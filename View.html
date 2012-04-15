@@ -14,12 +14,6 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
 <script type="text/javascript" src="schedule.js"></script>
 
-<!-- Put fonts below this comment-->
-<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-
-<!--Title-->
-<div id="title">VenView: A tool for musicians to book venues geographically</span></div>
-
 <script type="text/javascript">
 function addDays(){
 	for(var count = 1; var<32; count++){
@@ -42,192 +36,212 @@ $(document).ready(function() {
 	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
 
 	<table id ="page">
-		 <tr style ="position: relative">
-			<td id = "Column1">
+		<tr style="position: relative">
+			<td id="Column1">
 
-		<table id="information">
-			<tr><td>
-				Begin Date
-				<select id = "days">
-					<option>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-					<option>5</option>
-					<option>6</option>
-					<option>7</option>
-					<option>8</option>
-					<option>9</option>
-					<option>10</option>
-					<option>11</option>
-					<option>12</option>
-					<option>13</option>
-					<option>14</option>
-					<option>15</option>
-					<option>16</option>
-					<option>17</option>
-					<option>18</option>
-					<option>19</option>
-					<option>20</option>
-					<option>21</option>
-					<option>22</option>
-					<option>23</option>
-					<option>24</option>
-					<option>25</option>
-					<option>26</option>
-					<option>27</option>
-					<option>28</option>
-					<option>29</option>
-					<option>30</option>
-				</select>
-				<select>
-				  <option>January</option>
-				  <option>February</option>
-				  <option>March</option>
-				<option>April</option>
-				<option>May</option>
-				<option>June</option>
-				<option>July</option>
-				<option>August</option>
-				<option>September</option>
-				<option>October</option>
-				<option>November</option>
-				<option>December</option>
-				</select>
-				<select>
-				  <option>2012</option>
-				  <option>2013</option>
-				  <option>2014</option>
-				</select>
-			</td></tr>
-			<tr><td>
-				End Date
-				<select id = "days">
-					<option>1</option>
-					<option>2</option>
-					<option>3</option>
-					<option>4</option>
-					<option>5</option>
-					<option>6</option>
-					<option>7</option>
-					<option>8</option>
-					<option>9</option>
-					<option>10</option>
-					<option>11</option>
-					<option>12</option>
-					<option>13</option>
-					<option>14</option>
-					<option>15</option>
-					<option>16</option>
-					<option>17</option>
-					<option>18</option>
-					<option>19</option>
-					<option>20</option>
-					<option>21</option>
-					<option>22</option>
-					<option>23</option>
-					<option>24</option>
-					<option>25</option>
-					<option>26</option>
-					<option>27</option>
-					<option>28</option>
-					<option>29</option>
-					<option>30</option>
-				</select>
-				<select>
-				  <option>January</option>
-				  <option>February</option>
-				  <option>March</option>
-				<option>April</option>
-				<option>May</option>
-				<option>June</option>
-				<option>July</option>
-				<option>August</option>
-				<option>September</option>
-				<option>October</option>
-				<option>November</option>
-				<option>December</option>
-				</select>
-				<select>
-				  <option>2012</option>
-				  <option>2013</option>
-				  <option>2014</option>
-				</select>
-			</td></tr>
-			
-			<tr><td>Enter Origin: <input id="Destination" type="text"/>
-				</td></tr>
-			 <tr><td>Enter Destination: <input id="Destination" type="text"/>
-				</td></tr>
-				<tr><td>
-					<a href="#Destination">Click to add more cities to your route</a>
-				</td></tr>
-			<tr><td>
-				Genre 
-				<select>
-					<option>Jazz</option>
-					<option>Classic</option>
-					<option>Rock</option>
-					<option>Blues</option>
-					<option>Indi</option>
-					</select>
-			</td></tr>
-			<tr><td>Capacity
-				<select>
-					<option>50-100</option>
-					<option>100-200</option>
-					<option>200-300</option>
-					<option>300-400</option>
-					<option>400-500</option>
-					</select></td></tr>
-			</table>
-			</td>
-			<td id="Column2">
-				<img id="map" src ="map.png">
-				<table id = "venueTable" border="1" >
-				<tbody>
-					<tr><td></td>
-						<td>Mon April 1</td>
-						<td>row 2, cell 2</td>
+				<table id="information">
+					<tr>
+						<td>Begin Date <select id="days">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+								<option>6</option>
+								<option>7</option>
+								<option>8</option>
+								<option>9</option>
+								<option>10</option>
+								<option>11</option>
+								<option>12</option>
+								<option>13</option>
+								<option>14</option>
+								<option>15</option>
+								<option>16</option>
+								<option>17</option>
+								<option>18</option>
+								<option>19</option>
+								<option>20</option>
+								<option>21</option>
+								<option>22</option>
+								<option>23</option>
+								<option>24</option>
+								<option>25</option>
+								<option>26</option>
+								<option>27</option>
+								<option>28</option>
+								<option>29</option>
+								<option>30</option>
+						</select> <select>
+								<option>January</option>
+								<option>February</option>
+								<option>March</option>
+								<option>April</option>
+								<option>May</option>
+								<option>June</option>
+								<option>July</option>
+								<option>August</option>
+								<option>September</option>
+								<option>October</option>
+								<option>November</option>
+								<option>December</option>
+						</select> <select>
+								<option>2012</option>
+								<option>2013</option>
+								<option>2014</option>
+						</select>
+						</td>
 					</tr>
 					<tr>
-					<td>
-						<div class="Venue" style="background-color: #D1A8ED">Paradise</div>
-					</td>
-					<td width="25%" align="center">
-						<div class="box airline" style="width: 75%; cursor:pointer;background-color:#D1A8ED;border-right: 1px solid;border-color: #D1A8ED;"><div class="full-name">​$</div></div>
-					</td>
-					<td width="20%">
-					</td>
+						<td>End Date <select id="days">
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+								<option>5</option>
+								<option>6</option>
+								<option>7</option>
+								<option>8</option>
+								<option>9</option>
+								<option>10</option>
+								<option>11</option>
+								<option>12</option>
+								<option>13</option>
+								<option>14</option>
+								<option>15</option>
+								<option>16</option>
+								<option>17</option>
+								<option>18</option>
+								<option>19</option>
+								<option>20</option>
+								<option>21</option>
+								<option>22</option>
+								<option>23</option>
+								<option>24</option>
+								<option>25</option>
+								<option>26</option>
+								<option>27</option>
+								<option>28</option>
+								<option>29</option>
+								<option>30</option>
+						</select> <select>
+								<option>January</option>
+								<option>February</option>
+								<option>March</option>
+								<option>April</option>
+								<option>May</option>
+								<option>June</option>
+								<option>July</option>
+								<option>August</option>
+								<option>September</option>
+								<option>October</option>
+								<option>November</option>
+								<option>December</option>
+						</select> <select>
+								<option>2012</option>
+								<option>2013</option>
+								<option>2014</option>
+						</select>
+						</td>
+					</tr>
 
-				</tr> 
-				<tr>
-				<td width="25%">
-					</td><tr>
-					<td>
-						<div id="Venue2" style="background-color: #30B0DC">Beehive</div>
-					</td>
-					<td width="20%">
-					</td>
-					<td width="25%" align="center">
-						<div class="box airline" style="width: 75%;cursor: pointer; background-color: #30B0DC;border-right: 1px solid;border-color: #000040;"><div class="full-name">​$</div></div>
-					</td>
-					<td width="25%">
-					</td>
-				</tr>
-				</tbody>
-
-
-					</table>
+					<tr>
+						<td>Enter Origin: <input id="Destination" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td>Enter Destination: <input id="Destination" type="text" />
+						</td>
+					</tr>
+					<tr>
+						<td><a href="#Destination">Click to add more cities to
+								your route</a></td>
+					</tr>
+					<tr>
+						<td>Genre <select>
+								<option>Jazz</option>
+								<option>Classic</option>
+								<option>Rock</option>
+								<option>Blues</option>
+								<option>Indi</option>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Capacity <select>
+								<option>50-100</option>
+								<option>100-200</option>
+								<option>200-300</option>
+								<option>300-400</option>
+								<option>400-500</option>
+						</select></td>
+					</tr>
+				</table>
 			</td>
-			</tr>
+			<td id="Column2"><img id="map" src="map.png">
+				<table id="venueTable" style = "width:100%" >
+					<tbody>
+						<tr>
+							
+							<td width="20%">Mon April 1</td>
+							<td width="20%" >Tue April 2</td>
+							<td width="20%">Wed April 3</td>
+							<td width="20%">Thus April 4</td>
+							<td width="20%">Fri April 5</td>
+						
+						</tr>
+						<tr>
+							<td>
+								<div class="Venue" style="background-color: #D1A8ED">Paradise</div>
+							</td>
+							<td align="center">
+								<div class="box time"
+									style="width: 75%; cursor: pointer; background-color: #D1A8ED;" >
+									$</div>
+							
+							</td>
+							<td> </td>
+							<td ></td>
+							<td ></td>
+						</tr>
+						<tr>
+							<td width="20%"></td>
+						<tr>
+							<td>
+								<div id="Venue2" style="background-color: #30B0DC">Beehive</div>
+							</td>
+							<td ></td>
+							<td align="center">
+								<div class="box time"
+									style="width: 75%; cursor: pointer; background-color: #30B0DC;">$</div>
+							</td>
+							<td ></td>
+							<td ></td>
+							<td ></td>
+							
+						</tr>
+						<tr>
+							<td>
+								<div id="Venue3" style="background-color: #30B0DC">House of Blues</div>
+							</td>
+							<td ></td>
+							<td ></td>
+							<td align="center">
+								<div class="box time" style="width:75%; cursor: pointer; background-color: #30B0DC;" >
+									$$$</div>
+				
+							</td>
+							<td ></td>
+							<td ></td>
+							
+						</tr>
+					</tbody>
 
 
-</table>
-
-</tr>
-
+				</table></td>
+		</tr>
 
 
+	</table>
 </body>
 </html>
