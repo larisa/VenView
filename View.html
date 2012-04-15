@@ -31,9 +31,11 @@ function addDays(){
 }
 $(document).ready(function() {
 	addDays();
-
 	
-}
+});
+$("#Enter").click(function(evt) {
+	document.getElementById('#Column2').style.visibility="visible";
+});
 </script>
 
 </head>
@@ -181,11 +183,11 @@ $(document).ready(function() {
 					<option>400-500</option>
 					</select>
 					</td></tr>
-					<tr><td align="right"><input type="button" value = "Enter"></input></td></tr>
+					<tr><td align="right"><input type="button" id = "Enter" value = "Enter"></input></td></tr>
 					
 			</table>
 			</td>
-			<td id="Column2">
+			<td id="Column2" style = "visibility: hidden">
 				<img id="map" src ="map.png">
 				<table id = "venueTable" border="1" >
 				<tbody>
