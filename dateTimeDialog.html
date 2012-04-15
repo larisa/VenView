@@ -1,51 +1,9 @@
 <!DOCTYPE html>
-
-<html>  
+<html>
 
 <head>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-<title>VenView</title>
-
-<!-- Load style sheets -->
-<link rel="stylesheet" type="text/css" href="viewLayout.css" />
-
-<!-- Load any supplemental Javascript libraries here -->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-<script type="text/javascript" src="schedule.js"></script>
-
-<!-- Put fonts below this comment-->
-<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
-
-<!--Title-->
-<div id="title">VenView: A tool for musicians to book venues geographically</span></div>
-
-<script type="text/javascript">
-function addDays(){
-	for(var count = 1; var<32; count++){
-		var innerText = document.createTextNode(count);
-		var day = document.createElement("option");
-		day.appendChild(innerText);
-		document.getElementById("days").appendChild(day);	
-	}
-}
-$(document).ready(function() {
-	addDays();
-
-	
-}
-</script>
-
 </head>
-
 <body>
-	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
-		<tr>
-		<td></td>
-		</tr>
-		<tr>
- 			HEAD
-			<td>
 		<table id="information">
 			<tr><td>
 				Begin Date
@@ -161,45 +119,8 @@ $(document).ready(function() {
 			 <tr><td>Enter Destination: <input id="Destination" type="text"/>
 				</td></tr>
 			</table>
-			</td>
-			<td><img id="map" src ="map.png">
-			</td>
 			</tr>
 
-<table id = "venueTable" border="1" >
-<tbody>
-	<tr><td></td>
-		<td>Mon April 1</td>
-		<td>row 2, cell 2</td>
-	</tr>
-	<tr>
-	<td>
-		<div class="Venue" style="background-color: #D1A8ED">Paradise</div>
-	</td>
-	<td width="25%" align="center">
-		<div class="box airline" style="width: 75%; cursor:pointer;background-color:#D1A8ED;border-right: 1px solid;border-color: #D1A8ED;"><div class="full-name">​$</div></div>
-	</td>
-	<td width="20%">
-	</td>
-	
-</tr> 
-<tr>
-<td width="25%">
-	</td><tr>
-	<td>
-		<div id="Venue2" style="background-color: #30B0DC">Beehive</div>
-	</td>
-	<td width="20%">
-	</td>
-	<td width="25%" align="center">
-		<div class="box airline" style="width: 75%;cursor: pointer; background-color: #30B0DC;border-right: 1px solid;border-color: #000040;"><div class="full-name">​$</div></div>
-	</td>
-	<td width="25%">
-	</td>
-</tr>
-</tbody>
-
-	
-	</table>
+</table>
 </body>
 </html>
