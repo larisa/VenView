@@ -40,12 +40,9 @@ $(document).ready(function() {
 
 <body>
 	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
-		<tr>
-		<td></td>
-		</tr>
-		<tr>
- 			HEAD
-			<td>
+	<table id ="page">
+		 <tr style ="position: relative">
+			<td id = "Column1">
 		<table id="information">
 			<tr><td>
 				Begin Date
@@ -162,16 +159,21 @@ $(document).ready(function() {
 				</td></tr>
 			</table>
 			</td>
-			<td><img id="map" src ="map.png">
+			<td id="Column2">
+				<img id="map" src ="map.png">
 			</td>
 			</tr>
+			<tr id="scehduleTable">
+				<td id = "padme"></td>
+				
+				<td id="map2">
+					Schedule goes here
+				</td>
+				</tr>
 </table>
-=======
-		<td>Mon April 1</td>
-		<td>row 2, cell 2</td>
-		</tr>
-	<table id="schedule">
-	</table>
->>>>>>> origin/master
+
+</tr>
+
+
 </body>
 </html>
