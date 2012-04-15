@@ -8,7 +8,19 @@ function addDays(dayID){
 }
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
-	//document.getElementById("#Enter").value="fuck you";
+}
+var citycount = 1;
+function dosomething(){
+
+//	var newC = document.createElement("input");
+//	newC.setAttribute("id", "city_"+citycount);
+	
+//	newC.setAttribute("type", "text");
+	$("#Origin").after(
+		'</td></tr><tr><td>'+ '<input id="city_'+citycount + '" type="text"></input>' +
+		'</td></tr>'
+		);
+		citycount++;
 }
 $(document).ready(function() {
 	addDays("daysB");

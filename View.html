@@ -24,7 +24,7 @@
 
 <body>
 	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
-
+	
 	<table id ="page">
 
 		 <tr style ="position: relative">
@@ -79,13 +79,15 @@
 				  <option>2014</option>
 				</select>
 			</td></tr>
-			
+		
 			<tr><td>Origin: <input id="Origin" type="text"/>
 				</td></tr>
 			 <tr><td>Destination: <input id="Destination" type="text"/>
 				</td></tr>
+			
 				<tr><td>
-					<a href="#Destination">Click to add more cities to your route</a>
+					<a href="#" onclick="dosomething(); return(false);">Click to add cities to route</a>
+					
 				</td></tr>
 			<tr><td>
 				Genre 
@@ -106,7 +108,6 @@
 					<option>400-500</option>
 					</select>
 					</td></tr>
-					
 					<tr><td align="right">
 						<input id = "Enter" type="button" value = "Enter"></input>
 						</td></tr>
