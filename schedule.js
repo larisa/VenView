@@ -60,8 +60,8 @@ function make_money_btns(){
 				//TODO figure out position based on venue name + date
 				bookBtn.style.position = "absolute";
 				
-				bookBtn.style.height = 20px;
-				bookBtn.style.width = 100px;
+				bookBtn.style.height = 20 + "px";
+				bookBtn.style.width = 100 + "px";
 				//bookBtn.style.top = + "px";
 				//bookBtn.style.left = + "px";
 //				bookBtn.style.background-color = bookBtnInfo.color;
