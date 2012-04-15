@@ -28,10 +28,12 @@ $(document).ready(function() {
 	$("#Enter").click(function(evt) {
 		display();
 	});
+		make_money_btns();
 });
 
 
 function make_money_btns(){
+		console.log("in make money btns");
 		var venueOpenings = [9];
 		var venueNames = ["Paradise", "Beehive", "House of Blues",
 											"Paradise", "Beehive", "House of Blues",
