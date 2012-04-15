@@ -1,5 +1,7 @@
+
+
 function addDays(){
-	for(var count = 1; var<32; count++){
+	for(var count=1; count<32; count++){
 		var innerText = document.createTextNode(count);
 		var day = document.createElement("option");
 		day.appendChild(innerText);
