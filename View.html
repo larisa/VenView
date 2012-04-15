@@ -81,10 +81,16 @@
 			</td></tr>
 		
 			<tr id="city_0"><td>
-				Origin: <input type="text"/>
-				</td></tr>
-
-			 <tr><td>Destination: <input id="Destination" type="text"/>
+				<table id = "origin">
+					<tr><td width = "80" id= "col1">Origin: </td>
+					<td align = "right"><input type="text"/></td></tr>
+				</table>
+			</td></tr>
+			 <tr><td>
+				<table id = "Destination">
+				<tr><td width = "80" id ="col1">Destination:</td>
+				<td><input type="text"/></td></tr>
+				</table>
 				</td></tr>
 			
 				<tr><td>
@@ -122,18 +128,18 @@
 				<table id="venueTable" style = "width:100%" >
 					<tbody>
 						<tr>
-							<td width="20%">ShowSched</td>							
-							<td width="20%">Mon April 1</td>
-							<td width="20%" >Tue April 2</td>
-							<td width="20%">Wed April 3</td>
-							<td width="20%">Thur April 4</td>
-							<td width="20%">Fri April 5</td>
+							<td width="16.6%">ShowSched</td>							
+							<td width="16.6%">Mon April 1</td>
+							<td width="16.6%" >Tue April 2</td>
+							<td width="16.6%">Wed April 3</td>
+							<td width="16.6%">Thur April 4</td>
+							<td width="16.6%">Fri April 5</td>
 						
 						</tr>
 						<tr>
 							<td id="content">
 								<div id="allMoneyBtns" style="position:absolute;">
-									<div class="moneyBtn" type="button" style="position:absolute;"></div>
+									<div class="moneyBtn" type="button" style="position:absolute;" value= "i am "></div>
 								<canvas id="canvasMoneyBtns">
 									</canvas>
 								<!--

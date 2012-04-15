@@ -13,7 +13,7 @@ var citycount = 1;
 var cityNum = 0;
 function dosomething(){
 	$("#city_"+cityNum).after(
-		'<tr id="city_'+citycount+'"><td><input type= "text"/></td></tr>'
+		'<tr id="city_'+citycount+'"><td class = "cities"><input type= "text"/></td></tr>'
 	);
 	citycount++;
 	cityNum++;
