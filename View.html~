@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Checkerboard</title>
+
+<!-- Load style sheets -->
+<link rel="stylesheet" type="text/css" href="viewLayout.css" />
+
+<!-- Load any supplemental Javascript libraries here -->
