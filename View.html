@@ -80,9 +80,9 @@
 				</select>
 			</td></tr>
 			
-			<tr><td>Enter Origin: <input id="Origin" type="text"/>
+			<tr><td>Origin: <input id="Origin" type="text"/>
 				</td></tr>
-			 <tr><td>Enter Destination: <input id="Destination" type="text"/>
+			 <tr><td>Destination: <input id="Destination" type="text"/>
 				</td></tr>
 				<tr><td>
 					<a href="#Destination">Click to add more cities to your route</a>
@@ -106,12 +106,16 @@
 					<option>400-500</option>
 					</select>
 					</td></tr>
-					<tr><td align="right"><input type="button" id = "Enter" value = "Enter"></input></td></tr>
+					
+					<tr><td align="right">
+						<input id = "Enter" type="button" value = "Enter"></input>
+						</td></tr>
 					
 			</table>
 			</td>
 		
-			<td id="Column2"><img id="map" src="map.png">
+			<td id="Column2" style="visibility: hidden">
+				<img id="map" src="map.png">
 				<table id="venueTable" style = "width:100%" >
 					<tbody>
 						<tr>
