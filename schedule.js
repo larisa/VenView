@@ -1,16 +1,18 @@
 //allow Javascript code inside this block to only run when the page has finished loading.
 
 
-function addDays(){
+function addDays(dayID){
 	for(var count=1; count<32; count++){
 		var innerText = document.createTextNode(count);
 		var day = document.createElement("option");
 		day.appendChild(innerText);
-		document.getElementById("days").appendChild(day);	
+		document.getElementById(dayID).appendChild(day);	
 	}
 }
 $(document).ready(function() {
-	addDays();
+	addDays("daysB");
+	addDays("daysE");
+
 	
 });
 $("#Enter").click(function(evt) {
