@@ -25,6 +25,40 @@ $(document).ready(function() {
 	$("#Enter").click(function(evt) {
 		display();
 	});
-
-	
 });
+
+
+function make_money_btns(){
+		var venueOpenings = [9];
+		var venueNames = ["Paradise", "Beehive", "House of Blues",
+											"Paradise", "Beehive", "House of Blues",
+										 "Paradise", "Beehive", "House of Blues"];
+		var allDates = [1, 4, 3, 2, 3, 2, 4, 5, 5];
+		var startTimes = [10, 15, 18, 19, 20, 10, 23, 22, 4]; 
+		for (var i=0; i<=9; i++){
+				var gig = new Booking(venueNames[i], allDates[i], startTimes[i], 
+															allDur[i], allDollars[i]);
+				venueOpenings.push(gig);
+		}
+		for (var i=0; i<venueOpenings.length; i++){
+				var bookBtnInfo = venueOpenings[i];
+				var bookBtn = new span();
+				bookBtn.id = "moneyBtn" + i;
+				bookBtn.className = "moneyBtn";
+				bookBtn.type = "button";
+				bookBtn.name = bookBtnInfo.dollars;
+
+				//TODO figure out position based on venue name + date
+				bookBtn.style.position = "absolute";
+				//bookBtn.style.height = ;
+//				bookBtn.style.width = 75%;
+				//bookBtn.style.top = + "px";
+				//bookBtn.style.left = + "px";
+				bookBtn.style.background-color = bookBtnInfo.color;
+						
+				allMoneyBtns.appendChild(nextBtn);
+
+				}
+
+}
+		
