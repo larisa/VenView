@@ -134,6 +134,7 @@ function drawButton(gigOpening, i){
 	}
 	if(bookBtnInfo.venue == "Beehive"){topDistance=1;}
 	if(bookBtnInfo.venue == "House of Blues"){topDistance=2;}
+		bookBtnInfo.top = topDistance*heightt/5 + heightt/24;
 	$(bookBtn).css("top", topDistance*heightt/5 + heightt/24);
 	$(bookBtn).css("width", 400/5+ "px");
 	$(bookBtn).css("height", heightt/10 + "px");
@@ -162,29 +163,9 @@ function drawSchedule(selBooking){
 		var width = selBooking.duration;
 		console.log("length:" + length + "width" + width);
 		context.fillStyle = "red";
-		context.fillRect(20, 20, length, width);
+
+		context.fillRect(selBooking.left, selBooking.top, length, width);
 		console.log(context);
 
 }
-		
-//for now represent pay Amt as string of $ ($, $$ or $$$)
-//start time is int on the hour
-//dates are 1-# of tour dates for now (where 1 is first day of tour)
-
-var Booking = function(venueName, date, startTime, duration, payAmt){
-		this.venue = venueName;
-		this.date = date;
-		this.startTime = startTime;
-		this.duration = duration;
-		this.dollars = payAmt;
-		this.color = assignColor(venueName);
-
-		this.toString = function(){
-				var name = this.venue + this.date;
-				return name;
-		}
-}
-
-function assignColor(venueName){
-		return new color("#30B0DV");
-}
+	
