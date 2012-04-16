@@ -44,6 +44,11 @@ function draw(){
 			ctx.lineTo(i*theSize,400);
 			ctx.stroke();
 			
+			ctx.fillStyle = "rgb(0,0,0)";
+			ctx.beginPath();
+			ctx.moveTo(0,i*theSize);
+			ctx.lineTo(400,i*theSize);
+			ctx.stroke();
 		
 			
 		}
