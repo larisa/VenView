@@ -34,19 +34,20 @@ function draw(){
 	var canvas = document.getElementById("canvasMoneyBtns");
 	var ctx = canvas.getContext('2d');
 	var theSize = 400/6;
-
-	for(j=0;j<theSize;j++){
+	
+	
 		for(i=0;i<theSize;i++){
-			if((j%2==0 && i%2!=0)||(j%2!=0 && i%2==0)){
-				ctx.fillStyle = "rgb(0,0,0)";
-			}
-			else{
-				ctx.fillStyle = "rgb(255,255,255)";
-				
-			}
-			//ctx.fillRect (i*theSize,j*theSize, theSize, 20);
+			
+			ctx.fillStyle = "rgb(0,0,0)";
+			ctx.beginPath();
+			ctx.moveTo(i*theSize,0);
+			ctx.lineTo(i*theSize,400);
+			ctx.stroke();
+			
+		
+			
 		}
-	}
+	
 	
 }
 function make_money_btns(){
@@ -110,9 +111,9 @@ function drawButton(button){
 	}
 	if(bookBtnInfo.venue == "Beehive"){topDistance=2;}
 	if(bookBtnInfo.venue == "House of Blues"){topDistance=3;}
-	$(bookBtn).css("top", topDistance*20);
+	$(bookBtn).css("top", topDistance*400/6);
 	$(bookBtn).css("width", 400/6+ "px");
-	$(bookBtn).css("height", 20 + "px");
+	$(bookBtn).css("height", 400/12 + "px");
 	$(bookBtn).css("z-index", ++toppest);
 	return bookBtn;
 }
