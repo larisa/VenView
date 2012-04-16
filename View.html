@@ -27,12 +27,12 @@
 <body>
 	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
 	
-	<table id ="page">
+	<table class = "tables" id ="page">
 
 		 <tr style ="position: relative">
 			<td id = "Column1" valign = "top" style = "background-color: #9ae0a2">
 
-		<table id="information">
+		<table class = "tables" id="information">
 			<tr><td>
 				Begin Date
 				<select id = "daysB">
@@ -83,13 +83,13 @@
 			</td></tr>
 		
 			<tr id="city_0"><td>
-				<table id = "origin">
+				<table class="tables" id = "origin">
 					<tr><td width = "80" id= "col1">Origin: </td>
 					<td align = "right"><input type="text"/></td></tr>
 				</table>
 			</td></tr>
 			 <tr><td>
-				<table id = "Destination">
+				<table class="tables" id = "Destination">
 				<tr><td width = "80" id ="col1">Destination:</td>
 				<td><input type="text"/></td></tr>
 				</table>
@@ -134,7 +134,7 @@
 		
 			<td id="Column2" style="visibility: hidden">
 				<img id="map" src="map.png" width = "485">
-				<table id="venueTable" style = "width:100%" >
+				<table class = "tables" id="venueTable" style = "width:100%" style="font-family: Oxygen; font-size:12pt" >
 					<tbody>
 						<tr height= "20">
 							<td width = "77" align = "center"></td>
@@ -146,13 +146,13 @@
 								April 3</td>
 							<td width = "77" align = "center">Thursday
 								April 5</td>
-							<td width = "77" align = "center">Friday
+							<td width = "77" align = "center">Friday<br>
 								April 4</td>
 							</tr>
 						<tr>
 							<td id="venues">
-								<table height = "250">
-									<tr ><td>Paradise</td></tr>
+								<table class= "tables" height = "250">
+									<tr ><td >Paradise</td></tr>
 									<tr ><td>Beehive</td></tr>
 									<tr ><td>House</td></tr>
 									<tr ><td>Dragon</td></tr>

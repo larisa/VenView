@@ -5,7 +5,7 @@
 		font-weight: 900;
 		text-align: left;
 		color:#b6dbd;
-		background-color: #b6dbd4
+		background-color: #b6dbd4;
 }
 
 
@@ -13,8 +13,14 @@
 	font-family: 'Oxygen', sans-serif;
 
 }
-#padme{
-
+.tables{
+	font-family: 'Oxygen', sans-serif;
+	font-size: 11pt;
+	color:#b6dbd;
+}
+#fontdudes{
+	font-family: 'Oxygen', sans-serif;
+	font-size: 12pt;
 }
 .cities{
 	padding: 0 0 0 120px;
