@@ -64,6 +64,7 @@ function make_money_btns(){
 															allDur[i], allDollars[i]);
 				venueOpenings.push(gig);
 		}
+
 		return venueOpenings;
 		
 }
@@ -94,6 +95,7 @@ function drawButton(button){
 	bookBtn.setAttribute("value", bookBtnInfo.dollars);
 	//bookBtn.value = bookBtnInfo.dollars;
 
+
 	//$("moneyButton" + i, "moneyBtn").click(function() { return false;});
 
 
@@ -114,6 +116,15 @@ function drawButton(button){
 	$(bookBtn).css("z-index", ++toppest);
 	return bookBtn;
 }
+
+$(function(){
+		console.log("in function with jquery bs");
+				$("button", ".moneyBtn").click(function() { 
+						console.log("clicked the button dude");
+						return false;
+				});
+});
+
 		
 //for now represent pay Amt as string of $ ($, $$ or $$$)
 //start time is int on the hour
