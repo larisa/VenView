@@ -148,6 +148,8 @@ $(function(){
 		$(".moneyBtn").click(function() {
 				console.log("we clicked");
 				console.log(this);
+				//make a new popup
+				
 				return false;
 		});
 });
