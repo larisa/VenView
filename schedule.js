@@ -81,8 +81,8 @@ function drawButtons(){
 			document.getElementById("allMoneyBtns").appendChild(drawButton(button));
 
 			}
-	
 }
+
 var toppest = 10;
 function drawButton(button){
 	//console.log("making button allegedly");
