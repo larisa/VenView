@@ -116,7 +116,7 @@ function drawButton(button){
 	}
 	if(bookBtnInfo.venue == "Beehive"){topDistance=2;}
 	if(bookBtnInfo.venue == "House of Blues"){topDistance=3;}
-	$(bookBtn).css("top", topDistance*400/6);
+	$(bookBtn).css("top", topDistance*400/6 + 400/24);
 	$(bookBtn).css("width", 400/6+ "px");
 	$(bookBtn).css("height", 400/12 + "px");
 	$(bookBtn).css("z-index", ++toppest);
