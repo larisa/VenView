@@ -66,7 +66,7 @@ function get_venue_openings(){
 										 "Paradise", "Beehive", "House of Blues"];
 		var allDates = [1, 4, 3, 2, 3, 2, 4, 5, 5];
 		var startTimes = [10, 15, 18, 19, 20, 10, 23, 22, 4]; 
-		var allDur = [40, 40, 40, 40, 40, 40, 40, 40, 40];
+		var allDur = [40, 20, 30, 70, 20, 120, 60, 30, 40];
 		var allDollars = ["$$$", "$$", "$$", "$", "$$", "$", "$$$", "$$", "$"];
 
 		for (var i=0; i<=8; i++){
@@ -145,6 +145,7 @@ $(function(){
 		$(".moneyBtn").button();
 		$(".moneyBtn").click(function() {
 				var currBooking = this.label;
+				console.log(currBooking);
 				drawSchedule(currBooking);
 				return false;
 		});
@@ -154,14 +155,11 @@ $(function(){
 function drawSchedule(selBooking){
 		console.log(selBooking);
 		var canvas = document.getElementById("canvasMoneyBtns");
-		//orient canvas over the column?
-		
-		console.log(canvas);
-//		canvas.z-index = 100;
+
 		var context = canvas.getContext("2d");
 		//open booking rectangle block proportional to its duration
 		var length = selBooking.duration;
-		var width = 70;
+		var width = selBooking.duration;
 		console.log("length:" + length + "width" + width);
 		context.fillStyle = "red";
 		context.fillRect(0, 0, length, width);
