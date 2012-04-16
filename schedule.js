@@ -82,7 +82,7 @@ function drawButtons(){
 	var venueOpenings = make_money_btns();
 	for (var i=0; i<venueOpenings.length; i++){
 			var button = venueOpenings[i];
-			document.getElementById("allMoneyBtns").appendChild(drawButton(button));
+			document.getElementById("allMoneyBtns").appendChild(drawButton(button,i));
 
 			}
 }
@@ -101,7 +101,7 @@ function showText() {
 }
 
 var toppest = 10;
-function drawButton(button){
+function drawButton(button, i){
 	//console.log("making button allegedly");
 	var bookBtnInfo = button;
 	var bookBtn = document.createElement("button");
@@ -144,8 +144,8 @@ function drawButton(button){
 }
 
 $(function(){
-		$(".moneyBtns").button();
-		$(".moneyBtns").click(function() {
+		$(".moneyBtn").button();
+		$(".moneyBtn").click(function() {
 				console.log("we clicked");
 				console.log(this);
 				//make a new popup

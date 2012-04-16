@@ -10,8 +10,16 @@
 
 
 .informationTable{
+	
 	font-family: 'Oxygen', sans-serif;
 
+}
+.dates{
+	font-size: 8pt;
+	margin:0%;
+}
+.days{
+	margin:0%;
 }
 .tables{
 	font-family: 'Oxygen', sans-serif;
