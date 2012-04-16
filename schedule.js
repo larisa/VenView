@@ -9,6 +9,7 @@ function addDays(dayID){
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
 }
+var heightt = 250;
 var citycount = 1;
 var cityNum = 0;
 function dosomething(){
@@ -35,7 +36,7 @@ function draw(){
 	var canvas = document.getElementById("canvasMoneyBtns");
 	var ctx = canvas.getContext('2d');
 	var theSize = 400/5;
-	var theSize2 = 60;
+	var theSize2 = heightt/5;
 	
 	
 		for(i=0;i<theSize;i++){
@@ -43,7 +44,7 @@ function draw(){
 			ctx.fillStyle = "rgb(0,0,0)";
 			ctx.beginPath();
 			ctx.moveTo(i*theSize,0);
-			ctx.lineTo(i*theSize,300);
+			ctx.lineTo(i*theSize,heightt);
 			ctx.stroke();
 			
 			ctx.fillStyle = "rgb(0,0,0)";
@@ -134,9 +135,9 @@ function drawButton(button){
 	}
 	if(bookBtnInfo.venue == "Beehive"){topDistance=1;}
 	if(bookBtnInfo.venue == "House of Blues"){topDistance=2;}
-	$(bookBtn).css("top", topDistance*300/5 + 300/24);
+	$(bookBtn).css("top", topDistance*heightt/5 + heightt/24);
 	$(bookBtn).css("width", 400/5+ "px");
-	$(bookBtn).css("height", 300/10 + "px");
+	$(bookBtn).css("height", heightt/10 + "px");
 	$(bookBtn).css("z-index", ++toppest);
 	return bookBtn;
 }
