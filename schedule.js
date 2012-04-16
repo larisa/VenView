@@ -25,29 +25,32 @@ $(document).ready(function() {
 	$("#Enter").click(function(evt) {
 		display();
 	});
-		make_money_btns();
+		//drawSched();
+		draw();
+		drawButtons();
 });
 
-function drawSched(canvas, canvas2){
+function draw(){
+	var canvas = document.getElementById("canvasMoneyBtns");
 	var ctx = canvas.getContext('2d');
-	//var theSize = $.getUrlVar('size') ? $.getUrlVar('size') : DEFAULT_BOARD_SIZE;
-	var blockSize = 400/6;
-//	for(j=0;j<theSize;j++){
-//		for(i=0;i<theSize;i++){
-//			if((j%2==0 && i%2!=0)||(j%2!=0 && i%2==0)){
-//				ctx.fillStyle = "rgb(0,0,0)";
-//			}
-///			else{
-//				ctx.fillStyle = "rgb(255,255,255)";
-//				
-//			}
-//			ctx.fillRect (i*blockSize,j*blockSize, blockSize, blockSize);
-//		}
-//	}
+	var theSize = 400/6;
+
+	for(j=0;j<theSize;j++){
+		for(i=0;i<theSize;i++){
+			if((j%2==0 && i%2!=0)||(j%2!=0 && i%2==0)){
+				ctx.fillStyle = "rgb(0,0,0)";
+			}
+			else{
+				ctx.fillStyle = "rgb(255,255,255)";
+				
+			}
+			ctx.fillRect (i*theSize,j*theSize, theSize, 20);
+		}
+	}
 	
 }
 function make_money_btns(){
-		var venueOpenings = [9];
+		var venueOpenings = [];
 		var venueNames = ["Paradise", "Beehive", "House of Blues",
 											"Paradise", "Beehive", "House of Blues",
 										 "Paradise", "Beehive", "House of Blues"];
@@ -56,49 +59,60 @@ function make_money_btns(){
 		var allDur = [40, 40, 40, 40, 40, 40, 40, 40, 40];
 		var allDollars = ["$$$", "$$", "$$", "$", "$$", "$", "$$$", "$$", "$"];
 
-		for (var i=0; i<=9; i++){
+		for (var i=0; i<=8; i++){
 				var gig = new Booking(venueNames[i], allDates[i], startTimes[i], 
 															allDur[i], allDollars[i]);
 				venueOpenings.push(gig);
 		}
-		for (var i=0; i<venueOpenings.length; i++){
-				console.log("making button allegedly");
-				var bookBtnInfo = venueOpenings[i];
-				var bookBtn = document.createElement("button");
-				var canvas = document.getElementById("canvasMoneyBtns");
-				bookBtn.id = "moneyBtn" + i;
-				bookBtn.className = "moneyBtn";
-				bookBtn.type = "button";
-				bookBtn.name = bookBtnInfo.dollars;
-				bookBtn.value = bookBtnInfo.dollars;
+		return venueOpenings;
+		
+}
+function drawButtons(){
+	var venueOpenings = make_money_btns();
+	for (var i=0; i<venueOpenings.length; i++){
+			var button = venueOpenings[i];
+			document.getElementById("allMoneyBtns").appendChild(drawButton(button));
 
-				$("moneyButton" + i, "moneyBtn").click(function() { return false;});
+			}
+	
+}
+var toppest = 10;
+function drawButton(button){
+	//console.log("making button allegedly");
+	var bookBtnInfo = button;
+	//var bookBtn = document.createElement("button");
+	var bookBtn = document.createElement("img");
+	bookBtn.setAttribute("src","map.png");
+	var canvas = document.getElementById("canvasMoneyBtns");
+	bookBtn.setAttribute("id", "moneyBtn" + i);
+	bookBtn.setAttribute("class", "moneyBtn");
+	//bookBtn.className = "moneyBtn";
+	bookBtn.setAttribute("type", "button");
+	//bookBtn.type = "button";
+	bookBtn.setAttribute("name", bookBtnInfo.dollars);
+	//bookBtn.name = bookBtnInfo.dollars;
+	bookBtn.setAttribute("value", bookBtnInfo.dollars);
+	//bookBtn.value = bookBtnInfo.dollars;
+
+	//$("moneyButton" + i, "moneyBtn").click(function() { return false;});
 
 
-				//TODO figure out position based on venue name + date
-				bookBtn.style.position = "absolute";
-				
-				bookBtn.style.height = 20 + "px";
-				bookBtn.style.width = 400/6 + "px";
-				//bookBtn.style.top = + "px";
-				//bookBtn.style.left = + "px";
-//				bookBtn.style.background-color = bookBtnInfo.color;
-				$(bookBtn).css("position", "absolute");
-				$(bookBtn).css("left", $(canvas).offset().left + bookBtnInfo.date*400/6);
-				var topDistance = 0;
-				if(bookBtnInfo.venue == "Paradise"){
-					topDistance = 1;
-				}
-				if(bookBtnInfo.venue == "Beehive"){topDistance=2;}
-				if(bookBtnInfo.venue == "House of Blues"){topDistance=3;}
-				
+	//TODO figure out position based on venue name + date
+//	bookBtn.style.position = "absolute";
 
-				
-				$(bookBtn).css("top", $(canvas).offset().top + topDistance*400/6);		
-				allMoneyBtns.appendChild(bookBtn);
-
-				}
-
+	$(bookBtn).css("position", "absolute");
+	$(bookBtn).css("left", $(canvas).offset().left + bookBtnInfo.date*400/6);
+	var topDistance = 0;
+	if(bookBtnInfo.venue == "Paradise"){
+		topDistance = 1;
+	}
+	if(bookBtnInfo.venue == "Beehive"){topDistance=2;}
+	if(bookBtnInfo.venue == "House of Blues"){topDistance=3;}
+	$(bookBtn).css("top", $(canvas).offset().top + topDistance*400/6);
+	$(bookBtn).css("width", 400/6+ "px");
+	$(bookBtn).css("height", 20 + "px");
+	$(bookBtn).css("z-index", ++toppest);
+	return bookBtn;
 }
 		
 //for now represent pay Amt as string of $ ($, $$ or $$$)
