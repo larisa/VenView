@@ -9,6 +9,8 @@ var Booking = function(venueName, date, startTime, duration, payAmt){
 		this.duration = duration;
 		this.dollars = payAmt;
 		this.color = assignColor(venueName);
+		this.top = 0;
+		this.left = 0;
 
 		this.toString = function(){
 				var name = this.venue + this.date;
