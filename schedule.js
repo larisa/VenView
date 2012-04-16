@@ -160,10 +160,10 @@ function drawSchedule(selBooking){
 		var context = canvas.getContext("2d");
 		//open booking rectangle block proportional to its duration
 		var length = selBooking.duration;
-		var width = selBooking.duration;
+		var width = 400/5;
 		console.log("length:" + length + "width" + width);
 		context.fillStyle = "red";
-		context.fillRect(selBooking.left, selBooking.top, length, width);
+		context.fillRect(selBooking.left, selBooking.top, width, length);
 		console.log(context);
 
 }
