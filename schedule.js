@@ -88,18 +88,21 @@ function drawButton(button){
 	//console.log("making button allegedly");
 	var bookBtnInfo = button;
 	var bookBtn = document.createElement("button");
+
+		
 	//var bookBtn = document.createElement("img");
 	//bookBtn.setAttribute("src","map.png");
 	var canvas = document.getElementById("canvasMoneyBtns");
 	bookBtn.setAttribute("id", "moneyBtn" + i);
 	bookBtn.setAttribute("class", "moneyBtn");
-	//bookBtn.className = "moneyBtn";
+	bookBtn.className = "moneyBtn";
 	bookBtn.setAttribute("type", "button");
 	//bookBtn.type = "button";
-	bookBtn.setAttribute("name", bookBtnInfo.dollars);
+//	bookBtn.setAttribute("name", bookBtnInfo.dollars);
 	//bookBtn.name = bookBtnInfo.dollars;
-	bookBtn.setAttribute("value", bookBtnInfo.dollars);
-	//bookBtn.value = bookBtnInfo.dollars;
+		bookBtn.innerHTML = bookBtnInfo.dollars;
+		bookBtn.setAttribute("value", "hello");//bookBtnInfo.dollars);
+//		bookBtn.value = "hello";//bookBtnInfo.dollars;
 
 
 	//$("moneyButton" + i, "moneyBtn").click(function() { return false;});
@@ -124,11 +127,12 @@ function drawButton(button){
 }
 
 $(function(){
-		console.log("in function with jquery bs");
-				$("button", ".moneyBtn").click(function() { 
-						console.log("clicked the button dude");
-						return false;
-				});
+		$(".moneyBtn").button("refresh");
+		$(".moneyBtn").click(function() {
+				console.log("we clicked");
+				console.log(this);
+				return false;
+		});
 });
 
 		
