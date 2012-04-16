@@ -111,7 +111,7 @@ function drawButton(button){
 	//bookBtn.setAttribute("src","map.png");
 	var canvas = document.getElementById("canvasMoneyBtns");
 	bookBtn.setAttribute("id", "moneyBtn" + i);
-	bookBtn.setAttribute("class", "moneyBtn");
+//	bookBtn.setAttribute("class", "moneyBtn");
 	bookBtn.className = "moneyBtn";
 	bookBtn.setAttribute("type", "button");
 	//bookBtn.type = "button";
@@ -144,8 +144,8 @@ function drawButton(button){
 }
 
 $(function(){
-		$(".moneyBtn").button("refresh");
-		$(".moneyBtn").click(function() {
+		$(".moneyBtns").button();
+		$(".moneyBtns").click(function() {
 				console.log("we clicked");
 				console.log(this);
 				//make a new popup
