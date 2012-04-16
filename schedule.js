@@ -59,7 +59,7 @@ function draw(){
 	
 	
 }
-function make_money_btns(){
+function get_venue_openings(){
 		var venueOpenings = [];
 		var venueNames = ["Paradise", "Beehive", "House of Blues",
 											"Paradise", "Beehive", "House of Blues",
@@ -79,10 +79,10 @@ function make_money_btns(){
 		
 }
 function drawButtons(){
-	var venueOpenings = make_money_btns();
+	var venueOpenings = get_venue_openings();
 	for (var i=0; i<venueOpenings.length; i++){
-			var button = venueOpenings[i];
-			document.getElementById("allMoneyBtns").appendChild(drawButton(button,i));
+			var opening = venueOpenings[i];
+			document.getElementById("allMoneyBtns").appendChild(drawButton(opening,i));
 
 			}
 }
@@ -101,9 +101,9 @@ function showText() {
 }
 
 var toppest = 10;
-function drawButton(button, i){
+function drawButton(gigOpening, i){
 	//console.log("making button allegedly");
-	var bookBtnInfo = button;
+	var bookBtnInfo = gigOpening;
 	var bookBtn = document.createElement("button");
 
 		
@@ -118,9 +118,7 @@ function drawButton(button, i){
 //	bookBtn.setAttribute("name", bookBtnInfo.dollars);
 	//bookBtn.name = bookBtnInfo.dollars;
 		bookBtn.innerHTML = bookBtnInfo.dollars;
-		bookBtn.setAttribute("value", "hello");//bookBtnInfo.dollars);
-//		bookBtn.value = "hello";//bookBtnInfo.dollars;
-
+		bookBtn.label = bookBtnInfo;
 
 	//$("moneyButton" + i, "moneyBtn").click(function() { return false;});
 
@@ -146,14 +144,30 @@ function drawButton(button, i){
 $(function(){
 		$(".moneyBtn").button();
 		$(".moneyBtn").click(function() {
-				console.log("we clicked");
-				console.log(this);
-				//make a new popup
-				
+				var currBooking = this.label;
+				drawSchedule(currBooking);
 				return false;
 		});
 });
 
+//takes Booking object of moneyBtn that was clicked
+function drawSchedule(selBooking){
+		console.log(selBooking);
+		var canvas = document.getElementById("canvasMoneyBtns");
+		//orient canvas over the column?
+		
+		console.log(canvas);
+//		canvas.z-index = 100;
+		var context = canvas.getContext("2d");
+		//open booking rectangle block proportional to its duration
+		var length = selBooking.duration;
+		var width = 70;
+		console.log("length:" + length + "width" + width);
+		context.fillStyle = "red";
+		context.fillRect(0, 0, length, width);
+		console.log(context);
+
+}
 		
 //for now represent pay Amt as string of $ ($, $$ or $$$)
 //start time is int on the hour
