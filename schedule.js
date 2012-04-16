@@ -28,12 +28,14 @@ $(document).ready(function() {
 		//drawSched();
 		draw();
 		drawButtons();
+		//showText();
 });
 
 function draw(){
 	var canvas = document.getElementById("canvasMoneyBtns");
 	var ctx = canvas.getContext('2d');
-	var theSize = 400/6;
+	var theSize = 400/5;
+	var theSize2 = 60;
 	
 	
 		for(i=0;i<theSize;i++){
@@ -41,17 +43,18 @@ function draw(){
 			ctx.fillStyle = "rgb(0,0,0)";
 			ctx.beginPath();
 			ctx.moveTo(i*theSize,0);
-			ctx.lineTo(i*theSize,400);
+			ctx.lineTo(i*theSize,300);
 			ctx.stroke();
 			
 			ctx.fillStyle = "rgb(0,0,0)";
 			ctx.beginPath();
-			ctx.moveTo(0,i*theSize);
-			ctx.lineTo(400,i*theSize);
+			ctx.moveTo(0,i*theSize2);
+			ctx.lineTo(400,i*theSize2);
 			ctx.stroke();
 		
 			
 		}
+		//showText();
 	
 	
 }
@@ -83,6 +86,18 @@ function drawButtons(){
 			}
 	
 }
+function showText() {
+	var cxt = document.getElementById("allMoneyBtns").getContext('2d');
+	//ctx.fillStyle = '#f00';
+	ctx.font = 'bold 12px sans-serif';
+	cxt.textAlign = "left";
+	ctx.textBaseline = "top";
+	var VenueList = ["Paradise", "Beehive", "House of Blues"];
+
+	for(var i=0; i<VenueList.length; i++){
+//		ctx.fillText(VenueList[i],0,(i+1)*(400/5)+(400/24));
+	}
+}
 var toppest = 10;
 function drawButton(button){
 	//console.log("making button allegedly");
@@ -109,16 +124,16 @@ function drawButton(button){
 //	bookBtn.style.position = "absolute";
 
 	$(bookBtn).css("position", "absolute");
-	$(bookBtn).css("left", bookBtnInfo.date*400/6);
+	$(bookBtn).css("left", (bookBtnInfo.date-1)*400/5);
 	var topDistance = 0;
 	if(bookBtnInfo.venue == "Paradise"){
-		topDistance = 1;
+		topDistance = 0;
 	}
-	if(bookBtnInfo.venue == "Beehive"){topDistance=2;}
-	if(bookBtnInfo.venue == "House of Blues"){topDistance=3;}
-	$(bookBtn).css("top", topDistance*400/6 + 400/24);
-	$(bookBtn).css("width", 400/6+ "px");
-	$(bookBtn).css("height", 400/12 + "px");
+	if(bookBtnInfo.venue == "Beehive"){topDistance=1;}
+	if(bookBtnInfo.venue == "House of Blues"){topDistance=2;}
+	$(bookBtn).css("top", topDistance*300/5 + 300/24);
+	$(bookBtn).css("width", 400/5+ "px");
+	$(bookBtn).css("height", 300/10 + "px");
 	$(bookBtn).css("z-index", ++toppest);
 	return bookBtn;
 }
