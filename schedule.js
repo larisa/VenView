@@ -162,7 +162,7 @@ function drawSchedule(selBooking){
 		var width = selBooking.duration;
 		console.log("length:" + length + "width" + width);
 		context.fillStyle = "red";
-		context.fillRect(0, 0, length, width);
+		context.fillRect(20, 20, length, width);
 		console.log(context);
 
 }
