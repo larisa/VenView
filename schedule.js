@@ -44,7 +44,7 @@ function draw(){
 				ctx.fillStyle = "rgb(255,255,255)";
 				
 			}
-			ctx.fillRect (i*theSize,j*theSize, theSize, 20);
+			//ctx.fillRect (i*theSize,j*theSize, theSize, 20);
 		}
 	}
 	
@@ -81,9 +81,9 @@ var toppest = 10;
 function drawButton(button){
 	//console.log("making button allegedly");
 	var bookBtnInfo = button;
-	//var bookBtn = document.createElement("button");
-	var bookBtn = document.createElement("img");
-	bookBtn.setAttribute("src","map.png");
+	var bookBtn = document.createElement("button");
+	//var bookBtn = document.createElement("img");
+	//bookBtn.setAttribute("src","map.png");
 	var canvas = document.getElementById("canvasMoneyBtns");
 	bookBtn.setAttribute("id", "moneyBtn" + i);
 	bookBtn.setAttribute("class", "moneyBtn");
@@ -103,14 +103,14 @@ function drawButton(button){
 //	bookBtn.style.position = "absolute";
 
 	$(bookBtn).css("position", "absolute");
-	$(bookBtn).css("left", $(canvas).offset().left + bookBtnInfo.date*400/6);
+	$(bookBtn).css("left", bookBtnInfo.date*400/6);
 	var topDistance = 0;
 	if(bookBtnInfo.venue == "Paradise"){
 		topDistance = 1;
 	}
 	if(bookBtnInfo.venue == "Beehive"){topDistance=2;}
 	if(bookBtnInfo.venue == "House of Blues"){topDistance=3;}
-	$(bookBtn).css("top", $(canvas).offset().top + topDistance*400/6);
+	$(bookBtn).css("top", topDistance*20);
 	$(bookBtn).css("width", 400/6+ "px");
 	$(bookBtn).css("height", 20 + "px");
 	$(bookBtn).css("z-index", ++toppest);
