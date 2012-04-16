@@ -28,7 +28,24 @@ $(document).ready(function() {
 		make_money_btns();
 });
 
-
+function drawSched(canvas, canvas2){
+	var ctx = canvas.getContext('2d');
+	//var theSize = $.getUrlVar('size') ? $.getUrlVar('size') : DEFAULT_BOARD_SIZE;
+	var blockSize = 400/6;
+//	for(j=0;j<theSize;j++){
+//		for(i=0;i<theSize;i++){
+//			if((j%2==0 && i%2!=0)||(j%2!=0 && i%2==0)){
+//				ctx.fillStyle = "rgb(0,0,0)";
+//			}
+///			else{
+//				ctx.fillStyle = "rgb(255,255,255)";
+//				
+//			}
+//			ctx.fillRect (i*blockSize,j*blockSize, blockSize, blockSize);
+//		}
+//	}
+	
+}
 function make_money_btns(){
 		var venueOpenings = [9];
 		var venueNames = ["Paradise", "Beehive", "House of Blues",
@@ -48,6 +65,7 @@ function make_money_btns(){
 				console.log("making button allegedly");
 				var bookBtnInfo = venueOpenings[i];
 				var bookBtn = document.createElement("button");
+				var canvas = document.getElementById("canvasMoneyBtns");
 				bookBtn.id = "moneyBtn" + i;
 				bookBtn.className = "moneyBtn";
 				bookBtn.type = "button";
@@ -61,11 +79,22 @@ function make_money_btns(){
 				bookBtn.style.position = "absolute";
 				
 				bookBtn.style.height = 20 + "px";
-				bookBtn.style.width = 100 + "px";
+				bookBtn.style.width = 400/6 + "px";
 				//bookBtn.style.top = + "px";
 				//bookBtn.style.left = + "px";
 //				bookBtn.style.background-color = bookBtnInfo.color;
-						
+				$(bookBtn).css("position", "absolute");
+				$(bookBtn).css("left", $(canvas).offset().left + bookBtnInfo.date*400/6);
+				var topDistance = 0;
+				if(bookBtnInfo.venue == "Paradise"){
+					topDistance = 1;
+				}
+				if(bookBtnInfo.venue == "Beehive"){topDistance=2;}
+				if(bookBtnInfo.venue == "House of Blues"){topDistance=3;}
+				
+
+				
+				$(bookBtn).css("top", $(canvas).offset().top + topDistance*400/6);		
 				allMoneyBtns.appendChild(bookBtn);
 
 				}
