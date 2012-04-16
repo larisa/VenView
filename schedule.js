@@ -59,14 +59,14 @@ function draw(){
 	
 	
 }
-function make_money_btns(){
+function get_venue_openings(){
 		var venueOpenings = [];
 		var venueNames = ["Paradise", "Beehive", "House of Blues",
 											"Paradise", "Beehive", "House of Blues",
 										 "Paradise", "Beehive", "House of Blues"];
 		var allDates = [1, 4, 3, 2, 3, 2, 4, 5, 5];
 		var startTimes = [10, 15, 18, 19, 20, 10, 23, 22, 4]; 
-		var allDur = [40, 40, 40, 40, 40, 40, 40, 40, 40];
+		var allDur = [40, 20, 30, 70, 20, 120, 60, 30, 40];
 		var allDollars = ["$$$", "$$", "$$", "$", "$$", "$", "$$$", "$$", "$"];
 
 		for (var i=0; i<=8; i++){
@@ -79,10 +79,10 @@ function make_money_btns(){
 		
 }
 function drawButtons(){
-	var venueOpenings = make_money_btns();
+	var venueOpenings = get_venue_openings();
 	for (var i=0; i<venueOpenings.length; i++){
-			var button = venueOpenings[i];
-			document.getElementById("allMoneyBtns").appendChild(drawButton(button,i));
+			var opening = venueOpenings[i];
+			document.getElementById("allMoneyBtns").appendChild(drawButton(opening,i));
 
 			}
 }
@@ -101,9 +101,9 @@ function showText() {
 }
 
 var toppest = 10;
-function drawButton(button, i){
+function drawButton(gigOpening, i){
 	//console.log("making button allegedly");
-	var bookBtnInfo = button;
+	var bookBtnInfo = gigOpening;
 	var bookBtn = document.createElement("button");
 
 		
@@ -111,16 +111,14 @@ function drawButton(button, i){
 	//bookBtn.setAttribute("src","map.png");
 	var canvas = document.getElementById("canvasMoneyBtns");
 	bookBtn.setAttribute("id", "moneyBtn" + i);
-	bookBtn.setAttribute("class", "moneyBtn");
-	//bookBtn.className = "moneyBtn";
+//	bookBtn.setAttribute("class", "moneyBtn");
+	bookBtn.className = "moneyBtn";
 	bookBtn.setAttribute("type", "button");
 	//bookBtn.type = "button";
 //	bookBtn.setAttribute("name", bookBtnInfo.dollars);
 	//bookBtn.name = bookBtnInfo.dollars;
 		bookBtn.innerHTML = bookBtnInfo.dollars;
-		bookBtn.setAttribute("value", "hello");//bookBtnInfo.dollars);
-//		bookBtn.value = "hello";//bookBtnInfo.dollars;
-
+		bookBtn.label = bookBtnInfo;
 
 	//$("moneyButton" + i, "moneyBtn").click(function() { return false;});
 
@@ -146,12 +144,28 @@ function drawButton(button, i){
 $(function(){
 		$(".moneyBtn").button();
 		$(".moneyBtn").click(function() {
-				console.log("we clicked");
-				console.log(this);
+				var currBooking = this.label;
+				console.log(currBooking);
+				drawSchedule(currBooking);
 				return false;
 		});
 });
 
+//takes Booking object of moneyBtn that was clicked
+function drawSchedule(selBooking){
+		console.log(selBooking);
+		var canvas = document.getElementById("canvasMoneyBtns");
+
+		var context = canvas.getContext("2d");
+		//open booking rectangle block proportional to its duration
+		var length = selBooking.duration;
+		var width = selBooking.duration;
+		console.log("length:" + length + "width" + width);
+		context.fillStyle = "red";
+		context.fillRect(0, 0, length, width);
+		console.log(context);
+
+}
 		
 //for now represent pay Amt as string of $ ($, $$ or $$$)
 //start time is int on the hour
