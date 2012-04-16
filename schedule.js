@@ -50,12 +50,22 @@ function make_money_btns(){
 				var bookBtn = document.createElement("button");
 				bookBtn.id = "moneyBtn" + i;
 				bookBtn.className = "moneyBtn";
+				bookBtn.className = "ui-button-text";
 				bookBtn.type = "button";
-				bookBtn.name = bookBtnInfo.dollars;
-				bookBtn.value = bookBtnInfo.dollars;
+				bookBtn.name = "hello";
+				bookBtn.value = "hello";
 
-				$("moneyButton" + i, "moneyBtn").click(function() { return false;});
-
+/*
+				$("button", ".moneyBtn").click(function() { 
+						window.console.log("clicked the button dude");
+						return false;
+				});
+				$(".moneyBtn").button({ label: "hello"});
+				//getter
+				var label = $( ".moneyBtn" ).button( "option", "label" );
+				//setter
+				$( ".moneyBtn" ).button( "option", "label", "custom label" );
+*/
 
 				//TODO figure out position based on venue name + date
 				bookBtn.style.position = "absolute";
@@ -71,6 +81,15 @@ function make_money_btns(){
 				}
 
 }
+
+$(function(){
+		console.log("in function with jquery bs");
+				$("button", ".moneyBtn").click(function() { 
+						console.log("clicked the button dude");
+						return false;
+				});
+});
+
 		
 //for now represent pay Amt as string of $ ($, $$ or $$$)
 //start time is int on the hour
