@@ -134,6 +134,7 @@ function drawButton(gigOpening, i){
 	}
 	if(bookBtnInfo.venue == "Beehive"){topDistance=1;}
 	if(bookBtnInfo.venue == "House of Blues"){topDistance=2;}
+		bookBtnInfo.top = topDistance*heightt/5 + heightt/24;
 	$(bookBtn).css("top", topDistance*heightt/5 + heightt/24);
 	$(bookBtn).css("width", 400/5+ "px");
 	$(bookBtn).css("height", heightt/10 + "px");
@@ -162,7 +163,7 @@ function drawSchedule(selBooking){
 		var width = selBooking.duration;
 		console.log("length:" + length + "width" + width);
 		context.fillStyle = "red";
-		context.fillRect(0, 0, length, width);
+		context.fillRect(selBooking.left, selBooking.top, length, width);
 		console.log(context);
 
 }
