@@ -20,6 +20,10 @@ function dosomething(){
 	cityNum++;
 }
 
+var myBookings = [];
+var displayedGig = null;
+
+
 $(document).ready(function() {
 	addDays("daysB");
 	addDays("daysE");
@@ -149,6 +153,7 @@ $(function(){
 				var currBooking = this.label;
 				console.log(currBooking);
 				drawSchedule(currBooking);
+				displayedGig = currBooking;
 				return false;
 		});
 });
@@ -158,6 +163,7 @@ function drawSchedule(selBooking){
 		console.log(selBooking);
 		var canvas = document.getElementById("canvasMoneyBtns2");
 		canvas.width = canvas.width;
+		displayedGig = null;
 
 		var context = canvas.getContext("2d");
 		//open booking rectangle block proportional to its duration
@@ -181,6 +187,7 @@ function drawSchedule(selBooking){
 		context.drawImage(bgCalImg, selBooking.left-35, 0);
 
 		//paint curr venue time-block
+		console.log("x" + selBooking.left + "y" + selBooking.duration);
 		context.fillRect(selBooking.left, selBooking.duration, width, length);
 		context.font = 'bold 11px sans-serif';
 		context.textAlign = "left";
@@ -190,4 +197,24 @@ function drawSchedule(selBooking){
 		console.log(context);
 
 }
-	
+
+
+$("#canvasMoneyBtns").click(function(v){
+		console.log("displayedGIg");
+		console.log(displayedGig);
+		if (displayedGig == null) {return; }
+
+		var mX = v.pageX - this.offsetLeft,
+				mY = v.pageY - this.offsetTop;
+
+		if (mX >= displayedGig.left && mX <= displayedGig.left + (400/5) &&
+				mY >= displayedGig.duration && mY <= displayedGig.duration+length){
+				console.log("clicking in the rectangle");
+				var canvas = document.getElementById("canvasMoneyBtns2");
+				canvas.width = canvas.width;
+				myBookings.push(displayedGig);
+				displayedGig = null;
+		}
+				
+
+});
