@@ -180,7 +180,7 @@ function drawSchedule(selBooking){
 		context.textAlign = "left";
 		context.textBaseline = "top";
 		context.fillStyle = "white";
-		context.fillText("book me",selBooking.left,selBooking.top);
+		context.fillText("book me, click me",selBooking.left,selBooking.top+20, width, 50);
 		console.log(context);
 
 }
