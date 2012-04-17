@@ -156,7 +156,8 @@ $(function(){
 //takes Booking object of moneyBtn that was clicked
 function drawSchedule(selBooking){
 		console.log(selBooking);
-		var canvas = document.getElementById("canvasMoneyBtns");
+		var canvas = document.getElementById("canvasMoneyBtns2");
+		canvas.width = canvas.width;
 
 		var context = canvas.getContext("2d");
 		//open booking rectangle block proportional to its duration
