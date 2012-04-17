@@ -59,6 +59,7 @@ function draw(){
 	
 	
 }
+
 function get_venue_openings(){
 		var venueOpenings = [];
 		var venueNames = ["Paradise", "Beehive", "House",
@@ -86,14 +87,14 @@ function drawButtons(){
 
 			}
 }
-
+var VenueList = ["Paradise", "Beehive", "House"];
 function showText() {
 	var cxt = document.getElementById("allMoneyBtns").getContext('2d');
 	//ctx.fillStyle = '#f00';
 	ctx.font = 'bold 12px sans-serif';
 	cxt.textAlign = "left";
 	ctx.textBaseline = "top";
-	var VenueList = ["Paradise", "Beehive", "House"];
+	
 
 	for(var i=0; i<VenueList.length; i++){
 //		ctx.fillText(VenueList[i],0,(i+1)*(400/5)+(400/24));
@@ -167,6 +168,11 @@ function drawSchedule(selBooking){
 		//set height to be 50 constant
 
 		document.getElementById(selBooking.venue).setAttribute("style","color:"+selBooking.color+";");
+		for(var i = 0; i<VenueList.length; i++){
+			if(VenueList[i]!=selBooking.venue){
+				document.getElementById(VenueList[i]).setAttribute("style","color:black;");
+			}
+		}
 		
 		context.fillRect(selBooking.left, selBooking.top, width, 50);
 		console.log(context);
