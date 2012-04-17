@@ -23,7 +23,7 @@ function assignColor(venueName){
 		if(venueName == "Beehive"){
 			return "green";
 		}
-		if(venueName == "House of Blues"){
+		if(venueName == "House"){
 			return "blue";
 		}
 		if(venueName == "Paradise"){

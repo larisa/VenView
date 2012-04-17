@@ -61,9 +61,9 @@ function draw(){
 }
 function get_venue_openings(){
 		var venueOpenings = [];
-		var venueNames = ["Paradise", "Beehive", "House of Blues",
-											"Paradise", "Beehive", "House of Blues",
-										 "Paradise", "Beehive", "House of Blues"];
+		var venueNames = ["Paradise", "Beehive", "House",
+											"Paradise", "Beehive", "House",
+										 "Paradise", "Beehive", "House"];
 		var allDates = [1, 4, 3, 2, 3, 2, 4, 5, 5];
 		var startTimes = [10, 15, 18, 19, 20, 10, 23, 22, 4]; 
 		var allDur = [40, 20, 30, 70, 20, 120, 60, 30, 40];
@@ -93,7 +93,7 @@ function showText() {
 	ctx.font = 'bold 12px sans-serif';
 	cxt.textAlign = "left";
 	ctx.textBaseline = "top";
-	var VenueList = ["Paradise", "Beehive", "House of Blues"];
+	var VenueList = ["Paradise", "Beehive", "House"];
 
 	for(var i=0; i<VenueList.length; i++){
 //		ctx.fillText(VenueList[i],0,(i+1)*(400/5)+(400/24));
@@ -133,7 +133,7 @@ function drawButton(gigOpening, i){
 		topDistance = 0;
 	}
 	if(bookBtnInfo.venue == "Beehive"){topDistance=1;}
-	if(bookBtnInfo.venue == "House of Blues"){topDistance=2;}
+	if(bookBtnInfo.venue == "House"){topDistance=2;}
 		bookBtnInfo.top = topDistance*heightt/5 + heightt/24;
 	$(bookBtn).css("top", topDistance*heightt/5 + heightt/24);
 	$(bookBtn).css("width", 400/5+ "px");
@@ -161,10 +161,14 @@ function drawSchedule(selBooking){
 		//open booking rectangle block proportional to its duration
 		var length = selBooking.duration;
 		var width = 400/5;
-		console.log("length:" + length + "width" + width);
-	
+		//console.log("length:" + length + "width" + width);
+		console.log("length:" + 50 + "width" + width);
 		context.fillStyle = selBooking.color;
-		context.fillRect(selBooking.left, selBooking.top, width, length);
+		//set height to be 50 constant
+
+		document.getElementById(selBooking.venue).setAttribute("style","color:"+selBooking.color+";");
+		
+		context.fillRect(selBooking.left, selBooking.top, width, 50);
 		console.log(context);
 
 }
