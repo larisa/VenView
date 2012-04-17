@@ -19,5 +19,14 @@ var Booking = function(venueName, date, startTime, duration, payAmt){
 }
 
 function assignColor(venueName){
-		return "#30B0DV";
+
+		if(venueName == "Beehive"){
+			return "green";
+		}
+		if(venueName == "House of Blues"){
+			return "blue";
+		}
+		if(venueName == "Paradise"){
+			return "red";
+		}
 }
