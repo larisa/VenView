@@ -174,13 +174,19 @@ function drawSchedule(selBooking){
 				document.getElementById(VenueList[i]).setAttribute("style","color:black;");
 			}
 		}
-		
-		context.fillRect(selBooking.left, selBooking.duration, width, 50);
-		context.font = 'bold 12px sans-serif';
+		//paint calendar bg
+		var bgCalImg = new Image();
+		bgCalImg.src = 'calendarBg.png';
+		console.log(bgCalImg);
+		context.drawImage(bgCalImg, selBooking.left-35, 0);
+
+		//paint curr venue time-block
+		context.fillRect(selBooking.left, selBooking.duration, width, length);
+		context.font = 'bold 11px sans-serif';
 		context.textAlign = "left";
 		context.textBaseline = "top";
 		context.fillStyle = "white";
-		context.fillText("book me, click me",selBooking.left,selBooking.duration+20, width, 50);
+		context.fillText("book me, click me",selBooking.left,selBooking.duration, width, length);
 		console.log(context);
 
 }
