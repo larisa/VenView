@@ -176,6 +176,11 @@ function drawSchedule(selBooking){
 		}
 		
 		context.fillRect(selBooking.left, selBooking.top, width, 50);
+		context.font = 'bold 12px sans-serif';
+		context.textAlign = "left";
+		context.textBaseline = "top";
+		context.fillStyle = "white";
+		context.fillText("book me",selBooking.left,selBooking.top);
 		console.log(context);
 
 }
