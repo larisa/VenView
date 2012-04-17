@@ -175,12 +175,12 @@ function drawSchedule(selBooking){
 			}
 		}
 		
-		context.fillRect(selBooking.left, selBooking.top, width, 50);
+		context.fillRect(selBooking.left, selBooking.duration, width, 50);
 		context.font = 'bold 12px sans-serif';
 		context.textAlign = "left";
 		context.textBaseline = "top";
 		context.fillStyle = "white";
-		context.fillText("book me, click me",selBooking.left,selBooking.top+20, width, 50);
+		context.fillText("book me, click me",selBooking.left,selBooking.duration+20, width, 50);
 		console.log(context);
 
 }
