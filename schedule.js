@@ -195,7 +195,7 @@ function drawSchedule(selBooking){
 }
 
 
-$("#canvasMoneyBtns").click(function(v){
+$("#canvasMoneyBtns2").click(function(v){
 		console.log("displayedGIg");
 		console.log(displayedGig);
 		if (displayedGig == null) {return; }
@@ -206,7 +206,7 @@ $("#canvasMoneyBtns").click(function(v){
 		if (mX >= displayedGig.left && mX <= displayedGig.left + (400/5) &&
 				mY >= displayedGig.duration && mY <= displayedGig.duration+length){
 				console.log("clicking in the rectangle");
-				var canvas = document.getElementById("canvasMoneyBtns2");
+				var canvas = document.getElementById("#canvasMoneyBtns2");
 				canvas.width = canvas.width;
 				myBookings.push(displayedGig);
 				displayedGig = null;
