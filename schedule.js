@@ -194,10 +194,14 @@ function drawSchedule(selBooking){
 		context.fillStyle = "white";
 		context.fillText("book me, click me",selBooking.left+35,selBooking.duration, width, length);
 
+		//document.getElementById("canvasMoneyBtns2").style.zIndex="100";
+		//document.getElementById("canvasMoneyBtns").style.zIndex="101";
+
+
 }
 
 
-$("#canvasMoneyBtns").click(function(v){
+$("#canvasMoneyBtns2").click(function(v){
 		console.log("displayedGIg");
 		console.log(displayedGig);
 		if (displayedGig == null) {return; }
@@ -205,13 +209,15 @@ $("#canvasMoneyBtns").click(function(v){
 		var mX = v.pageX - this.offsetLeft,
 				mY = v.pageY - this.offsetTop;
 
-		if (mX >= displayedGig.left && mX <= displayedGig.left + (400/5) &&
+		if (mX >= displayedGig.left+35 && mX <= displayedGig.left + (400/5) + 35 &&
 				mY >= displayedGig.duration && mY <= displayedGig.duration+length){
 				console.log("clicking in the rectangle");
 				var canvas = document.getElementById("canvasMoneyBtns2");
 				canvas.width = canvas.width;
 				myBookings.push(displayedGig);
 				displayedGig = null;
+				//$(canvasMoneyBtns2).css("z-index", 101);
+				//$(canvasMoneyBtns).css("z-index", 100);
 		}
 				
 
