@@ -215,7 +215,9 @@ $("#canvasMoneyBtns").click(function(v){
 		if (mX >= displayedGig.left+35 && mX <= displayedGig.left + (400/5) + 35 &&
 				mY >= displayedGig.duration && mY <= displayedGig.duration+length){
 				console.log("clicking in the rectangle");
+
 				var canvas = document.getElementById("canvasMoneyBtns");
+
 				canvas.width = canvas.width;
 				$('.moneyBtn').attr('disabled', false);
 				myBookings.push(displayedGig);
