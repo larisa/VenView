@@ -33,9 +33,40 @@ $(document).ready(function() {
 		//drawSched();
 		draw();
 		drawButtons();
+//	$("#c2").click(function(evt) {
+//		var mX = evt.pageX - this.offsetLeft;
+//		var mY = evt.pageY- this.offsetTop;
+//	}):
 		//showText();
+
 });
 
+
+
+//$("#c2").addEventListener('click', function(e){
+//		console.log('click: ' + e.offsetX + '/' + e.offsetY);
+//		console.log("displayedGIg");
+//		console.log(displayedGig);
+//		if (displayedGig == null) {return; }
+	//	var mX = e.pageX - this.offsetLeft;
+	//	var mY = e.pageY- this.offsetTop;
+
+	//			if (mX >= displayedGig.left+35 && mX <= displayedGig.left + (400/5) + 35 &&
+	//					mY >= displayedGig.duration && mY <= displayedGig.duration+length){
+					//	console.log("clicking in the rectangle");
+
+					//	var canvas = document.getElementById("canvasMoneyBtns2");
+
+					//	canvas.width = canvas.width;
+					//	$('.moneyBtn').attr('disabled', false);
+					//	myBookings.push(displayedGig);
+					//	displayedGig = null;
+
+						//$(canvasMoneyBtns2).css("z-index", 101);
+						//$(canvasMoneyBtns).css("z-index", 100);
+			//	}
+
+//}, false);
 var numberOfVenues= 5; //set static for now, but then length pf listOfVenues
 
 function draw(){
@@ -149,6 +180,26 @@ function drawButton(gigOpening, i){
 	return bookBtn;
 }
 
+function drawSelectButton(booking){
+	var btn = document.createElement("button");
+	var canvas = document.getElementById("canvasMoneyBtns2");
+	btn.className = "selectBtns";
+	btn.setAttribute("id", "temp");
+	btn.setAttribute("type", "button");
+	btn.style.fontSize = "8px";
+	btn.innerHTML = "click me";
+	
+	//	bookBtn.label = bookBtnInfo;
+	$(btn).css("position", "absolute");
+	$(btn).css("left", booking.left+55);
+
+	$(btn).css("top", booking.duration+15);
+	$(btn).css("width", 40+ "px");
+	$(btn).css("height", 10 + "px");
+	$(btn).css("z-index", 102);
+	return btn;
+}
+
 $(function(){
 		$(".moneyBtn").button();
 		$(".moneyBtn").click(function() {
@@ -160,6 +211,26 @@ $(function(){
 				return false;
 				
 		});
+		
+});
+$(function(){
+	$("#selectBtns").button();
+	$("#selectBtns").click(function() {
+			console.log("selectBtn click");
+			
+				var canvas = document.getElementById("canvasMoneyBtns2");
+				canvas.width = canvas.width;
+				$('.moneyBtn').attr('disabled', false);
+				myBookings.push(displayedGig);
+				displayedGig = null;
+				for(var i = 0; i<VenueList.length; i++){
+						document.getElementById(VenueList[i]).setAttribute("style","color:black;");
+					
+				}
+				document.getElementById("selectBtns").removeChild(document.getElementById("temp"));
+			return false;
+			
+	});	
 });
 
 //takes Booking object of moneyBtn that was clicked
@@ -195,6 +266,9 @@ function drawSchedule(selBooking){
 		context.textBaseline = "top";
 		context.fillStyle = "white";
 		context.fillText("book me, click me",selBooking.left+35,selBooking.duration, width, length);
+		document.getElementById("selectBtns").appendChild(drawSelectButton(selBooking));
+
+
 
 		//document.getElementById("canvasMoneyBtns2").style.zIndex="100";
 		//document.getElementById("canvasMoneyBtns").style.zIndex="101";
@@ -204,27 +278,3 @@ function drawSchedule(selBooking){
 
 
 
-$("#canvasMoneyBtns").click(function(v){
-		console.log("displayedGIg");
-		console.log(displayedGig);
-		if (displayedGig == null) {return; }
-
-		var mX = v.pageX - this.offsetLeft,
-				mY = v.pageY - this.offsetTop;
-
-		if (mX >= displayedGig.left+35 && mX <= displayedGig.left + (400/5) + 35 &&
-				mY >= displayedGig.duration && mY <= displayedGig.duration+length){
-				console.log("clicking in the rectangle");
-
-				var canvas = document.getElementById("canvasMoneyBtns");
-
-				canvas.width = canvas.width;
-				$('.moneyBtn').attr('disabled', false);
-				myBookings.push(displayedGig);
-				displayedGig = null;
-				//$(canvasMoneyBtns2).css("z-index", 101);
-				//$(canvasMoneyBtns).css("z-index", 100);
-		}
-				
-
-});
