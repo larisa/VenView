@@ -36,6 +36,8 @@ $(document).ready(function() {
 		//showText();
 });
 
+var numberOfVenues= 5; //set static for now, but then length pf listOfVenues
+
 function draw(){
 	var canvas = document.getElementById("canvasMoneyBtns");
 	var ctx = canvas.getContext('2d');
@@ -43,7 +45,7 @@ function draw(){
 	var theSize2 = heightt/5;
 	
 	
-		for(i=0;i<theSize;i++){
+		for(i=0;i<numberOfVenues+1;i++){
 			
 			ctx.fillStyle = "rgb(0,0,0)";
 			ctx.beginPath();
@@ -181,16 +183,16 @@ function drawSchedule(selBooking){
 		//paint calendar bg
 		var bgCalImg = new Image();
 		bgCalImg.src = 'calendarBg.png';
-		context.drawImage(bgCalImg, selBooking.left-35, 0);
+		context.drawImage(bgCalImg, selBooking.left, 0);
 
 		//paint curr venue time-block
-		console.log("x" + selBooking.left + "y" + selBooking.duration);
-		context.fillRect(selBooking.left, selBooking.duration, width, length);
+		console.log("x" + selBooking.left+35 + "y" + selBooking.duration);
+		context.fillRect(selBooking.left+35, selBooking.duration, width, length);
 		context.font = 'bold 11px sans-serif';
 		context.textAlign = "left";
 		context.textBaseline = "top";
 		context.fillStyle = "white";
-		context.fillText("book me, click me",selBooking.left,selBooking.duration, width, length);
+		context.fillText("book me, click me",selBooking.left+35,selBooking.duration, width, length);
 
 }
 
