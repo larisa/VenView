@@ -156,7 +156,9 @@ $(function(){
 				var currBooking = this.label;
 				drawSchedule(currBooking);
 				displayedGig = currBooking;
+				$('.moneyBtn').attr('disabled', true);
 				return false;
+				
 		});
 });
 
@@ -201,7 +203,8 @@ function drawSchedule(selBooking){
 }
 
 
-$("#canvasMoneyBtns2").click(function(v){
+
+$("#canvasMoneyBtns").click(function(v){
 		console.log("displayedGIg");
 		console.log(displayedGig);
 		if (displayedGig == null) {return; }
@@ -212,8 +215,9 @@ $("#canvasMoneyBtns2").click(function(v){
 		if (mX >= displayedGig.left+35 && mX <= displayedGig.left + (400/5) + 35 &&
 				mY >= displayedGig.duration && mY <= displayedGig.duration+length){
 				console.log("clicking in the rectangle");
-				var canvas = document.getElementById("canvasMoneyBtns2");
+				var canvas = document.getElementById("canvasMoneyBtns");
 				canvas.width = canvas.width;
+				$('.moneyBtn').attr('disabled', false);
 				myBookings.push(displayedGig);
 				displayedGig = null;
 				//$(canvasMoneyBtns2).css("z-index", 101);
