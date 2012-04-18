@@ -150,8 +150,8 @@ function drawButton(gigOpening, i){
 $(function(){
 		$(".moneyBtn").button();
 		$(".moneyBtn").click(function() {
+				console.log("moneybtn click");
 				var currBooking = this.label;
-				console.log(currBooking);
 				drawSchedule(currBooking);
 				displayedGig = currBooking;
 				return false;
@@ -160,7 +160,6 @@ $(function(){
 
 //takes Booking object of moneyBtn that was clicked
 function drawSchedule(selBooking){
-		console.log(selBooking);
 		var canvas = document.getElementById("canvasMoneyBtns2");
 		canvas.width = canvas.width;
 		displayedGig = null;
@@ -170,7 +169,6 @@ function drawSchedule(selBooking){
 		var length = selBooking.duration;
 		var width = 400/5;
 		//console.log("length:" + length + "width" + width);
-		console.log("length:" + 50 + "width" + width);
 		context.fillStyle = selBooking.color;
 		//set height to be 50 constant
 
@@ -183,7 +181,6 @@ function drawSchedule(selBooking){
 		//paint calendar bg
 		var bgCalImg = new Image();
 		bgCalImg.src = 'calendarBg.png';
-		console.log(bgCalImg);
 		context.drawImage(bgCalImg, selBooking.left-35, 0);
 
 		//paint curr venue time-block
@@ -194,7 +191,6 @@ function drawSchedule(selBooking){
 		context.textBaseline = "top";
 		context.fillStyle = "white";
 		context.fillText("book me, click me",selBooking.left,selBooking.duration, width, length);
-		console.log(context);
 
 }
 
