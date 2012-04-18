@@ -36,6 +36,8 @@ $(document).ready(function() {
 		//showText();
 });
 
+var numberOfVenues= 5; //set static for now, but then length pf listOfVenues
+
 function draw(){
 	var canvas = document.getElementById("canvasMoneyBtns");
 	var ctx = canvas.getContext('2d');
@@ -43,7 +45,7 @@ function draw(){
 	var theSize2 = heightt/5;
 	
 	
-		for(i=0;i<theSize;i++){
+		for(i=0;i<numberOfVenues+1;i++){
 			
 			ctx.fillStyle = "rgb(0,0,0)";
 			ctx.beginPath();
@@ -181,16 +183,20 @@ function drawSchedule(selBooking){
 		//paint calendar bg
 		var bgCalImg = new Image();
 		bgCalImg.src = 'calendarBg.png';
-		context.drawImage(bgCalImg, selBooking.left-35, 0);
+		context.drawImage(bgCalImg, selBooking.left, 0);
 
 		//paint curr venue time-block
-		console.log("x" + selBooking.left + "y" + selBooking.duration);
-		context.fillRect(selBooking.left, selBooking.duration, width, length);
+		console.log("x" + selBooking.left+35 + "y" + selBooking.duration);
+		context.fillRect(selBooking.left+35, selBooking.duration, width, length);
 		context.font = 'bold 11px sans-serif';
 		context.textAlign = "left";
 		context.textBaseline = "top";
 		context.fillStyle = "white";
-		context.fillText("book me, click me",selBooking.left,selBooking.duration, width, length);
+		context.fillText("book me, click me",selBooking.left+35,selBooking.duration, width, length);
+
+		//document.getElementById("canvasMoneyBtns2").style.zIndex="100";
+		//document.getElementById("canvasMoneyBtns").style.zIndex="101";
+
 
 }
 
@@ -203,13 +209,15 @@ $("#canvasMoneyBtns2").click(function(v){
 		var mX = v.pageX - this.offsetLeft,
 				mY = v.pageY - this.offsetTop;
 
-		if (mX >= displayedGig.left && mX <= displayedGig.left + (400/5) &&
+		if (mX >= displayedGig.left+35 && mX <= displayedGig.left + (400/5) + 35 &&
 				mY >= displayedGig.duration && mY <= displayedGig.duration+length){
 				console.log("clicking in the rectangle");
 				var canvas = document.getElementById("#canvasMoneyBtns2");
 				canvas.width = canvas.width;
 				myBookings.push(displayedGig);
 				displayedGig = null;
+				//$(canvasMoneyBtns2).css("z-index", 101);
+				//$(canvasMoneyBtns).css("z-index", 100);
 		}
 				
 
