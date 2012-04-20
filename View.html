@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html>  
 
 <head>
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
@@ -7,173 +7,161 @@
 
 
 <!-- Load style sheets -->
-<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="css/viewLayout.css" />
-<link rel="stylesheet" type="text/css"
-	href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css"
-	media="all" />
-<link rel="stylesheet" type="text/css" href="css/datePicker.css" />
-
+<link rel="stylesheet" type="text/css" href="viewLayout.css" />
+<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" media = "all"/>
+<link rel="stylesheet" type="text/css" href="css/datePicker.css"/>
 
 <!-- Put fonts below this comment-->
-<link href='http://fonts.googleapis.com/css?family=Oxygen'
-	rel='stylesheet' type='text/css' />
-<link href='http://fonts.googleapis.com/css?family=Happy+Monkey'
-	rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'/>
+<link href='http://fonts.googleapis.com/css?family=Happy+Monkey' rel='stylesheet' type='text/css'>
 
 <!-- Load any supplemental Javascript libraries here -->
-<script type="text/javascript"
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-<script type="text/javascript" src="js/schedule.js"></script>
-<script type="text/javascript" src="js/Booking.js"></script>
-<script type="text/javascript" src="js/bootstrap.js"></script>
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
-<script
-	src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.2.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+<script type="text/javascript" src="schedule.js"></script>
+<script type="text/javascript" src="Booking.js"></script>
+<script src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.2.js"></script> 
+<script type = "text/javascript" >
+$(document).ready(function() {
 
-		// Vars
-		var startDate, endDate, today;
-		var dates = [];
+	// Vars
+	var startDate, endDate, today;
+	var dates = [];
+	
+		
+	// Calendars
+	$("#start_cal").datepicker();
 
-		// Calendars
-		$("#start_cal").datepicker();
+	$("#end_cal").datepicker();
+	
+	});	 
 
-		$("#end_cal").datepicker();
+  	  		
 
-	});
 </script>
 
-
+	
 
 <!--Title-->
 </head>
-<div id="title">
-	<img id="logo" src="logo5.png" ><div id = title_text > Book a Venue.
-	Plan a tour. Become a star.</div>
-</div>
+<div id="title"> <img id="logo" src="logo5.png" align = "absbottom">Book a Venue. Plan a tour. Become a star.</div>
 <body>
 	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
+	
+	<table class = "tables" id ="page">
 
-	<table class="tables" id="page">
-
-		<tr style="position: relative">
-			<td id="Column1" valign="top">
-				<table class="tables" id="information">
-					<tr>
-						<td><label>Begin date:</label> <input type="text"
-							id="start_cal" title="Begin date"></td>
-					</tr>
-					<tr>
-						<td><label>End date: </label> <input id="end_cal"></input>
-						</td>
-					</tr>
-
-					<tr id="city_0">
-						<td id="col1"><label> Origin:</label><input
-							class="vv-input" type="text" /></td>
-					</tr>
-					<tr>
-
-						<td id="col1"><label> Destination:</label> <input type="text" /></td>
-
-					</tr>
-
-					<tr>
-						<td><a href="#" onclick="dosomething(); return(false);">Add
-								cities along your tour</a></td>
-					</tr>
-					<tr>
-						<td><label>Genre</label> <select>
-								<option>Jazz</option>
-								<option>Classic</option>
-								<option>Rock</option>
-								<option>Blues</option>
-								<option>Indi</option>
-						</select>
-						</td>
-					</tr>
-					<tr>
-						<td><label>Capacity</label> <select>
-								<option>50-100</option>
-								<option>100-200</option>
-								<option>200-300</option>
-								<option>300-400</option>
-								<option>400-500</option>
-						</select>
-						</td>
-					</tr>
-					<tr>
-						<td><label>Path Style</label> <select>
-								<option>Short</option>
-								<option>Groovy</option>
-								<option>Packed</option>
-
-						</select></td>
-					</tr>
-					<tr>
-						<td align="right"><input id="Enter" type="button"
-							class = "vv-button" value="Enter"></input></td>
-					</tr>
-
+		 <tr style ="position: relative">
+			<td id = "Column1" valign = "top">
+			<table class = "tables" id="information">
+			<tr><td>
+			
+	
+          <span>Begin date:</span>
+          <input type="text" id = "start_cal" title="Begin date">
+      
+			
+			</td></tr>
+			<tr><td>
+			 <span>End date:  </span>&nbsp; &nbsp;
+				<input id = "end_cal"></input>
+			
+				 
+			</td></tr>
+		
+			<tr id="city_0"><td>
+				<table class="tables" id = "origin">
+					<tr><td width = "80" id= "col1">Origin: </td>
+					<td align = "right"> <input type="text"/></td></tr>
 				</table>
-			</td>
+			</td></tr>
+			 <tr><td>
+				<table class="tables" id = "Destination">
+				<tr><td width = "80" id ="col1">Destination:</td>
+				<td><input type="text"/></td></tr>
+				</table>
+				</td></tr>
+			
+				<tr><td>
+					<a href="#" onclick="dosomething(); return(false);">Add cities along your tour</a>
+					
+				</td></tr>
+			<tr><td>
+				Genre 
+				<select>
+					<option>Jazz</option>
+					<option>Classic</option>
+					<option>Rock</option>
+					<option>Blues</option>
+					<option>Indi</option>
+					</select>
+			</td></tr>
+			<tr><td>Capacity
+				<select>
+					<option>50-100</option>
+					<option>100-200</option>
+					<option>200-300</option>
+					<option>300-400</option>
+					<option>400-500</option>
+					</select>
+					</td></tr>
+					<tr><td>Path Style 
+						<select>
+							<option>Short</option>
+							<option>Groovy</option>
+							<option>Packed</option>
 
-			<td id="Column2" style="visibility: hidden"><img id="map"
-				src="map.png" width="500">
-				<table class="tables" id="venueTable" style="width: 100%"
-					style="font-family: Oxygen; font-size:12pt">
+							</select></td></tr>
+					<tr><td align="right">
+						<input id = "Enter" type="button" value = "Enter"></input>
+						</td></tr>
+					
+			</table>
+			</td>
+		
+			<td id="Column2" style="visibility: hidden">
+				<img id="map" src="map.png" width = "500">
+				<table class = "tables" id="venueTable" style = "width:100%" style="font-family: Oxygen; font-size:12pt" >
 					<tbody>
-						<tr height="20">
-							<td width="77" align="center"></td>
-							<td width="77" align="center"><p class="days">Monday</p>
-								<p class="dates">April 1 2012</p></td>
-							<td width="77" align="center"><p class="days">Tuesday</p>
-								<p class="dates">April 2 2012</p></td>
-							<td width="77" align="center"><p class="days">Wednesday</p>
-								<p class="dates">April 3 2012</p></td>
-							<td width="77" align="center"><p class="days">Thursday</p>
-								<p class="dates">April 5 2012</p></td>
-							<td width="77" align="center"><p class="days">Friday</p>
-								<p class="dates">April 4 2012</p></td>
-						</tr>
+						<tr height= "20">
+							<td width = "77" align = "center"></td>
+							<td width = "77" align = "center"><p class = "days">Monday</p>
+								 <p class = "dates">April 1 2012</p></td>
+							<td width = "77" align = "center"><p class = "days">Tuesday</p>
+								<p class = "dates">April 2 2012</p></td>
+							<td width = "77" align = "center"><p class = "days">Wednesday</p>
+								<p class = "dates">April 3 2012</p></td>
+							<td width = "77" align = "center"><p class = "days">Thursday</p>
+								<p class = "dates">April 5 2012</p></td>
+							<td width = "77" align = "center"><p class = "days">Friday</p>
+								<p class = "dates">April 4 2012</p></td>
+							</tr>
 						<tr>
 							<td id="venues">
-								<table class="tables" height="250">
-									<tr>
-										<td id="Paradise" align="right">Paradise</td>
-									</tr>
-									<tr>
-										<td id="Beehive" align="right">Beehive</td>
-									</tr>
-									<tr>
-										<td id="House" align="right">House</td>
-									</tr>
-									<tr>
-										<td id="Dragon" align="right">Dragon</td>
-									</tr>
-									<tr>
-										<td id="MiddleSex" align="right">MiddleSex</td>
-									</tr>
-
+								<table class= "tables" height = "250">
+									<tr><td id = "Paradise" align = "right">Paradise</td></tr>
+									<tr><td id = "Beehive" align = "right">Beehive</td></tr>
+									<tr><td id = "House" align = "right">House</td></tr>
+									<tr><td id = "Dragon" align = "right">Dragon</td></tr>
+									<tr><td id = "MiddleSex" align = "right">MiddleSex</td></tr>
+								
 								</table>
 							</td>
-							<td valign="top" id="content">
+							<td valign = "top" id="content">
 
-								<canvas id="canvasMoneyBtns" width="400" height="2000"
-									style="z-index: 100; pointer-events: none; position: absolute;">
+								<canvas id="canvasMoneyBtns" width="400" height="2000" style ="z-index: 100; 
+																																							pointer-events: none;
+																																							position: absolute;">
 									</canvas>
-								<canvas id="canvasMoneyBtns2" width="500" height="2000"
-									style="z-index: 101; pointer-events: none; position: absolute;">
+									<canvas id="canvasMoneyBtns2" width="500" height="2000" style ="z-index: 101; 
+																																								pointer-events: none;
+																																								position: absolute;">
 										</canvas>
-								<div id="selectBtns" style="position: absolute;"></div>
-
-								<div id="allMoneyBtns" style="position: absolute;"></div>
+										<div id="selectBtns" style="position:absolute;"></div>
+										
+								<div id="allMoneyBtns" style="position:absolute;"></div>
 
 								<div class="moneyBtn" type="button">
+									
 							</td>
 						</tr>
 					</tbody>
