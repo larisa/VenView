@@ -51,71 +51,65 @@ $(document).ready(function() {
 	<table class = "tables" id ="page">
 
 		 <tr style ="position: relative">
-			<td id = "Column1" valign = "top">
-			<table class = "tables" id="information">
-			<tr><td>
-			
-	
-          <span>Begin date:</span>
-          <input type="text" id = "start_cal" title="Begin date">
-      
-			
-			</td></tr>
-			<tr><td>
-			 <span>End date:  </span>&nbsp; &nbsp;
-				<input id = "end_cal"></input>
-			
-				 
-			</td></tr>
-		
-			<tr id="city_0"><td>
-				<table class="tables" id = "origin">
-					<tr><td width = "80" id= "col1">Origin: </td>
-					<td align = "right"> <input type="text"/></td></tr>
-				</table>
-			</td></tr>
-			 <tr><td>
-				<table class="tables" id = "Destination">
-				<tr><td width = "80" id ="col1">Destination:</td>
-				<td><input type="text"/></td></tr>
-				</table>
-				</td></tr>
-			
-				<tr><td>
-					<a href="#" onclick="dosomething(); return(false);">Add cities along your tour</a>
-					
-				</td></tr>
-			<tr><td>
-				Genre 
-				<select>
-					<option>Jazz</option>
-					<option>Classic</option>
-					<option>Rock</option>
-					<option>Blues</option>
-					<option>Indi</option>
-					</select>
-			</td></tr>
-			<tr><td>Capacity
-				<select>
-					<option>50-100</option>
-					<option>100-200</option>
-					<option>200-300</option>
-					<option>300-400</option>
-					<option>400-500</option>
-					</select>
-					</td></tr>
-					<tr><td>Path Style 
-						<select>
-							<option>Short</option>
-							<option>Groovy</option>
-							<option>Packed</option>
+			<td id="Column1" valign="top">
+				<table class="tables" id="information">
+					<tr>
+						<td><label>Begin date:</label> <input type="text"
+							id="start_cal" title="Begin date"></td>
+					</tr>
+					<tr>
+						<td><label>End date: </label> <input id="end_cal"></input>
+						</td>
+					</tr>
 
-							</select></td></tr>
-					<tr><td align="right">
-						<input id = "Enter" type="button" value = "Enter"></input>
-						</td></tr>
-					
-			</table>
+					<tr id="city_0">
+						<td id="col1"><label> Origin:</label><input
+							class="vv-input" type="text" /></td>
+					</tr>
+					<tr>
+
+						<td id="col1"><label> Destination:</label> <input type="text" /></td>
+
+					</tr>
+
+					<tr>
+						<td><a href="#" onclick="dosomething(); return(false);">Add
+								cities along your tour</a></td>
+					</tr>
+					<tr>
+						<td><label>Genre</label> <select>
+								<option>Jazz</option>
+								<option>Classic</option>
+								<option>Rock</option>
+								<option>Blues</option>
+								<option>Indie</option>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td><label>Capacity</label> <select>
+								<option>50-100</option>
+								<option>100-200</option>
+								<option>200-300</option>
+								<option>300-400</option>
+								<option>400-500</option>
+						</select>
+						</td>
+					</tr>
+					<tr>
+						<td><label>Path Style</label> <select>
+								<option>Short</option>
+								<option>Groovy</option>
+								<option>Packed</option>
+
+						</select></td>
+					</tr>
+					<tr>
+						<td align="right"><input id="Enter" type="button"
+							class = "vv-button" value="Enter"></input></td>
+					</tr>
+
+				</table>
 			</td>
 		
 			<td id="Column2" style="visibility: hidden">
