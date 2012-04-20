@@ -7,9 +7,11 @@
 
 
 <!-- Load style sheets -->
-<link rel="stylesheet" type="text/css" href="viewLayout.css" />
+<link rel="stylesheet" type="text/css" href="css/viewLayout.css" />
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" media = "all"/>
 <link rel="stylesheet" type="text/css" href="css/datePicker.css"/>
+<link href="css/jquery-bubble-popup-v3.css" rel="stylesheet" type="text/css" />
+
 
 <!-- Put fonts below this comment-->
 <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'/>
@@ -21,6 +23,7 @@
 <script type="text/javascript" src="schedule.js"></script>
 <script type="text/javascript" src="Booking.js"></script>
 <script src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.2.js"></script> 
+<script src="scripts/jquery-bubble-popup-v3.min.js" type="text/javascript"></script>
 <script type = "text/javascript" >
 $(document).ready(function() {
 
@@ -34,10 +37,101 @@ $(document).ready(function() {
 
 	$("#end_cal").datepicker();
 	
+	$("#pin1, #pin2, #pin3, #pin4, #pin5").mouseover(function(event) {
+	    createTooltip(event);               
+	}).mouseout(function(){
+	    // create a hidefunction on the callback if you want
+		hideTooltip(); 
+	}).click(function(event){
+		highlightRow(event)
+	});
+	
+
+	$('html').click(function(event) {
+		var source = event.srcElement.id;
+		if (!(event.srcElement.id == "pin1")){
+			$("#v1").css({'background-color': 'white'});
+		}
+		if (!(event.srcElement.id == "pin2")){
+			$("#v2").css({'background-color': 'white'});
+		}
+		
+		if (!(event.srcElement.id == "pin3")){
+			$("#v3").css({'background-color': 'white'});
+		}
+		
+		if (!(event.srcElement.id == "pin4")){
+			$("#v4").css({'background-color': 'white'});
+		}
+		
+		if (!(event.srcElement.id == "pin5")){
+			$("#v5").css({'background-color': 'white'});
+		}
+		
+///		if (!$(event.target).closest('#pin2').length){
+		//	$("#v2").css({'background-color': 'white'})
+///		}
+	});
+
+	
+	function createTooltip(event){  
+		var text;
+		if ($(event.target).closest('#pin1').length){
+			text = "Paradise Lounge"
+		}
+		else if ($(event.target).closest('#pin2').length){
+			text = "Beehive"
+		}
+		else if ($(event.target).closest('#pin3').length){
+			text = "House"
+		}
+		
+		else if ($(event.target).closest('#pin4').length){
+			text = "Dragon"
+		}
+		
+		else if ($(event.target).closest('#pin5').length){
+			text = "MiddleSex"
+		}
+	    $('<div id = "tool1" class="popup">' + text + '</div>').appendTo('body');
+	    positionTooltip(event);        
+	};
+	
+	
+	function hideTooltip(){
+		 $("#tool1").fadeOut();
+		 $("#tool1").remove();
+	};
+	
+	function positionTooltip(event){
+	    var tPosX = event.pageX - 25;
+	    var tPosY = event.pageY - 100;
+	    $('div.popup').css({'position': 'absolute', 'font-family': 'Oxygen','top': tPosY, 'left': tPosX, 'z-index': '202'});
+	};
 	});	 
-
-  	  		
-
+	
+	function highlightRow(event){
+		var row;
+		var source = event.srcElement.id;
+		if (event.srcElement.id == "pin1"){
+			row = "#v1"
+		}
+		else if (event.srcElement.id == "pin2"){
+			row = "#v2"
+		}
+		
+		else if (event.srcElement.id == "pin3"){
+			row = "#v3"
+		}
+		else if (event.srcElement.id == "pin4"){
+			row = "#v4"
+		}
+		else if (event.srcElement.id == "pin5"){
+			row = "#v5"
+		}
+		 $(row).css({'background-color': 'yellow'});
+	}
+  	
 </script>
 
 	
@@ -113,7 +207,17 @@ $(document).ready(function() {
 			</td>
 		
 			<td id="Column2" style="visibility: hidden">
-				<img id="map" src="map.png" width = "500">
+			<div id = "mapView">
+				<img id="map" src="map.png" width="500">
+				<img src="google_pin.png" id="pin1" class="pin" style="position: absolute; top: 75px; left: 400px;z-index:201">
+				<img src="google_pin.png" id="pin2" class="pin" style="position: absolute; top: 100px; left: 280px;z-index:201">
+				<img src="google_pin.png" id="pin3" class="pin" style="position: absolute; top: 155px; left: 250px;z-index:201">
+				<img src="google_pin.png" id="pin4" class="pin" style="position: absolute; top: 163px; left: 200px;z-index:201">
+				<img src="google_pin.png" id="pin5" class="pin" style="position: absolute; top: 200px; left: 150px;z-index:201">
+				
+				
+			</div>
+			<div id = "scheduleView">
 				<table class = "tables" id="venueTable" style = "width:100%" style="font-family: Oxygen; font-size:12pt" >
 					<tbody>
 						<tr height= "20">
@@ -132,11 +236,11 @@ $(document).ready(function() {
 						<tr>
 							<td id="venues">
 								<table class= "tables" height = "250">
-									<tr><td id = "Paradise" align = "right">Paradise</td></tr>
-									<tr><td id = "Beehive" align = "right">Beehive</td></tr>
-									<tr><td id = "House" align = "right">House</td></tr>
-									<tr><td id = "Dragon" align = "right">Dragon</td></tr>
-									<tr><td id = "MiddleSex" align = "right">MiddleSex</td></tr>
+									<tr id = "v1"><td id = "Paradise" align = "right">Paradise</td></tr>
+									<tr id = "v2"><td id = "Beehive" align = "right">Beehive</td></tr>
+									<tr id = "v3"><td id = "House" align = "right">House</td></tr>
+									<tr id = "v4"><td id = "Dragon" align = "right">Dragon</td></tr>
+									<tr id = "v5"><td id = "MiddleSex" align = "right">MiddleSex</td></tr>
 								
 								</table>
 							</td>
@@ -161,7 +265,10 @@ $(document).ready(function() {
 					</tbody>
 
 
-				</table></td>
+				</table>
+				</div>
+				
+		</td>
 		</tr>
 
 
