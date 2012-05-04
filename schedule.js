@@ -10,6 +10,7 @@ var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
 }
 var heightt = 250;
+var fixedHeight = 30;
 var citycount = 1;
 var cityNum = 0;
 function dosomething(){
@@ -19,6 +20,11 @@ function dosomething(){
 	);
 	citycount++;
 	cityNum++;
+	}
+	else{
+		var lin = document.getElementById("citLink");
+		//line.attr('disabled', "<%= bit>");
+		//remember to put a remove icon
 	}
 }
 
@@ -30,6 +36,19 @@ $(document).ready(function() {
 	//addDays("daysB");
 	//addDays("daysE");
 	$("#Enter").click(function(evt) {
+		var bDate = document.getElementById('start_cal').value;
+		var eDate = document.getElementById('end_cal').value;
+		var origin = document.getElementById('origin').value;
+		var dest = document.getElementById('dest').value;
+		var genre = document.getElementById('genre').value;
+		var cap = document.getElementById('cap').value;
+		var style = document.getElementById('style').value;
+		var city1 = document.getElementById('city_1').value;
+		//var city2 = document.getElementById('city_2').value;
+		//var city3 = document.getElementById('city_3').value;
+		//var city4 = document.getElementById('city_4').value;
+		//var city5 = document.getElementById('city_5').value;
+		//var city6 = document.getElementById('city_6').value;
 		display();
 	});
 		//drawSched();
@@ -75,7 +94,7 @@ function draw(){
 	var canvas = document.getElementById("canvasMoneyBtns");
 	var ctx = canvas.getContext('2d');
 	var theSize = 400/5;
-	var theSize2 = heightt/5;
+	var theSize2 = 30;
 	
 	
 		for(i=0;i<numberOfVenues+1;i++){
@@ -83,13 +102,13 @@ function draw(){
 			ctx.fillStyle = "rgb(0,0,0)";
 			ctx.beginPath();
 			ctx.moveTo(i*theSize,0);
-			ctx.lineTo(i*theSize,heightt);
+			ctx.lineTo(i*theSize,numberOfVenues*fixedHeight);
 			ctx.stroke();
 			
 			ctx.fillStyle = "rgb(0,0,0)";
 			ctx.beginPath();
-			ctx.moveTo(0,i*theSize2);
-			ctx.lineTo(400,i*theSize2);
+			ctx.moveTo(0,i*fixedHeight);
+			ctx.lineTo(400,i*fixedHeight);
 			ctx.stroke();
 		
 			
@@ -174,10 +193,10 @@ function drawButton(gigOpening, i){
 	}
 	if(bookBtnInfo.venue == "Beehive"){topDistance=1;}
 	if(bookBtnInfo.venue == "House"){topDistance=2;}
-		bookBtnInfo.top = topDistance*heightt/5 + heightt/24;
-	$(bookBtn).css("top", topDistance*heightt/5 + heightt/24);
+		bookBtnInfo.top = topDistance*fixedHeight + 5; //+heightt/24
+	$(bookBtn).css("top", topDistance*fixedHeight + 5); // + heightt/24
 	$(bookBtn).css("width", 400/5+ "px");
-	$(bookBtn).css("height", heightt/10 + "px");
+	$(bookBtn).css("height", 20 + "px");
 	$(bookBtn).css("z-index", ++toppest);
 	return bookBtn;
 }

@@ -157,21 +157,21 @@ $(document).ready(function() {
 					</tr>
 
 					<tr id="city_0">
-						<td id="col1"><label> Origin:</label><input
+						<td id="origin"><label> Origin:</label><input
 							class="vv-input" type="text" /></td>
 					</tr>
 					<tr>
 
-						<td id="col1"><label> Destination:</label> <input type="text" /></td>
+						<td id="dest"><label> Destination:</label> <input type="text" /></td>
 
 					</tr>
 
 					<tr>
-						<td><a href="#" onclick="dosomething(); return(false);">Add
+						<td><a id = "citLink" href="#" onclick="dosomething(); return(false);">Add
 								cities along your tour</a></td>
 					</tr>
 					<tr>
-						<td><label>Genre</label> <select>
+						<td><label>Genre</label> <select id = "genre">
 								<option>Jazz</option>
 								<option>Classic</option>
 								<option>Rock</option>
@@ -181,7 +181,7 @@ $(document).ready(function() {
 						</td>
 					</tr>
 					<tr>
-						<td><label>Capacity</label> <select>
+						<td><label>Capacity</label> <select id = "cap">
 								<option>50-100</option>
 								<option>100-200</option>
 								<option>200-300</option>
@@ -191,7 +191,7 @@ $(document).ready(function() {
 						</td>
 					</tr>
 					<tr>
-						<td><label>Path Style</label> <select>
+						<td><label>Path Style</label> <select id = "style">
 								<option>Short</option>
 								<option>Groovy</option>
 								<option>Packed</option>
@@ -228,7 +228,7 @@ $(document).ready(function() {
 								</tr>
 								<tr id = "secondRow" width = "16.6%">
 									<td id="venues">
-										<table class= "tables" height = "250">
+										<table class= "tables" height = "150">
 											<tr id = "v1"><td id = "Paradise" align = "right">Paradise</td></tr>
 											<tr id = "v2"><td id = "Beehive" align = "right">Beehive</td></tr>
 											<tr id = "v3"><td id = "House" align = "right">House</td></tr>
