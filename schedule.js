@@ -28,6 +28,37 @@ function dosomething(){
 	}
 }
 
+var directionDisplay;
+var directionsService = new google.maps.DirectionsService();
+var map;
+
+function initialize() {
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  var chicago = new google.maps.LatLng(41.850033, -87.6500523);
+  var myOptions = {
+    zoom:7,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    center: chicago
+  }
+  map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+  directionsDisplay.setMap(map);
+}
+
+function calcRoute() {
+  var start = document.getElementById("origin").value;
+  var end = document.getElementById("dest").value;
+  var request = {
+      origin:start, 
+      destination:end,
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+    }
+  });
+}
+
 var myBookings = [];
 var displayedGig = null;
 
@@ -49,6 +80,8 @@ $(document).ready(function() {
 		//var city4 = document.getElementById('city_4').value;
 		//var city5 = document.getElementById('city_5').value;
 		//var city6 = document.getElementById('city_6').value;
+
+		//calcRoute();
 		display();
 	});
 		//drawSched();
