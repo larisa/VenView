@@ -43,7 +43,7 @@ $(document).ready(function() {
 		var genre = document.getElementById('genre').value;
 		var cap = document.getElementById('cap').value;
 		var style = document.getElementById('style').value;
-		var city1 = document.getElementById('city_1').value;
+		//var city1 = document.getElementById('city_1').value;
 		//var city2 = document.getElementById('city_2').value;
 		//var city3 = document.getElementById('city_3').value;
 		//var city4 = document.getElementById('city_4').value;
