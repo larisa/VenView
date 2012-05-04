@@ -206,72 +206,49 @@ $(document).ready(function() {
 				</table>
 			</td>
 		
-			<td id="Column2" style="visibility: hidden">
-			<div id = "mapView">
-				<img id="map" src="map.png" width="500">
-				<img src="google_pin.png" id="pin1" class="pin" style="position: absolute; top: 75px; left: 400px;z-index:201">
-				<img src="google_pin.png" id="pin2" class="pin" style="position: absolute; top: 100px; left: 280px;z-index:201">
-				<img src="google_pin.png" id="pin3" class="pin" style="position: absolute; top: 155px; left: 250px;z-index:201">
-				<img src="google_pin.png" id="pin4" class="pin" style="position: absolute; top: 163px; left: 200px;z-index:201">
-				<img src="google_pin.png" id="pin5" class="pin" style="position: absolute; top: 200px; left: 150px;z-index:201">
-				
-				
-			</div>
-			<div id = "scheduleView">
-				<table class = "tables" id="venueTable" style = "width:100%" style="font-family: Oxygen; font-size:12pt" >
-					<tbody>
-						<tr height= "20">
-							<td width = "77" align = "center"></td>
-							<td width = "77" align = "center"><p class = "days">Monday</p>
-								 <p class = "dates">April 1 2012</p></td>
-							<td width = "77" align = "center"><p class = "days">Tuesday</p>
-								<p class = "dates">April 2 2012</p></td>
-							<td width = "77" align = "center"><p class = "days">Wednesday</p>
-								<p class = "dates">April 3 2012</p></td>
-							<td width = "77" align = "center"><p class = "days">Thursday</p>
-								<p class = "dates">April 5 2012</p></td>
-							<td width = "77" align = "center"><p class = "days">Friday</p>
-								<p class = "dates">April 4 2012</p></td>
-							</tr>
-						<tr>
-							<td id="venues">
-								<table class= "tables" height = "250">
-									<tr id = "v1"><td id = "Paradise" align = "right">Paradise</td></tr>
-									<tr id = "v2"><td id = "Beehive" align = "right">Beehive</td></tr>
-									<tr id = "v3"><td id = "House" align = "right">House</td></tr>
-									<tr id = "v4"><td id = "Dragon" align = "right">Dragon</td></tr>
-									<tr id = "v5"><td id = "MiddleSex" align = "right">MiddleSex</td></tr>
-								
-								</table>
-							</td>
-							<td valign = "top" id="content">
-
-								<canvas id="canvasMoneyBtns" width="400" height="2000" style ="z-index: 100; 
-																																							pointer-events: none;
-																																							position: absolute;">
-									</canvas>
-									<canvas id="canvasMoneyBtns2" width="500" height="2000" style ="z-index: 101; 
-																																								pointer-events: none;
-																																								position: absolute;">
-										</canvas>
+			<td id="Column2" style="visibility: hidden" width = "600">
+				<table>
+					<tr id = "firstRow" height="400">
+						<td><img id="map" src="map.png" align = "left" width="500" height = "400"></img></td>
+					</tr>
+					<tr>
+						<table id = "sched">
+								<tr height= "20" >
+									<td width = "16.6%" align = "center"></td>
+									<td width = "16.6%" align = "center"><p class = "days">Monday</p>
+							 			<p class = "dates">April 1 2012</p></td>
+									<td width = "16.6%" align = "center"><p class = "days">Tuesday</p>
+											<p class = "dates">April 2 2012</p></td>
+									<td width = "16.6%" align = "center"><p class = "days">Wednesday</p>
+										<p class = "dates">April 3 2012</p></td>
+									<td width = "16.6%" align = "center"><p class = "days">Thursday</p>
+										<p class = "dates">April 5 2012</p></td>
+									<td width = "16.6%" align = "center"><p class = "days">Friday</p>
+										<p class = "dates">April 4 2012</p></td>
+								</tr>
+								<tr id = "secondRow" width = "16.6%">
+									<td id="venues">
+										<table class= "tables" height = "250">
+											<tr id = "v1"><td id = "Paradise" align = "right">Paradise</td></tr>
+											<tr id = "v2"><td id = "Beehive" align = "right">Beehive</td></tr>
+											<tr id = "v3"><td id = "House" align = "right">House</td></tr>
+											<tr id = "v4"><td id = "Dragon" align = "right">Dragon</td></tr>
+											<tr id = "v5"><td id = "MiddleSex" align = "right">MiddleSex</td></tr>
+										</table>
+									</td>
+									<td valign = "top" id="content">
+										<canvas id="canvasMoneyBtns" width="500" height="2000" style ="z-index: 100; 																																						pointer-events: none; position: absolute;"></canvas>
+										<canvas id="canvasMoneyBtns2" width="500" height="2000" style ="z-index: 101; pointer-events: none; position: absolute;"></canvas>
 										<div id="selectBtns" style="position:absolute;"></div>
-										
-								<div id="allMoneyBtns" style="position:absolute;"></div>
-
-								<div class="moneyBtn" type="button">
-									
-							</td>
-						</tr>
-					</tbody>
-
-
+										<div id="allMoneyBtns" style="position:absolute;"></div>
+										<div class="moneyBtn" type="button"></div>
+									</td>
+								</tr>
+						</table>
+					</tr>
 				</table>
-				</div>
-				
-		</td>
+			</td>
 		</tr>
-
-
 	</table>
 </body>
 </html>

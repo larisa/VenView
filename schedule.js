@@ -13,11 +13,13 @@ var heightt = 250;
 var citycount = 1;
 var cityNum = 0;
 function dosomething(){
+	if(citycount < 7){
 	$("#city_"+cityNum).after(
 		'<tr id="city_'+citycount+'"><td class = "cities"><input type= "text"/></td></tr>'
 	);
 	citycount++;
 	cityNum++;
+	}
 }
 
 var myBookings = [];
