@@ -1,11 +1,3 @@
-function addDays(dayID){
-	for(var count=1; count<32; count++){
-		var innerText = document.createTextNode(count);
-		var day = document.createElement("option");
-		day.appendChild(innerText);
-		document.getElementById(dayID).appendChild(day);	
-	}
-}
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
 }
@@ -15,16 +7,13 @@ var citycount = 1;
 var cityNum = 0;
 function dosomething(){
 	if(citycount < 7){
-	$("#city_"+cityNum).after(
-		'<tr id="city_'+citycount+'"><td class = "cities"><input type= "text"/></td></tr>'
-	);
+		document.getElementById("city"+citycount).style.display="block";
+
 	citycount++;
 	cityNum++;
 	}
 	if(citycount == 7){
-		document.getElementById("citLink").style.visibility="hidden";
-		//line.attr('disabled', "<%= bit>");
-		//remember to put a remove icon
+		document.getElementById("citLink").style.display="none";
 	}
 }
 
@@ -47,18 +36,136 @@ function initialize() {
 	var autocomplete = new google.maps.places.Autocomplete(origin);
 	var dest = document.getElementById('destInput');
 	var autocomplete = new google.maps.places.Autocomplete(dest);
-
+	var city1 = document.getElementById('city1');
+	var autocomplete = new google.maps.places.Autocomplete(city1);
+	var city2 = document.getElementById('city2');
+	var autocomplete = new google.maps.places.Autocomplete(city2);
+	var city3 = document.getElementById('city3');
+	var autocomplete = new google.maps.places.Autocomplete(city3);
+	var city4 = document.getElementById('city4');
+	var autocomplete = new google.maps.places.Autocomplete(city4);
+	var city5 = document.getElementById('city5');
+	var autocomplete = new google.maps.places.Autocomplete(city5);
+	var city6 = document.getElementById('city6');
+	var autocomplete = new google.maps.places.Autocomplete(city6);
 }
+
 
 function calcRoute() {
 	
   var ori = $("#originInput").val();
   var en = $("#destInput").val();
-  var request = {
+	var c1 = $("#city1").val(); 
+	var c2 = $("#city2").val(); 
+	var c3 = $("#city3").val(); 
+	var c4 = $("#city4").val(); 
+	var c5 = $("#city5").val(); 
+	var c6 = $("#city6").val(); 
+	
+  var request;
+	if(citycount == 1){
+ 	request = {
       origin: ori, 
       destination: en,
+		
       travelMode: google.maps.DirectionsTravelMode.DRIVING
-  };
+  };}
+	if(citycount == 2){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true}
+	],
+
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
+	if(citycount == 3){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true},
+	{location: c2,
+		stopover: true}
+	],
+		
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
+	if(citycount == 4){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true},
+	{location: c2,
+		stopover: true},
+	{location: c3,
+		stopover: true}
+	],
+		
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
+	if(citycount == 5){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true},
+	{location: c2,
+		stopover: true},
+	{location: c3,
+		stopover: true},
+	{location: c4,
+		stopover: true}
+	],
+
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
+	if(citycount == 6){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true},
+	{location: c2,
+		stopover: true},
+	{location: c3,
+		stopover: true},
+	{location: c4,
+		stopover: true},
+	{location: c5,
+		stopover: true}
+	],
+		
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
+	if(citycount == 7){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true},
+	{location: c2,
+		stopover: true},
+	{location: c3,
+		stopover: true},
+	{location: c4,
+		stopover: true},
+	{location: c5,
+		stopover: true},
+	{location: c6,
+		stopover: true}
+	],
+		
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
@@ -68,19 +175,11 @@ function calcRoute() {
 
 var myBookings = [];
 var displayedGig = null;
-var city1; 
-var city2; 
-var city3; 
-var city4; 
-var city5;
-var city6;
 
 
 $(document).ready(function() {
-
 	$('.clickables').keypress(function(e) {
 	  	  	if (e.keyCode == '13' &&  this.value != '') {
-		//put somthing to check that all the fields are filled. in the click function :)
 						$('#Enter').click();
 	  	  	}
 	});
