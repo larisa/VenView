@@ -43,7 +43,10 @@ function initialize() {
   }
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   directionsDisplay.setMap(map);
-//	geocoder = new google.maps.Geocoder();
+	var origin = document.getElementById('originInput');
+	var autocomplete = new google.maps.places.Autocomplete(origin);
+	var dest = document.getElementById('destInput');
+	var autocomplete = new google.maps.places.Autocomplete(dest);
 
 }
 
@@ -77,11 +80,6 @@ $(document).ready(function() {
 	$("#Enter").click(function(evt) {
 		var bDate = document.getElementById('start_cal').value;
 		var eDate = document.getElementById('end_cal').value;
-		var origin = document.getElementById('origin').value;
-		//translateGeocode();
-	//	var autocomplete = new google.maps.places.Autocomplete(origin);
-		var dest = document.getElementById('dest').value;
-	//	var autocomplete = new google.maps.places.Autocomplete(dest);
 		var genre = document.getElementById('genre').value;
 		var cap = document.getElementById('cap').value;
 		var style = document.getElementById('style').value;
