@@ -183,6 +183,11 @@ $(document).ready(function() {
 						$('#Enter').click();
 	  	  	}
 	});
+	$('.cities').keypress(function(e) {
+	  	  	if (e.keyCode == '13' &&  this.value != '') {
+						$('#Enter').click();
+	  	  	}
+	});
 
 	$("#Enter").click(function(evt) {
 		var bDate = document.getElementById('start_cal').value;
