@@ -1,18 +1,19 @@
 
 #title{
 		font-family: 'Oxygen', sans-serif;
-		font-size: 20pt;
+		font-size: 15pt;
 		font-weight: 900;
-		text-align: left;
 		color:#b6dbd;
 		background-color: #b6dbd4;
+		vertical-align: center;
 }
 
-
-.informationTable{
+#logo{
+	float:bottom;
 	
+}
+.informationTable{	
 	font-family: 'Oxygen', sans-serif;
-
 }
 
 select, label {
@@ -30,6 +31,7 @@ select, label {
 	font-family: 'Oxygen', sans-serif;
 	font-size: 11pt;
 	color:#b6dbd;
+	margin-left: 10px;
 }
 #temp{
 	ont-size: 7pt;

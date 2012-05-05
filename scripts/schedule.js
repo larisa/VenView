@@ -16,7 +16,7 @@ var cityNum = 0;
 function dosomething(){
 	if(citycount < 7){
 	$("#city_"+cityNum).after(
-		'<tr id="city_'+citycount+'"><td class = "cities"><input type= "text"/></td></tr>'
+		'<tr id="city_'+citycount+'"><td class = "cities"><input type= "text"/> <a class="remove_comment"><i class="icon-remove-sign"></i></a></td></tr>'
 	);
 	citycount++;
 	cityNum++;

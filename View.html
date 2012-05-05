@@ -7,10 +7,11 @@
 
 
 <!-- Load style sheets -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="css/viewLayout.css" />
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" media = "all"/>
 <link rel="stylesheet" type="text/css" href="css/datePicker.css"/>
-<link href="css/jquery-bubble-popup-v3.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/jquery-bubble-popup-v3.css" />
 
 
 <!-- Put fonts below this comment-->
@@ -21,13 +22,13 @@
 
 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtJA2DVT63Bh-JQDh28XNVFNAOaLSMimg&sensor=false&libraries=places"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-<script type="text/javascript" src="schedule.js"></script>
-<script type="text/javascript" src="Booking.js"></script>
-<script src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.2.js"></script> 
-<script src="scripts/jquery-bubble-popup-v3.min.js" type="text/javascript"></script>
-<script type = "text/javascript" >
+<script type="text/javascript" src="scripts/schedule.js"></script>
+<script type="text/javascript" src="scripts/Booking.js"></script>
+<script type="text/javascript" src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.2.js"></script> 
+<script type="text/javascript" src="scripts/jquery-bubble-popup-v3.min.js" ></script>
+<script type="text/javascript" >
 $(document).ready(function() {
 
 	// Vars
@@ -50,90 +51,8 @@ $(document).ready(function() {
 	});
 	
 
-	$('html').click(function(event) {
-		var source = event.srcElement.id;
-		if (!(event.srcElement.id == "pin1")){
-			$("#v1").css({'background-color': 'white'});
-		}
-		if (!(event.srcElement.id == "pin2")){
-			$("#v2").css({'background-color': 'white'});
-		}
-		
-		if (!(event.srcElement.id == "pin3")){
-			$("#v3").css({'background-color': 'white'});
-		}
-		
-		if (!(event.srcElement.id == "pin4")){
-			$("#v4").css({'background-color': 'white'});
-		}
-		
-		if (!(event.srcElement.id == "pin5")){
-			$("#v5").css({'background-color': 'white'});
-		}
-		
-///		if (!$(event.target).closest('#pin2').length){
-		//	$("#v2").css({'background-color': 'white'})
-///		}
 	});
 
-	
-	function createTooltip(event){  
-		var text;
-		if ($(event.target).closest('#pin1').length){
-			text = "Paradise Lounge"
-		}
-		else if ($(event.target).closest('#pin2').length){
-			text = "Beehive"
-		}
-		else if ($(event.target).closest('#pin3').length){
-			text = "House"
-		}
-		
-		else if ($(event.target).closest('#pin4').length){
-			text = "Dragon"
-		}
-		
-		else if ($(event.target).closest('#pin5').length){
-			text = "MiddleSex"
-		}
-	    $('<div id = "tool1" class="popup">' + text + '</div>').appendTo('body');
-	    positionTooltip(event);        
-	};
-	
-	
-	function hideTooltip(){
-		 $("#tool1").fadeOut();
-		 $("#tool1").remove();
-	};
-	
-	function positionTooltip(event){
-	    var tPosX = event.pageX - 25;
-	    var tPosY = event.pageY - 100;
-	    $('div.popup').css({'position': 'absolute', 'font-family': 'Oxygen','top': tPosY, 'left': tPosX, 'z-index': '202'});
-	};
-	});	 
-	
-	function highlightRow(event){
-		var row;
-		var source = event.srcElement.id;
-		if (event.srcElement.id == "pin1"){
-			row = "#v1"
-		}
-		else if (event.srcElement.id == "pin2"){
-			row = "#v2"
-		}
-		
-		else if (event.srcElement.id == "pin3"){
-			row = "#v3"
-		}
-		else if (event.srcElement.id == "pin4"){
-			row = "#v4"
-		}
-		else if (event.srcElement.id == "pin5"){
-			row = "#v5"
-		}
-		 $(row).css({'background-color': 'yellow'});
-	}
 
 </script>
 
@@ -142,18 +61,16 @@ $(document).ready(function() {
 <!--Title-->
 </head>
 
-<div id="title"> <img id="logo" src="logo5.png" align = "absbottom">Book a Venue. Plan a tour. Become a star.</div>
+<p id="title"><img id="logo" src="logo5.png" >Book a venue. Plan a tour. Become a star.</p>
 <body onload="init()">
 	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
-	
 	<table class = "tables" id ="page">
 
 		 <tr style ="position: relative">
 			<td id="Column1" valign="top">
-				<table class="tables" id="information">
+				<table class="tables" id="information" >
 					<tr>
-						<td><label>Begin date:</label> <input type="text"
-							id="start_cal" title="Begin date"></td>
+						<td><label>Begin date:</label> <input type="text" id="start_cal" title="Begin date"></td>
 					</tr>
 					<tr>
 						<td><label>End date: </label> <input id="end_cal"></input>
@@ -161,8 +78,7 @@ $(document).ready(function() {
 					</tr>
 
 					<tr id="city_0">
-						<td id="origin"><label> Origin:</label><input
-							class="vv-input" type="text" /></td>
+						<td id="origin"><label> Origin:</label><input class="vv-input" type="text" /></td>
 					</tr>
 					<tr>
 
@@ -206,14 +122,13 @@ $(document).ready(function() {
 						<td align="right"><input id="Enter" type="button"
 							class = "vv-button" value="Enter"></input></td>
 					</tr>
-
 				</table>
 			</td>
 		
 			<td id="Column2" style="visibility: hidden" width = "600">
-				<table>
+				<table cellpadding  = "10px">
 					<tr id = "firstRow">
-						<div id="map_canvas" style ="height:400px; width:500px;"</div>
+						<div id="map_canvas" style ="height:400px; width:500px;"></div>
 					</tr>
 					<tr>
 						<table id = "sched">
