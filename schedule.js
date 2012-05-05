@@ -197,17 +197,37 @@ $(document).ready(function() {
 		var style = document.getElementById('style').value;
 		var origin = document.getElementById('originInput').value;
 		var dest = document.getElementById('destInput').value;
-		if(cityNum != 0){
-				for(i=0;i<cityNum+1;i++){
-					//city+i+1 = document.getElementById('city_'+i).value;
-
-				}
-		}
+		var cit1 = document.getElementById('city1').value;
+		var cit2 = document.getElementById('city2').value;
+		var cit3 = document.getElementById('city3').value;
+		var cit4 = document.getElementById('city4').value;
+		var cit5 = document.getElementById('city5').value;
+		var cit6 = document.getElementById('city6').value;
 
 		if(bDate != null && eDate!= null && genre != null && cap != null && style!= null && origin!="" && dest!=""){
+			if(citycount == 1){
 			calcRoute();
-			display();
+			display();}
+			if(citycount == 2 && cit1!=""){
+			calcRoute();
+			display();}
+			if(citycount == 3 && cit1!="" && cit2!=""){
+			calcRoute();
+			display();}
+			if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
+			calcRoute();
+			display();}
+			if(citycount == 5 && cit1!="" && cit2!="" && cit3!="" && cit4!=""){
+			calcRoute();
+			display();}
+			if(citycount == 6 && cit1!="" && cit2!="" && cit3!="" && cit4!="" && cit5!=""){
+			calcRoute();
+			display();}
+			if(citycount == 7 && cit1!="" && cit2!="" && cit3!="" && cit4!="" && cit5!="" && cit6!=""){
+			calcRoute();
+			display();}
 		}
+		
 
 		
 	});
