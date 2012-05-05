@@ -120,18 +120,11 @@ $(document).ready(function() {
 
 		calcRoute();
 		display();
-		draw();
-		drawButtons();
+		
 	});
 
-		//drawSched();
-		
-//	$("#c2").click(function(evt) {
-//		var mX = evt.pageX - this.offsetLeft;
-//		var mY = evt.pageY- this.offsetTop;
-//	}):
-		//showText();
-
+	draw();
+	drawButtons();
 });
 
 

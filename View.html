@@ -34,12 +34,12 @@ $(document).ready(function() {
 	var startDate, endDate, today;
 	var dates = [];
 	initialize();
-		
+
 	// Calendars
 	$("#start_cal").datepicker();
 
 	$("#end_cal").datepicker();
-	
+
 	$("#pin1, #pin2, #pin3, #pin4, #pin5").mouseover(function(event) {
 	    createTooltip(event);               
 	}).mouseout(function(){
@@ -48,7 +48,7 @@ $(document).ready(function() {
 	}).click(function(event){
 		highlightRow(event)
 	});
-	
+
 
 	$('html').click(function(event) {
 		var source = event.srcElement.id;
@@ -58,25 +58,25 @@ $(document).ready(function() {
 		if (!(event.srcElement.id == "pin2")){
 			$("#v2").css({'background-color': 'white'});
 		}
-		
+
 		if (!(event.srcElement.id == "pin3")){
 			$("#v3").css({'background-color': 'white'});
 		}
-		
+
 		if (!(event.srcElement.id == "pin4")){
 			$("#v4").css({'background-color': 'white'});
 		}
-		
+
 		if (!(event.srcElement.id == "pin5")){
 			$("#v5").css({'background-color': 'white'});
 		}
-		
+
 ///		if (!$(event.target).closest('#pin2').length){
 		//	$("#v2").css({'background-color': 'white'})
 ///		}
 	});
 
-	
+
 	function createTooltip(event){  
 		var text;
 		if ($(event.target).closest('#pin1').length){
@@ -88,31 +88,31 @@ $(document).ready(function() {
 		else if ($(event.target).closest('#pin3').length){
 			text = "House"
 		}
-		
+
 		else if ($(event.target).closest('#pin4').length){
 			text = "Dragon"
 		}
-		
+
 		else if ($(event.target).closest('#pin5').length){
 			text = "MiddleSex"
 		}
 	    $('<div id = "tool1" class="popup">' + text + '</div>').appendTo('body');
 	    positionTooltip(event);        
 	};
-	
-	
+
+
 	function hideTooltip(){
 		 $("#tool1").fadeOut();
 		 $("#tool1").remove();
 	};
-	
+
 	function positionTooltip(event){
 	    var tPosX = event.pageX - 25;
 	    var tPosY = event.pageY - 100;
 	    $('div.popup').css({'position': 'absolute', 'font-family': 'Oxygen','top': tPosY, 'left': tPosX, 'z-index': '202'});
 	};
 	});	 
-	
+
 	function highlightRow(event){
 		var row;
 		var source = event.srcElement.id;
@@ -122,7 +122,7 @@ $(document).ready(function() {
 		else if (event.srcElement.id == "pin2"){
 			row = "#v2"
 		}
-		
+
 		else if (event.srcElement.id == "pin3"){
 			row = "#v3"
 		}
@@ -137,7 +137,7 @@ $(document).ready(function() {
 
 </script>
 
-	
+
 
 <!--Title-->
 </head>
@@ -145,7 +145,7 @@ $(document).ready(function() {
 <div id="title"> <img id="logo" src="logo5.png" align = "absbottom">Book a Venue. Plan a tour. Become a star.</div>
 <body onload="init()">
 	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
-	
+
 	<table class = "tables" id ="page">
 
 		 <tr style ="position: relative">
@@ -166,7 +166,7 @@ $(document).ready(function() {
 					</tr>
 					<tr>
 
-						<td id="dest"><label> Destination:</label> <input id = "destInput" type="text" /></td>
+						<td id="dest"><label> Destination:</label> <input id= "destInput" type="text" /></td>
 
 					</tr>
 
@@ -209,7 +209,7 @@ $(document).ready(function() {
 
 				</table>
 			</td>
-		
+
 			<td id="Column2" style="visibility: hidden" width = "600">
 				<table>
 					<tr id = "firstRow">
