@@ -1,11 +1,3 @@
-function addDays(dayID){
-	for(var count=1; count<32; count++){
-		var innerText = document.createTextNode(count);
-		var day = document.createElement("option");
-		day.appendChild(innerText);
-		document.getElementById(dayID).appendChild(day);	
-	}
-}
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
 }
@@ -15,25 +7,26 @@ var citycount = 1;
 var cityNum = 0;
 function dosomething(){
 	if(citycount < 7){
-	$("#city_"+cityNum).after(
-		'<tr id="city_'+citycount+'"><td class = "cities"><input type= "text"/> <a class="remove_comment"><i class="icon-remove-sign"></i></a></td></tr>'
-	);
+	//$("#city_"+cityNum).after(
+	//	'<tr id="city_'+citycount+'"><td class = "cities"><input type= "text"/> <a class="remove_comment"><i class="icon-remove-sign"></i></a></td></tr>'
+//	);
+		document.getElementById("city"+citycount).style.display="block";
+
 	citycount++;
 	cityNum++;
 	}
-	else{
-		var lin = document.getElementById("citLink");
-		//line.attr('disabled', "<%= bit>");
-		//remember to put a remove icon
+	if(citycount == 7){
+		document.getElementById("citLink").style.display="none";
 	}
 }
 
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
-
+//var geocoder;
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
+	
   var chicago = new google.maps.LatLng(41.850033, -87.6500523);
   var myOptions = {
     zoom:7,
@@ -42,16 +35,140 @@ function initialize() {
   }
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   directionsDisplay.setMap(map);
+	var origin = document.getElementById('originInput');
+	var autocomplete = new google.maps.places.Autocomplete(origin);
+	var dest = document.getElementById('destInput');
+	var autocomplete = new google.maps.places.Autocomplete(dest);
+	var city1 = document.getElementById('city1');
+	var autocomplete = new google.maps.places.Autocomplete(city1);
+	var city2 = document.getElementById('city2');
+	var autocomplete = new google.maps.places.Autocomplete(city2);
+	var city3 = document.getElementById('city3');
+	var autocomplete = new google.maps.places.Autocomplete(city3);
+	var city4 = document.getElementById('city4');
+	var autocomplete = new google.maps.places.Autocomplete(city4);
+	var city5 = document.getElementById('city5');
+	var autocomplete = new google.maps.places.Autocomplete(city5);
+	var city6 = document.getElementById('city6');
+	var autocomplete = new google.maps.places.Autocomplete(city6);
 }
 
+
 function calcRoute() {
-  var start = document.getElementById("origin").value;
-  var end = document.getElementById("dest").value;
-  var request = {
-      origin:start, 
-      destination:end,
+	
+  var ori = $("#originInput").val();
+  var en = $("#destInput").val();
+	var c1 = $("#city1").val(); 
+	var c2 = $("#city2").val(); 
+	var c3 = $("#city3").val(); 
+	var c4 = $("#city4").val(); 
+	var c5 = $("#city5").val(); 
+	var c6 = $("#city6").val(); 
+	
+  var request;
+	if(citycount == 1){
+ 	request = {
+      origin: ori, 
+      destination: en,
+		
       travelMode: google.maps.DirectionsTravelMode.DRIVING
-  };
+  };}
+	if(citycount == 2){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true}
+	],
+
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
+	if(citycount == 3){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true},
+	{location: c2,
+		stopover: true}
+	],
+		
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
+	if(citycount == 4){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true},
+	{location: c2,
+		stopover: true},
+	{location: c3,
+		stopover: true}
+	],
+		
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
+	if(citycount == 5){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true},
+	{location: c2,
+		stopover: true},
+	{location: c3,
+		stopover: true},
+	{location: c4,
+		stopover: true}
+	],
+
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
+	if(citycount == 6){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true},
+	{location: c2,
+		stopover: true},
+	{location: c3,
+		stopover: true},
+	{location: c4,
+		stopover: true},
+	{location: c5,
+		stopover: true}
+	],
+		
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
+	if(citycount == 7){
+ 	request = {
+      origin: ori, 
+      destination: en,
+	waypoints:[
+	{location: c1,
+		stopover: true},
+	{location: c2,
+		stopover: true},
+	{location: c3,
+		stopover: true},
+	{location: c4,
+		stopover: true},
+	{location: c5,
+		stopover: true},
+	{location: c6,
+		stopover: true}
+	],
+		
+      travelMode: google.maps.DirectionsTravelMode.DRIVING
+  };}
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
@@ -64,63 +181,39 @@ var displayedGig = null;
 
 
 $(document).ready(function() {
-	//addDays("daysB");
-	//addDays("daysE");
+	$('.clickables').keypress(function(e) {
+	  	  	if (e.keyCode == '13' &&  this.value != '') {
+						$('#Enter').click();
+	  	  	}
+	});
+
 	$("#Enter").click(function(evt) {
 		var bDate = document.getElementById('start_cal').value;
 		var eDate = document.getElementById('end_cal').value;
-		var origin = document.getElementById('origin').value;
-		var dest = document.getElementById('dest').value;
 		var genre = document.getElementById('genre').value;
 		var cap = document.getElementById('cap').value;
 		var style = document.getElementById('style').value;
-		//var city1 = document.getElementById('city_1').value;
-		//var city2 = document.getElementById('city_2').value;
-		//var city3 = document.getElementById('city_3').value;
-		//var city4 = document.getElementById('city_4').value;
-		//var city5 = document.getElementById('city_5').value;
-		//var city6 = document.getElementById('city_6').value;
+		var origin = document.getElementById('originInput').value;
+		var dest = document.getElementById('destInput').value;
+		if(cityNum != 0){
+				for(i=0;i<cityNum+1;i++){
+					//city+i+1 = document.getElementById('city_'+i).value;
 
-		//calcRoute();
-		display();
+				}
+		}
+
+		if(bDate != null && eDate!= null && genre != null && cap != null && style!= null && origin!="" && dest!=""){
+			calcRoute();
+			display();
+		}
+
+		
 	});
-		//drawSched();
-		draw();
-		drawButtons();
-//	$("#c2").click(function(evt) {
-//		var mX = evt.pageX - this.offsetLeft;
-//		var mY = evt.pageY- this.offsetTop;
-//	}):
-		//showText();
 
+	draw();
+	drawButtons();
 });
 
-
-
-//$("#c2").addEventListener('click', function(e){
-//		console.log('click: ' + e.offsetX + '/' + e.offsetY);
-//		console.log("displayedGIg");
-//		console.log(displayedGig);
-//		if (displayedGig == null) {return; }
-	//	var mX = e.pageX - this.offsetLeft;
-	//	var mY = e.pageY- this.offsetTop;
-
-	//			if (mX >= displayedGig.left+35 && mX <= displayedGig.left + (400/5) + 35 &&
-	//					mY >= displayedGig.duration && mY <= displayedGig.duration+length){
-					//	console.log("clicking in the rectangle");
-
-					//	var canvas = document.getElementById("canvasMoneyBtns2");
-
-					//	canvas.width = canvas.width;
-					//	$('.moneyBtn').attr('disabled', false);
-					//	myBookings.push(displayedGig);
-					//	displayedGig = null;
-
-						//$(canvasMoneyBtns2).css("z-index", 101);
-						//$(canvasMoneyBtns).css("z-index", 100);
-			//	}
-
-//}, false);
 var numberOfVenues= 5; //set static for now, but then length pf listOfVenues
 
 function draw(){
@@ -145,10 +238,7 @@ function draw(){
 			ctx.stroke();
 		
 			
-		}
-		//showText();
-	
-	
+		}	
 }
 
 function get_venue_openings(){
@@ -181,14 +271,13 @@ function drawButtons(){
 var VenueList = ["Paradise", "Beehive", "House"];
 function showText() {
 	var cxt = document.getElementById("allMoneyBtns").getContext('2d');
-	//ctx.fillStyle = '#f00';
+
 	ctx.font = 'bold 12px sans-serif';
 	cxt.textAlign = "left";
 	ctx.textBaseline = "top";
 	
 
 	for(var i=0; i<VenueList.length; i++){
-//		ctx.fillText(VenueList[i],0,(i+1)*(400/5)+(400/24));
 	}
 }
 

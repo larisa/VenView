@@ -35,28 +35,21 @@ $(document).ready(function() {
 	var startDate, endDate, today;
 	var dates = [];
 	initialize();
-		
+
 	// Calendars
 	$("#start_cal").datepicker();
 
 	$("#end_cal").datepicker();
-	
-	$("#pin1, #pin2, #pin3, #pin4, #pin5").mouseover(function(event) {
-	    createTooltip(event);               
-	}).mouseout(function(){
-	    // create a hidefunction on the callback if you want
-		hideTooltip(); 
-	}).click(function(event){
-		highlightRow(event)
-	});
-	
+
+
+
 
 	});
 
 
 </script>
 
-	
+
 
 <!--Title-->
 </head>
@@ -64,34 +57,48 @@ $(document).ready(function() {
 <p id="title"><img id="logo" src="logo5.png" >Book a venue. Plan a tour. Become a star.</p>
 <body onload="init()">
 	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
+
 	<table class = "tables" id ="page">
 
 		 <tr style ="position: relative">
 			<td id="Column1" valign="top">
 				<table class="tables" id="information" >
 					<tr>
-						<td><label>Begin date:</label> <input type="text" id="start_cal" title="Begin date"></td>
+
+						<td><label>Begin date:</label> <input type="text"
+							class = "clickables" id="start_cal" title="Begin date"></td>
+
 					</tr>
 					<tr>
-						<td><label>End date: </label> <input id="end_cal"></input>
+						<td><label>End date: </label> <input class = "clickables" id="end_cal"></input>
 						</td>
 					</tr>
 
 					<tr id="city_0">
-						<td id="origin"><label> Origin:</label><input class="vv-input" type="text" /></td>
+
+						
+						<td id="origin"><label> Origin:</label><input
+							id = "originInput" class = "clickables" class="vv-input" type="text" /></td>
+
 					</tr>
+					<tr id="city_1"><td class = "cities"><input style = "DISPLAY: none;" id = "city1"type= "text"/></td></tr>
+					<tr id="city_2"><td class = "cities"><input style = "DISPLAY: none;" id = "city2"type= "text"/></td></tr>
+					<tr id="city_3"><td class = "cities"><input style = "DISPLAY: none;" id = "city3"type= "text"/></td></tr>
+					<tr id="city_4"><td class = "cities"><input style = "DISPLAY: none;" id = "city4"type= "text"/></td></tr>
+					<tr id="city_5"><td class = "cities"><input style = "DISPLAY: none;" id = "city5"type= "text"/></td></tr>
+					<tr id="city_6"><td class = "cities"><input style = "DISPLAY: none;" id = "city6"type= "text"/></td></tr>
 					<tr>
 
-						<td id="dest"><label> Destination:</label> <input type="text" /></td>
+						<td id="dest"><label> Destination:</label> <input id= "destInput" class = "clickables" type="text" /></td>
 
 					</tr>
 
 					<tr>
-						<td><a id = "citLink" href="#" onclick="dosomething(); return(false);">Add
+						<td><a id = "citLink" class = "clickables" href="#" onclick="dosomething(); return(false);">Add
 								cities along your tour</a></td>
 					</tr>
 					<tr>
-						<td><label>Genre</label> <select id = "genre">
+						<td><label>Genre</label> <select id = "genre" class = "clickables">
 								<option>Jazz</option>
 								<option>Classic</option>
 								<option>Rock</option>
@@ -101,7 +108,7 @@ $(document).ready(function() {
 						</td>
 					</tr>
 					<tr>
-						<td><label>Capacity</label> <select id = "cap">
+						<td><label>Capacity</label> <select id = "cap" class = "clickables">
 								<option>50-100</option>
 								<option>100-200</option>
 								<option>200-300</option>
@@ -111,7 +118,7 @@ $(document).ready(function() {
 						</td>
 					</tr>
 					<tr>
-						<td><label>Path Style</label> <select id = "style">
+						<td><label>Path Style</label> <select id = "style" class = "clickables">
 								<option>Short</option>
 								<option>Groovy</option>
 								<option>Packed</option>
@@ -120,11 +127,11 @@ $(document).ready(function() {
 					</tr>
 					<tr>
 						<td align="right"><input id="Enter" type="button"
-							class = "vv-button" value="Enter"></input></td>
+						 value="Enter" class = "clickables"></input></td>
 					</tr>
 				</table>
 			</td>
-		
+
 			<td id="Column2" style="visibility: hidden" width = "600">
 				<table cellpadding  = "10px">
 					<tr id = "firstRow">

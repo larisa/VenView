@@ -8,12 +8,17 @@
 		vertical-align: center;
 }
 
-#logo{
-	float:bottom;
-	
-}
-.informationTable{	
+BODY
+   {
+    font-family: 'Oxygen', sans-serif;
+	font-size:8pt;
+	color:#b6dbd;
+   }
+
+.informationTable{
+
 	font-family: 'Oxygen', sans-serif;
+
 }
 
 select, label {
@@ -21,9 +26,10 @@ select, label {
     float:left;
 }
 .dates{
-	font-size: 8pt;
+	font-size:11pt;
 	margin:0%;
 }
+
 .days{
 	margin:0%;
 }
