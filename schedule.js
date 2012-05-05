@@ -31,7 +31,7 @@ function dosomething(){
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
-var geocoder;
+//var geocoder;
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
 	
@@ -43,44 +43,14 @@ function initialize() {
   }
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   directionsDisplay.setMap(map);
-	geocoder = new google.maps.Geocoder();
-//	var request = {
-  //    origin:"Boston, MA", 
-    //  destination:"Chicago, IL",
-      //travelMode: google.maps.DirectionsTravelMode.DRIVING
- // };
-  //directionsService.route(request, function(response, status) {
-    //if (status == google.maps.DirectionsStatus.OK) {
-      //directionsDisplay.setDirections(response);
-    //}
-  //});
-	
-	//var origin = document.getElementById('origin');
-	//translateGeocode();
-	//var autocomplete = new google.maps.places.Autocomplete(origin);
+//	geocoder = new google.maps.Geocoder();
+
 }
-function translateGeocode(location){
-//	var location = $('input[id="origin"]').val();
-//	var location = document.getElementById("origin").value;
-//	var location = 	$("#originInput").val(); 
-	var kansas = new google.maps.LatLng(38.891033, -94.526367);
-	geocoder.geocode({'address': location}, function(results, status){
-		if (status == google.maps.GeocoderStatus.OK){
-			//map.setCenter(results[0].geometry.location);
-			return results[0].geometry.location;	
-		}
-		else{
-			map.setCenter(kansas);
-		}
-	});
-	
-}
+
 function calcRoute() {
 	
   var ori = $("#originInput").val();
   var en = $("#destInput").val();
-	//var start = 
-	//var end = 
   var request = {
       origin: ori, 
       destination: en,
@@ -98,8 +68,12 @@ var displayedGig = null;
 
 
 $(document).ready(function() {
-	//addDays("daysB");
-	//addDays("daysE");
+
+	$('.clickables').keypress(function(e) {
+	  	  	if (e.keyCode == '13') {
+						$('#Enter').click();
+	  	  	}
+	});
 	$("#Enter").click(function(evt) {
 		var bDate = document.getElementById('start_cal').value;
 		var eDate = document.getElementById('end_cal').value;
@@ -127,33 +101,6 @@ $(document).ready(function() {
 	drawButtons();
 });
 
-
-
-
-//$("#c2").addEventListener('click', function(e){
-//		console.log('click: ' + e.offsetX + '/' + e.offsetY);
-//		console.log("displayedGIg");
-//		console.log(displayedGig);
-//		if (displayedGig == null) {return; }
-	//	var mX = e.pageX - this.offsetLeft;
-	//	var mY = e.pageY- this.offsetTop;
-
-	//			if (mX >= displayedGig.left+35 && mX <= displayedGig.left + (400/5) + 35 &&
-	//					mY >= displayedGig.duration && mY <= displayedGig.duration+length){
-					//	console.log("clicking in the rectangle");
-
-					//	var canvas = document.getElementById("canvasMoneyBtns2");
-
-					//	canvas.width = canvas.width;
-					//	$('.moneyBtn').attr('disabled', false);
-					//	myBookings.push(displayedGig);
-					//	displayedGig = null;
-
-						//$(canvasMoneyBtns2).css("z-index", 101);
-						//$(canvasMoneyBtns).css("z-index", 100);
-			//	}
-
-//}, false);
 var numberOfVenues= 5; //set static for now, but then length pf listOfVenues
 
 function draw(){
@@ -178,10 +125,7 @@ function draw(){
 			ctx.stroke();
 		
 			
-		}
-		//showText();
-	
-	
+		}	
 }
 
 function get_venue_openings(){
@@ -214,14 +158,13 @@ function drawButtons(){
 var VenueList = ["Paradise", "Beehive", "House"];
 function showText() {
 	var cxt = document.getElementById("allMoneyBtns").getContext('2d');
-	//ctx.fillStyle = '#f00';
+
 	ctx.font = 'bold 12px sans-serif';
 	cxt.textAlign = "left";
 	ctx.textBaseline = "top";
 	
 
 	for(var i=0; i<VenueList.length; i++){
-//		ctx.fillText(VenueList[i],0,(i+1)*(400/5)+(400/24));
 	}
 }
 
