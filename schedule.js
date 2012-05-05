@@ -84,6 +84,7 @@ $(document).ready(function() {
 						$('#Enter').click();
 	  	  	}
 	});
+
 	$("#Enter").click(function(evt) {
 		var bDate = document.getElementById('start_cal').value;
 		var eDate = document.getElementById('end_cal').value;
@@ -99,9 +100,11 @@ $(document).ready(function() {
 				}
 		}
 
+		if(bDate != null && eDate!= null && genre != null && cap != null && style!= null && origin!="" && dest!=""){
+			calcRoute();
+			display();
+		}
 
-		calcRoute();
-		display();
 		
 	});
 
