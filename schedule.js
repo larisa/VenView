@@ -21,8 +21,8 @@ function dosomething(){
 	citycount++;
 	cityNum++;
 	}
-	else{
-		var lin = document.getElementById("citLink");
+	if(citycount == 7){
+		document.getElementById("citLink").style.visibility="hidden";
 		//line.attr('disabled', "<%= bit>");
 		//remember to put a remove icon
 	}
@@ -68,12 +68,19 @@ function calcRoute() {
 
 var myBookings = [];
 var displayedGig = null;
+var city1; 
+var city2; 
+var city3; 
+var city4; 
+var city5;
+var city6;
 
 
 $(document).ready(function() {
 
 	$('.clickables').keypress(function(e) {
-	  	  	if (e.keyCode == '13') {
+	  	  	if (e.keyCode == '13' &&  this.value != '') {
+		//put somthing to check that all the fields are filled. in the click function :)
 						$('#Enter').click();
 	  	  	}
 	});
@@ -83,12 +90,15 @@ $(document).ready(function() {
 		var genre = document.getElementById('genre').value;
 		var cap = document.getElementById('cap').value;
 		var style = document.getElementById('style').value;
-		//var city1 = document.getElementById('city_1').value;
-		//var city2 = document.getElementById('city_2').value;
-		//var city3 = document.getElementById('city_3').value;
-		//var city4 = document.getElementById('city_4').value;
-		//var city5 = document.getElementById('city_5').value;
-		//var city6 = document.getElementById('city_6').value;
+		var origin = document.getElementById('originInput').value;
+		var dest = document.getElementById('destInput').value;
+		if(cityNum != 0){
+				for(i=0;i<cityNum+1;i++){
+					//city+i+1 = document.getElementById('city_'+i).value;
+
+				}
+		}
+
 
 		calcRoute();
 		display();
