@@ -31,9 +31,10 @@ function dosomething(){
 var directionDisplay;
 var directionsService = new google.maps.DirectionsService();
 var map;
-
+var geocoder;
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
+	
   var chicago = new google.maps.LatLng(41.850033, -87.6500523);
   var myOptions = {
     zoom:7,
@@ -42,14 +43,47 @@ function initialize() {
   }
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
   directionsDisplay.setMap(map);
+	geocoder = new google.maps.Geocoder();
+//	var request = {
+  //    origin:"Boston, MA", 
+    //  destination:"Chicago, IL",
+      //travelMode: google.maps.DirectionsTravelMode.DRIVING
+ // };
+  //directionsService.route(request, function(response, status) {
+    //if (status == google.maps.DirectionsStatus.OK) {
+      //directionsDisplay.setDirections(response);
+    //}
+  //});
+	
+	//var origin = document.getElementById('origin');
+	//translateGeocode();
+	//var autocomplete = new google.maps.places.Autocomplete(origin);
 }
-
+function translateGeocode(location){
+//	var location = $('input[id="origin"]').val();
+//	var location = document.getElementById("origin").value;
+//	var location = 	$("#originInput").val(); 
+	var kansas = new google.maps.LatLng(38.891033, -94.526367);
+	geocoder.geocode({'address': location}, function(results, status){
+		if (status == google.maps.GeocoderStatus.OK){
+			//map.setCenter(results[0].geometry.location);
+			return results[0].geometry.location;	
+		}
+		else{
+			map.setCenter(kansas);
+		}
+	});
+	
+}
 function calcRoute() {
-  var start = document.getElementById("origin").value;
-  var end = document.getElementById("dest").value;
+	
+  var ori = $("#originInput").val();
+  var en = $("#destInput").val();
+	//var start = 
+	//var end = 
   var request = {
-      origin:start, 
-      destination:end,
+      origin: ori, 
+      destination: en,
       travelMode: google.maps.DirectionsTravelMode.DRIVING
   };
   directionsService.route(request, function(response, status) {
@@ -70,7 +104,10 @@ $(document).ready(function() {
 		var bDate = document.getElementById('start_cal').value;
 		var eDate = document.getElementById('end_cal').value;
 		var origin = document.getElementById('origin').value;
+		//translateGeocode();
+	//	var autocomplete = new google.maps.places.Autocomplete(origin);
 		var dest = document.getElementById('dest').value;
+	//	var autocomplete = new google.maps.places.Autocomplete(dest);
 		var genre = document.getElementById('genre').value;
 		var cap = document.getElementById('cap').value;
 		var style = document.getElementById('style').value;
@@ -81,12 +118,14 @@ $(document).ready(function() {
 		//var city5 = document.getElementById('city_5').value;
 		//var city6 = document.getElementById('city_6').value;
 
-		//calcRoute();
+		calcRoute();
 		display();
-	});
-		//drawSched();
 		draw();
 		drawButtons();
+	});
+
+		//drawSched();
+		
 //	$("#c2").click(function(evt) {
 //		var mX = evt.pageX - this.offsetLeft;
 //		var mY = evt.pageY- this.offsetTop;
@@ -94,6 +133,7 @@ $(document).ready(function() {
 		//showText();
 
 });
+
 
 
 
