@@ -1,21 +1,22 @@
 
 #title{
 		font-family: 'Oxygen', sans-serif;
-		font-size: 20pt;
+		font-size: 15pt;
 		font-weight: 900;
-		text-align: left;
 		color:#b6dbd;
 		background-color: #b6dbd4;
+		vertical-align: center;
 }
+
 BODY
    {
-   font-family: 'Oxygen', sans-serif;
+    font-family: 'Oxygen', sans-serif;
 	font-size:8pt;
 	color:#b6dbd;
    }
 
 .informationTable{
-	
+
 	font-family: 'Oxygen', sans-serif;
 
 }
@@ -36,6 +37,7 @@ select, label {
 	font-family: 'Oxygen', sans-serif;
 	font-size: 11pt;
 	color:#b6dbd;
+	margin-left: 10px;
 }
 #temp{
 	ont-size: 7pt;
@@ -114,3 +116,10 @@ text-align: center;
     width:0;
 }
 
+a.remove_city {
+	color: #B53934;
+	text-decoration: none;
+	font-size: 18px;
+	vertical-align: middle;
+	cursor: pointer;
+}

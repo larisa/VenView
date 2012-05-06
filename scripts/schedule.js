@@ -8,8 +8,11 @@ var cityNum = 0;
 
 function dosomething(){
 	if(citycount < 7){
-		document.getElementById("city"+citycount).style.display="block";
-
+	//$("#city_"+cityNum).after(
+	//	'<tr id="city_'+citycount+'"><td class = "cities"><input type= "text"/> <a id = "remove_city" class="remove_button"><i class="icon-remove-sign"></i></a></td></tr>'
+//	);
+		
+	document.getElementById("city_"+citycount).style.display="block";
 	citycount++;
 	cityNum++;
 	}
@@ -53,7 +56,10 @@ function initialize() {
 	var autocomplete = new google.maps.places.Autocomplete(city5);
 	var city6 = document.getElementById('city6');
 	var autocomplete = new google.maps.places.Autocomplete(city6);
+	setRemoveCommentHandlers();
+	
 }
+
 
 function findVenues(location){
 	var kan = new google.maps.LatLng(38.891033, -94.526367);
@@ -101,6 +107,18 @@ function createMarker(place) {
     infowindow.open(map, this);
   });
 }
+
+function setRemoveCommentHandlers() {
+	  $('.remove_city').unbind('click');
+	  $('.remove_city').click(function() {
+	    $(this).parents('.controls').first().fadeOut();
+	    citycount--;
+	    if(citycount < 7){
+			document.getElementById("citLink").style.display="block";
+		}
+	  });
+	}
+
 
 function calcRoute() {
 	

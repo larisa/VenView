@@ -7,10 +7,11 @@
 
 
 <!-- Load style sheets -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 <link rel="stylesheet" type="text/css" href="css/viewLayout.css" />
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" media = "all"/>
 <link rel="stylesheet" type="text/css" href="css/datePicker.css"/>
-<link href="css/jquery-bubble-popup-v3.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="css/jquery-bubble-popup-v3.css" />
 
 
 <!-- Put fonts below this comment-->
@@ -21,14 +22,18 @@
 
 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtJA2DVT63Bh-JQDh28XNVFNAOaLSMimg&sensor=false&libraries=places"></script>
+<<<<<<< HEAD
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+=======
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+>>>>>>> f7517ae1619c95b5c87fa87282d81a46857558eb
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-<script type="text/javascript" src="schedule.js"></script>
-<script type="text/javascript" src="Booking.js"></script>
-<script src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.2.js"></script> 
-<script src="scripts/jquery-bubble-popup-v3.min.js" type="text/javascript"></script>
-<script type = "text/javascript" >
+<script type="text/javascript" src="scripts/schedule.js"></script>
+<script type="text/javascript" src="scripts/Booking.js"></script>
+<script type="text/javascript" src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.2.js"></script> 
+<script type="text/javascript" src="scripts/jquery-bubble-popup-v3.min.js" ></script>
+<script type="text/javascript" >
 $(document).ready(function() {
 
 	// Vars
@@ -41,100 +46,11 @@ $(document).ready(function() {
 
 	$("#end_cal").datepicker();
 
-	$("#pin1, #pin2, #pin3, #pin4, #pin5").mouseover(function(event) {
-	    createTooltip(event);               
-	}).mouseout(function(){
-	    // create a hidefunction on the callback if you want
-		hideTooltip(); 
-	}).click(function(event){
-		highlightRow(event)
+
+
+
 	});
 
-
-	$('html').click(function(event) {
-		var source = event.srcElement.id;
-		if (!(event.srcElement.id == "pin1")){
-			$("#v1").css({'background-color': 'white'});
-		}
-		if (!(event.srcElement.id == "pin2")){
-			$("#v2").css({'background-color': 'white'});
-		}
-
-		if (!(event.srcElement.id == "pin3")){
-			$("#v3").css({'background-color': 'white'});
-		}
-
-		if (!(event.srcElement.id == "pin4")){
-			$("#v4").css({'background-color': 'white'});
-		}
-
-		if (!(event.srcElement.id == "pin5")){
-			$("#v5").css({'background-color': 'white'});
-		}
-
-///		if (!$(event.target).closest('#pin2').length){
-		//	$("#v2").css({'background-color': 'white'})
-///		}
-	});
-
-
-	function createTooltip(event){  
-		var text;
-		if ($(event.target).closest('#pin1').length){
-			text = "Paradise Lounge"
-		}
-		else if ($(event.target).closest('#pin2').length){
-			text = "Beehive"
-		}
-		else if ($(event.target).closest('#pin3').length){
-			text = "House"
-		}
-
-		else if ($(event.target).closest('#pin4').length){
-			text = "Dragon"
-		}
-
-		else if ($(event.target).closest('#pin5').length){
-			text = "MiddleSex"
-		}
-	    $('<div id = "tool1" class="popup">' + text + '</div>').appendTo('body');
-	    positionTooltip(event);        
-	};
-
-
-	function hideTooltip(){
-		 $("#tool1").fadeOut();
-		 $("#tool1").remove();
-	};
-
-	function positionTooltip(event){
-	    var tPosX = event.pageX - 25;
-	    var tPosY = event.pageY - 100;
-	    $('div.popup').css({'position': 'absolute', 'font-family': 'Oxygen','top': tPosY, 'left': tPosX, 'z-index': '202'});
-	};
-	});	 
-
-	function highlightRow(event){
-		var row;
-		var source = event.srcElement.id;
-		if (event.srcElement.id == "pin1"){
-			row = "#v1"
-		}
-		else if (event.srcElement.id == "pin2"){
-			row = "#v2"
-		}
-
-		else if (event.srcElement.id == "pin3"){
-			row = "#v3"
-		}
-		else if (event.srcElement.id == "pin4"){
-			row = "#v4"
-		}
-		else if (event.srcElement.id == "pin5"){
-			row = "#v5"
-		}
-		 $(row).css({'background-color': 'yellow'});
-	}
 
 </script>
 
@@ -143,7 +59,7 @@ $(document).ready(function() {
 <!--Title-->
 </head>
 
-<div id="title"> <img id="logo" src="logo5.png" align = "absbottom">Book a Venue. Plan a tour. Become a star.</div>
+<p id="title"><img id="logo" src="logo5.png" >Book a venue. Plan a tour. Become a star.</p>
 <body onload="init()">
 	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
 
@@ -151,10 +67,12 @@ $(document).ready(function() {
 
 		 <tr style ="position: relative">
 			<td id="Column1" valign="top">
-				<table class="tables" id="information">
+				<table class="tables" id="information" >
 					<tr>
+
 						<td><label>Begin date:</label> <input type="text"
 							class = "clickables" id="start_cal" title="Begin date"></td>
+
 					</tr>
 					<tr>
 						<td><label>End date: </label> <input class = "clickables" id="end_cal"></input>
@@ -162,23 +80,72 @@ $(document).ready(function() {
 					</tr>
 
 					<tr id="city_0">
-						
+
+
 						<td id="origin"><label> Origin:</label><input
-							id = "originInput" class = "clickables" class="vv-input" type="text" /></td>
+							id="originInput" class="clickables" class="vv-input" type="text" /></td>
+
 					</tr>
-					<tr id="city_1"><td class = "cities"><input style = "DISPLAY: none;" id = "city1"type= "text"/></td></tr>
-					<tr id="city_2"><td class = "cities"><input style = "DISPLAY: none;" id = "city2"type= "text"/></td></tr>
-					<tr id="city_3"><td class = "cities"><input style = "DISPLAY: none;" id = "city3"type= "text"/></td></tr>
-					<tr id="city_4"><td class = "cities"><input style = "DISPLAY: none;" id = "city4"type= "text"/></td></tr>
-					<tr id="city_5"><td class = "cities"><input style = "DISPLAY: none;" id = "city5"type= "text"/></td></tr>
-					<tr id="city_6"><td class = "cities"><input style = "DISPLAY: none;" id = "city6"type= "text"/></td></tr>
+					<tr>
+						<td class="cities">
+							<div id="city_1" class="controls" style="DISPLAY: none">
+								<input id="city1" type="text" /> <a class="remove_city">
+									<i class="icon-remove-sign"></i>
+								</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="cities">
+							<div id="city_2" class="controls" style="DISPLAY: none;">
+								<input id="city2" type="text" /> <a class="remove_city">
+									<i class="icon-remove-sign"></i>
+								</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="cities">
+							<div id="city_3" class="controls" style="DISPLAY: none;">
+								<input id="city3" type="text" /> <a class="remove_city"> <i
+									class="icon-remove-sign"></i></a>
+							</div>
+						</td>
+					</tr>
+
+
+					<tr>
+						<td class="cities">
+							<div id="city_4" class="controls" style="DISPLAY: none;">
+								<input id="city4" type="text" /> <a class="remove_city"> <i
+									class="icon-remove-sign"></i></a>
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="cities">
+							<div id="city_5" class="controls" style="DISPLAY: none;">
+								<input id="city5" type="text" /> <a class="remove_city"> <i
+									class="icon-remove-sign"></i></a>
+							</div>
+						</td>
+					</tr>
+
+					<tr >
+						<td class="cities">
+							<div id="city_6" class="controls" style="DISPLAY: none;">
+								<input id="city6" type="text" /> <a class="remove_city"> <i
+									class="icon-remove-sign"></i></a>
+							</div>
+						</td>
+					</tr>
 					<tr>
 
 						<td id="dest"><label> Destination:</label> <input id= "destInput" class = "clickables" type="text" /></td>
 
 					</tr>
-
-					<tr>
+<tr style = "float:right">
 						<td><a id = "citLink" class = "clickables" href="#" onclick="dosomething(); return(false);">Add
 								cities along your tour</a></td>
 					</tr>
@@ -212,16 +179,15 @@ $(document).ready(function() {
 					</tr>
 					<tr>
 						<td align="right"><input id="Enter" type="button"
-						 value="Enter" class = "clickables"></input></td>
+						 value="Enter" class = "clickables btn btn-primary"></input></td>
 					</tr>
-
 				</table>
 			</td>
 
 			<td id="Column2" style="visibility: hidden" width = "600">
-				<table>
+				<table cellpadding  = "10px">
 					<tr id = "firstRow">
-						<div id="map_canvas" style ="height:400px; width:500px;"</div>
+						<div id="map_canvas" style ="height:400px; width:500px;"></div>
 					</tr>
 					<tr>
 						<table id = "sched">
