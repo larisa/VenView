@@ -76,24 +76,71 @@ $(document).ready(function() {
 
 					<tr id="city_0">
 
-						
+
 						<td id="origin"><label> Origin:</label><input
-							id = "originInput" class = "clickables" class="vv-input" type="text" /></td>
+							id="originInput" class="clickables" class="vv-input" type="text" /></td>
 
 					</tr>
-					<tr id="city_1"><td class = "cities"><input style = "DISPLAY: none;" id = "city1"type= "text"/></td></tr>
-					<tr id="city_2"><td class = "cities"><input style = "DISPLAY: none;" id = "city2"type= "text"/></td></tr>
-					<tr id="city_3"><td class = "cities"><input style = "DISPLAY: none;" id = "city3"type= "text"/></td></tr>
-					<tr id="city_4"><td class = "cities"><input style = "DISPLAY: none;" id = "city4"type= "text"/></td></tr>
-					<tr id="city_5"><td class = "cities"><input style = "DISPLAY: none;" id = "city5"type= "text"/></td></tr>
-					<tr id="city_6"><td class = "cities"><input style = "DISPLAY: none;" id = "city6"type= "text"/></td></tr>
+					<tr>
+						<td class="cities">
+							<div id="city_1" class="controls" style="DISPLAY: none">
+								<input id="city1" type="text" /> <a class="remove_city">
+									<i class="icon-remove-sign"></i>
+								</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="cities">
+							<div id="city_2" class="controls" style="DISPLAY: none;">
+								<input id="city2" type="text" /> <a class="remove_city">
+									<i class="icon-remove-sign"></i>
+								</a>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class="cities">
+							<div id="city_3" class="controls" style="DISPLAY: none;">
+								<input id="city3" type="text" /> <a class="remove_city"> <i
+									class="icon-remove-sign"></i></a>
+							</div>
+						</td>
+					</tr>
+
+
+					<tr>
+						<td class="cities">
+							<div id="city_4" class="controls" style="DISPLAY: none;">
+								<input id="city4" type="text" /> <a class="remove_city"> <i
+									class="icon-remove-sign"></i></a>
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="cities">
+							<div id="city_5" class="controls" style="DISPLAY: none;">
+								<input id="city5" type="text" /> <a class="remove_city"> <i
+									class="icon-remove-sign"></i></a>
+							</div>
+						</td>
+					</tr>
+
+					<tr >
+						<td class="cities">
+							<div id="city_6" class="controls" style="DISPLAY: none;">
+								<input id="city6" type="text" /> <a class="remove_city"> <i
+									class="icon-remove-sign"></i></a>
+							</div>
+						</td>
+					</tr>
 					<tr>
 
 						<td id="dest"><label> Destination:</label> <input id= "destInput" class = "clickables" type="text" /></td>
 
 					</tr>
-
-					<tr>
+<tr style = "float:right">
 						<td><a id = "citLink" class = "clickables" href="#" onclick="dosomething(); return(false);">Add
 								cities along your tour</a></td>
 					</tr>
@@ -127,7 +174,7 @@ $(document).ready(function() {
 					</tr>
 					<tr>
 						<td align="right"><input id="Enter" type="button"
-						 value="Enter" class = "clickables"></input></td>
+						 value="Enter" class = "clickables btn btn-primary"></input></td>
 					</tr>
 				</table>
 			</td>

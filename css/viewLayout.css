@@ -116,3 +116,10 @@ text-align: center;
     width:0;
 }
 
+a.remove_city {
+	color: #B53934;
+	text-decoration: none;
+	font-size: 18px;
+	vertical-align: middle;
+	cursor: pointer;
+}
