@@ -5,6 +5,7 @@ var heightt = 250;
 var fixedHeight = 30;
 var citycount = 1;
 var cityNum = 0;
+
 function dosomething(){
 	if(citycount < 7){
 		document.getElementById("city"+citycount).style.display="block";
@@ -18,11 +19,13 @@ function dosomething(){
 }
 
 var directionDisplay;
+var service;
 var directionsService = new google.maps.DirectionsService();
 var map;
-//var geocoder;
+var geocoder;
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
+
 	
   var chicago = new google.maps.LatLng(41.850033, -87.6500523);
   var myOptions = {
@@ -31,6 +34,8 @@ function initialize() {
     center: chicago
   }
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	service = new google.maps.places.PlacesService(map);
+	geocoder = new google.maps.Geocoder();
   directionsDisplay.setMap(map);
 	var origin = document.getElementById('originInput');
 	var autocomplete = new google.maps.places.Autocomplete(origin);
@@ -50,6 +55,52 @@ function initialize() {
 	var autocomplete = new google.maps.places.Autocomplete(city6);
 }
 
+function findVenues(location){
+	var kan = new google.maps.LatLng(38.891033, -94.526367);
+	//document.getElementById("change").innerHTML="hi";
+	//return kan;
+	geocoder.geocode({"address": location}, function(results, status){
+		if (status == google.maps.GeocoderStatus.OK){
+			//map.setCenter(results[0].geometry.location);
+			var c = results[0].geometry.location;
+			var request = {
+	          location: c,
+	          radius: 500,
+	          types: ['food']
+	        };
+	        infowindow = new google.maps.InfoWindow();
+	        var service = new google.maps.places.PlacesService(map);
+	        service.search(request, callback);
+
+				
+		}
+		else{
+			//document.getElementById("change").innerHTML="hi";
+			//return kan;
+		}
+	});
+
+}
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      createMarker(results[i]);
+    }
+  }
+}
+
+function createMarker(place) {
+  var placeLoc = place.geometry.location;
+  var marker = new google.maps.Marker({
+    map: map,
+    position: place.geometry.location
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(place.name);
+    infowindow.open(map, this);
+  });
+}
 
 function calcRoute() {
 	
@@ -197,6 +248,9 @@ $(document).ready(function() {
 		var style = document.getElementById('style').value;
 		var origin = document.getElementById('originInput').value;
 		var dest = document.getElementById('destInput').value;
+		
+		//cities shouldn't be ordered, one can hav cities 1 through 5, then delete 3, this should not affect behavior
+		//also I can try to call initiate at every Enter. That would be better in terms of the autocompelte elements. 
 		var cit1 = document.getElementById('city1').value;
 		var cit2 = document.getElementById('city2').value;
 		var cit3 = document.getElementById('city3').value;
@@ -204,8 +258,11 @@ $(document).ready(function() {
 		var cit5 = document.getElementById('city5').value;
 		var cit6 = document.getElementById('city6').value;
 
+		findVenues(origin);
+		findVenues(dest);
 		if(bDate != null && eDate!= null && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
+			
 			calcRoute();
 			display();}
 			if(citycount == 2 && cit1!=""){
