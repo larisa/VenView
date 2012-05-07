@@ -42,6 +42,9 @@ select, label {
 #temp{
 	ont-size: 7pt;
 }
+#padme{
+	padding: 0 0 8px 0;
+}
 #fontdudes{
 	font-family: 'Oxygen', sans-serif;
 	font-size: 12pt;
