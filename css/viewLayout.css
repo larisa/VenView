@@ -5,7 +5,7 @@
 		font-weight: 900;
 		color:#b6dbd;
 		background-color: #b6dbd4;
-		vertical-align: center;
+		
 }
 
 BODY
@@ -13,6 +13,7 @@ BODY
     font-family: 'Oxygen', sans-serif;
 	font-size:8pt;
 	color:#b6dbd;
+	
    }
 
 .informationTable{
