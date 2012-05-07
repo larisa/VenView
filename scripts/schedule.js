@@ -164,7 +164,7 @@ function callback(results, status) {
     }
   }
 }
-
+var markersArray = [];
 function createMarker(place) {
   var placeLoc = place.geometry.location;
   var marker = new google.maps.Marker({
@@ -176,6 +176,15 @@ function createMarker(place) {
     infowindow.setContent(place.name);
     infowindow.open(map, this);
   });
+	markersArray.push(marker);
+}
+function deleteOverlays() {
+  if (markersArray) {
+    for (i in markersArray) {
+      markersArray[i].setMap(null);
+    }
+    markersArray.length = 0;
+  }
 }
 
 function setRemoveCommentHandlers() {
@@ -314,7 +323,8 @@ $(document).ready(function() {
 		var cit1 = document.getElementById('city1').value;
 		var cit2 = document.getElementById('city2').value;
 		var cit3 = document.getElementById('city3').value;
-
+		
+		deleteOverlays();
 		findVenues(origin);
 		findVenues(dest);
 		if(bDate != null && eDate!= null && genre != null && cap != null && style!= null && origin!="" && dest!=""){
