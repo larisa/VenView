@@ -29,13 +29,17 @@ function dosomething(){
 					document.getElementById("city1").value = valoo1;
 					document.getElementById("city3").value = "";
 					document.getElementById("city_1").style.display="block";
-					activeCities.push("#city1");	
+					removeByElement(activeCities,"#city3");
+					activeCities.push("#city1");
+					activeCities.push("#city3");	
 				}
 				else if(valoo2 != ""){
 					document.getElementById("city1").value = valoo2;
 					document.getElementById("city2").value = "";
 					document.getElementById("city_1").style.display="block";
-					activeCities.push("#city1");	
+					removeByElement(activeCities,"#city2");
+					activeCities.push("#city1");
+					activeCities.push("#city2");	
 				}
 				
 			}
@@ -48,7 +52,12 @@ function dosomething(){
 				document.getElementById("city2").value = valoo1;
 				document.getElementById("city3").value = "";
 				document.getElementById("city_1").style.display="block";
+				a = activeCities.pop();
+				b = activeCities.pop();
 				activeCities.push("#city1");
+				activeCities.push(b);
+				activeCities.push(a);
+				
 			}
 
 		}
@@ -62,7 +71,9 @@ function dosomething(){
 				document.getElementById("city2").value = valoo;
 				document.getElementById("city3").value = "";
 				document.getElementById("city_2").style.display="block";
+				removeByElement(activeCities,"#city3");
 				activeCities.push("#city2");
+				activeCities.push("#city3");
 			}
 		}
 		else if(contains(activeCities, "#city3") == false){
@@ -304,10 +315,10 @@ $(document).ready(function() {
 			
 			calcRoute();
 			display();}
-			if(citycount == 2 && cit1!=""){
+			if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
 			calcRoute();
 			display();}
-			if(citycount == 3 && cit1!="" && cit2!=""){
+			if(citycount == 3 && (cit1!="" && cit2!="") || (cit2!="" && cit3!="") || (cit1!="" && cit3!="")){
 			calcRoute();
 			display();}
 			if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
