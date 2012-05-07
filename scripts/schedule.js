@@ -108,12 +108,6 @@ function initialize() {
 	var autocomplete = new google.maps.places.Autocomplete(city2);
 	var city3 = document.getElementById('city3');
 	var autocomplete = new google.maps.places.Autocomplete(city3);
-	var city4 = document.getElementById('city4');
-	var autocomplete = new google.maps.places.Autocomplete(city4);
-	var city5 = document.getElementById('city5');
-	var autocomplete = new google.maps.places.Autocomplete(city5);
-	var city6 = document.getElementById('city6');
-	var autocomplete = new google.maps.places.Autocomplete(city6);
 	setRemoveCommentHandlers();
 	
 }
@@ -184,18 +178,6 @@ function setRemoveCommentHandlers() {
 		if(id == "rc3"){
 			removeByElement(activeCities,"#city3");
 			document.getElementById("city3").value = "";
-		}
-		if(id == "rc4"){
-			removeByElement(activeCities,"#city4");
-			document.getElementById("city4").value = "";
-		}
-		if(id == "rc5"){
-			removeByElement(activeCities,"#city5");
-			document.getElementById("city5").value = "";
-		}
-		if(id == "rc6"){
-			removeByElement(activeCities,"#city6");
-			document.getElementById("city6").value = "";
 		}
 	    if(citycount < 4){
 			document.getElementById("citLink").style.display="block";
@@ -276,94 +258,6 @@ function calcRoute() {
       travelMode: google.maps.DirectionsTravelMode.DRIVING
   };}
 
-	if(activeCities.length == 4){
-		var cityName = activeCities[0];
-		var c = $(cityName).val();
-		var cityName = activeCities[1];
-		var c1 = $(cityName).val();
-		var cityName = activeCities[2];
-		var c2 = $(cityName).val();
-		var cityName = activeCities[3];
-		var c3 = $(cityName).val();
- 	request = {
-      origin: ori, 
-      destination: en,
-	waypoints:[
-	{location: c,
-		stopover: true},
-	{location: c1,
-		stopover: true},
-	{location: c2,
-		stopover: true},
-	{location: c3,
-		stopover: true}
-	],
-
-      travelMode: google.maps.DirectionsTravelMode.DRIVING
-  };}
-	if(activeCities.length == 5){
-		var cityName = activeCities[0];
-		var c = $(cityName).val();
-		var cityName = activeCities[1];
-		var c1 = $(cityName).val();
-		var cityName = activeCities[2];
-		var c2 = $(cityName).val();
-		var cityName = activeCities[3];
-		var c3 = $(cityName).val();
-		var cityName = activeCities[4];
-		var c4 = $(cityName).val();
- 	request = {
-      origin: ori, 
-      destination: en,
-	waypoints:[
-	{location: c,
-		stopover: true},
-	{location: c1,
-		stopover: true},
-	{location: c2,
-		stopover: true},
-	{location: c3,
-		stopover: true},
-	{location: c4,
-		stopover: true}
-	],
-
-      travelMode: google.maps.DirectionsTravelMode.DRIVING
-  };}
-
-	if(activeCities.length == 5){
-		var cityName = activeCities[0];
-		var c = $(cityName).val();
-		var cityName = activeCities[1];
-		var c1 = $(cityName).val();
-		var cityName = activeCities[2];
-		var c2 = $(cityName).val();
-		var cityName = activeCities[3];
-		var c3 = $(cityName).val();
-		var cityName = activeCities[4];
-		var c4 = $(cityName).val();
-		var cityName = activeCities[5];
-		var c4 = $(cityName).val();
- 	request = {
-      origin: ori, 
-      destination: en,
-	waypoints:[
-	{location: c,
-		stopover: true},
-	{location: c1,
-		stopover: true},
-	{location: c2,
-		stopover: true},
-	{location: c3,
-		stopover: true},
-	{location: c4,
-		stopover: true},
-	{location: c5,
-		stopover: true}
-	],
-
-      travelMode: google.maps.DirectionsTravelMode.DRIVING
-  };}
 
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
@@ -402,9 +296,6 @@ $(document).ready(function() {
 		var cit1 = document.getElementById('city1').value;
 		var cit2 = document.getElementById('city2').value;
 		var cit3 = document.getElementById('city3').value;
-		var cit4 = document.getElementById('city4').value;
-		var cit5 = document.getElementById('city5').value;
-		var cit6 = document.getElementById('city6').value;
 
 		findVenues(origin);
 		findVenues(dest);
