@@ -44,8 +44,9 @@ function dosomething(){
 				
 			}
 			else if(activeCities.length == 2){
-				//take the value of 5 
-				//give 5 the value of 6
+				//take the value of 2 
+				//give 2 the value of 3
+				//put in the right order in activeCities so route can be computed correctly 
 				var valoo1 = document.getElementById("city3").value;
 				var valoo2 = document.getElementById("city2").value;
 				document.getElementById("city1").value = valoo2;
