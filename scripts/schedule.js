@@ -6,15 +6,75 @@ var fixedHeight = 30;
 var citycount = 1;
 var cityNum = 0;
 var activeCities =[];
+function contains(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+        if (a[i] == obj) {
+            return true;
+        }
+    }
+    return false;
+}
 function dosomething(){
-	if(citycount < 7){
-	var str = "city_"+citycount;
-	activeCities.push("#city"+citycount);
-	document.getElementById(str).style.display="block";//change block to inline later
+	if(citycount < 4){
+		if(contains(activeCities, "#city1") == false){
+			if(activeCities.length == 0){
+				document.getElementById("city_1").style.display="block";
+				activeCities.push("#city1");
+			}
+			else if(activeCities.length == 1){
+				//if there is a 5 or a 6 take their value
+				var valoo1 = document.getElementById("city3").value;
+				var valoo2 = document.getElementById("city2").value;
+				if(valoo1 != ""){
+					document.getElementById("city1").value = valoo1;
+					document.getElementById("city3").value = "";
+					document.getElementById("city_1").style.display="block";
+					activeCities.push("#city1");	
+				}
+				else if(valoo2 != ""){
+					document.getElementById("city1").value = valoo2;
+					document.getElementById("city2").value = "";
+					document.getElementById("city_1").style.display="block";
+					activeCities.push("#city1");	
+				}
+				
+			}
+			else if(activeCities.length == 2){
+				//take the value of 5 
+				//give 5 the value of 6
+				var valoo1 = document.getElementById("city3").value;
+				var valoo2 = document.getElementById("city2").value;
+				document.getElementById("city1").value = valoo2;
+				document.getElementById("city2").value = valoo1;
+				document.getElementById("city3").value = "";
+				document.getElementById("city_1").style.display="block";
+				activeCities.push("#city1");
+			}
+
+		}
+		else if(contains(activeCities, "#city2") == false){
+			if(activeCities.length == 1){
+				document.getElementById("city_2").style.display="block";
+				activeCities.push("#city2");
+			}
+			else if(activeCities.length == 2){
+				var valoo = document.getElementById("city3").value;
+				document.getElementById("city2").value = valoo;
+				document.getElementById("city3").value = "";
+				document.getElementById("city_2").style.display="block";
+				activeCities.push("#city2");
+			}
+		}
+		else if(contains(activeCities, "#city3") == false){
+			if(activeCities.length == 2){
+				document.getElementById("city_3").style.display="block";
+				activeCities.push("#city3");
+			}
+		}
 	citycount++;
 	cityNum++;
 	}
-	if(citycount == 7){
+	if(citycount == 4){
 		document.getElementById("citLink").style.display="none";
 	}
 }
@@ -115,35 +175,29 @@ function setRemoveCommentHandlers() {
 		if(id == "rc1"){
 			removeByElement(activeCities,"#city1");
 			document.getElementById("city1").value = "";
-			//activeCities.pop("#city1");
-			//clear the input box
+
 		}
 		if(id == "rc2"){
 			removeByElement(activeCities,"#city2");
 			document.getElementById("city2").value = "";
-			//activeCities.pop("#city2");
 		}
 		if(id == "rc3"){
 			removeByElement(activeCities,"#city3");
 			document.getElementById("city3").value = "";
-			//activeCities.pop("#city3");
 		}
 		if(id == "rc4"){
 			removeByElement(activeCities,"#city4");
 			document.getElementById("city4").value = "";
-			//activeCities.pop("#city4");
 		}
 		if(id == "rc5"){
 			removeByElement(activeCities,"#city5");
 			document.getElementById("city5").value = "";
-			//activeCities.pop("#city5");
 		}
 		if(id == "rc6"){
 			removeByElement(activeCities,"#city6");
 			document.getElementById("city6").value = "";
-			//activeCities.pop("#city6");
 		}
-	    if(citycount < 7){
+	    if(citycount < 4){
 			document.getElementById("citLink").style.display="block";
 		}
 		$('#Enter').click();
@@ -366,15 +420,6 @@ $(document).ready(function() {
 			calcRoute();
 			display();}
 			if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
-			calcRoute();
-			display();}
-			if(citycount == 5 && cit1!="" && cit2!="" && cit3!="" && cit4!=""){
-			calcRoute();
-			display();}
-			if(citycount == 6 && cit1!="" && cit2!="" && cit3!="" && cit4!="" && cit5!=""){
-			calcRoute();
-			display();}
-			if(citycount == 7 && cit1!="" && cit2!="" && cit3!="" && cit4!="" && cit5!="" && cit6!=""){
 			calcRoute();
 			display();}
 		}
