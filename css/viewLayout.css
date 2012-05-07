@@ -21,7 +21,8 @@ BODY
 	font-family: 'Oxygen', sans-serif;
 
 }
-
+#information{
+}
 select, label {
 	width:100px;    /*Or however much space you need for the form’s labels*/
     float:left;

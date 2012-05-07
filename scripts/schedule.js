@@ -123,8 +123,14 @@ function initialize() {
 	setRemoveCommentHandlers();
 	
 }
-
-
+function findVenuesAlongPath(){
+	//get directions from the api, choose stops at random
+	// google directions specify entering and passing through. learn how to isolate and retrieve 
+	//findVenues(stop) per stop
+	//display a maximum number of them
+	
+	//remember to figure out how to remove markers after they've been inserted
+}
 function findVenues(location){
 	var kan = new google.maps.LatLng(38.891033, -94.526367);
 	//document.getElementById("change").innerHTML="hi";
