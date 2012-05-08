@@ -141,8 +141,8 @@ function findVenues(location){
 			var c = results[0].geometry.location;
 			var request = {
 	          location: c,
-	          radius: 500,
-	          types: ['night_club']
+	          radius: 45000,
+	          types: ['food']
 	        };
 	        infowindow = new google.maps.InfoWindow();
 	        var service = new google.maps.places.PlacesService(map);
@@ -284,14 +284,49 @@ function calcRoute() {
 
       travelMode: google.maps.DirectionsTravelMode.DRIVING
   };}
-
+//Hartford, CT
+//41.730330
+//-72.718506
 
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
-    }
+		for (var i = 0; i < response.routes[0].overview_path.length-10; i=i+10) {
+			var c = response.routes[0].overview_path[i];
+		//	geocoder.geocode({"latLng": c }, function(results, status){
+		//		if (status == google.maps.GeocoderStatus.OK){
+		//			for(var j =0; j<results.length;j++){
+		//			findVenues(results[j].formatted_address);}
+		//		}
+		var marker = new google.maps.Marker({
+	        position: response.routes[0].overview_path[i],
+	        map: map
+	    
+
+			});
+			markersArray.push(marker);
+			
+
+		}
+		//reverseGeocodeVenue(41.730330, -72.718506);
+	}
+    
   });
 }
+
+function reverseGeocodeVenue(lat, lng){
+	//var latlng = new google.maps.LatLng(41.730330, -72.718506);
+	var latlng = new google.maps.LatLng(lat, lng);
+	geocoder.geocode({"latLng": latlng}, function(results, status){
+		if (status == google.maps.GeocoderStatus.OK){
+			for(var i =0; i<results.length;i++){
+			findVenues(results[i].formatted_address);}
+		}
+
+	});	
+}
+
+
 
 var myBookings = [];
 var displayedGig = null;
@@ -327,6 +362,7 @@ $(document).ready(function() {
 		deleteOverlays();
 		findVenues(origin);
 		findVenues(dest);
+		//findVenues("Hartford, CT");
 		if(bDate != null && eDate!= null && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
 			
