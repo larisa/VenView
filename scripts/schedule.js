@@ -128,7 +128,13 @@ function findVenuesAlongPath(){
 	// google directions specify entering and passing through. learn how to isolate and retrieve 
 	//findVenues(stop) per stop
 	//display a maximum number of them
+	for(var i = 0; i<array.length; i++){
+		if (i%10 == 0){
+		var latlng = new google.maps.LatLng(array[i][0], array[i][1]);
+		reverseGeocodeVenue(latlng);}
+	}
 	
+	//	reverseGeocodeVenue(latlng);
 	//remember to figure out how to remove markers after they've been inserted
 }
 function findVenues(location){
@@ -141,7 +147,7 @@ function findVenues(location){
 			var c = results[0].geometry.location;
 			var request = {
 	          location: c,
-	          radius: 45000,
+	          radius: 500, //change radius later
 	          types: ['food']
 	        };
 	        infowindow = new google.maps.InfoWindow();
@@ -219,6 +225,7 @@ function removeByElement(arrayName,arrayElement){
 	  {arrayName.splice(i,1);} 
 	  } 
 }
+var array = [];
 function calcRoute() {
 	
   var ori = $("#originInput").val();
@@ -291,36 +298,68 @@ function calcRoute() {
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
+	var a = "";
+
 		for (var i = 0; i < response.routes[0].overview_path.length-10; i=i+10) {
 			var c = response.routes[0].overview_path[i];
+		//	c.slice(1, -1);
+			var k = ""+c;
+			var l = k.slice(1, -1);
+			var lon = l.split(",")[0];
+			var lat  = l.split(",")[1].slice(1);
+			var lonn = parseFloat(lon);
+			var latt = parseFloat(lat);
+			array.push([lonn, latt]);
+			
+			//a =a + lonn + "," + latt + "<br />";
+			//a =a + array.pop() + "<br />";
+			//var k = c.split(",");
+			//var latlng = new google.maps.LatLng(lonn, latt);
+		//	var latlng = new google.maps.LatLng(41.543130000000005,-73.0245);
+		//	reverseGeocodeVenue(latlng);	
+			
+				
 		//	geocoder.geocode({"latLng": c }, function(results, status){
 		//		if (status == google.maps.GeocoderStatus.OK){
 		//			for(var j =0; j<results.length;j++){
 		//			findVenues(results[j].formatted_address);}
 		//		}
-		var marker = new google.maps.Marker({
-	        position: response.routes[0].overview_path[i],
-	        map: map
+		
+		//var marker = new google.maps.Marker({
+	      //  position: response.routes[0].overview_path[i],
+	        //map: map
 	    
 
-			});
-			markersArray.push(marker);
+			//});
+			//markersArray.push(marker);
 			
 
 		}
-		//reverseGeocodeVenue(41.730330, -72.718506);
+	//	document.getElementById("debug").innerHTML = a;
 	}
     
   });
 }
 
-function reverseGeocodeVenue(lat, lng){
+function reverseGeocodeVenue(latlng){
 	//var latlng = new google.maps.LatLng(41.730330, -72.718506);
-	var latlng = new google.maps.LatLng(lat, lng);
+	//var latlng = new google.maps.LatLng(lat, lng);
 	geocoder.geocode({"latLng": latlng}, function(results, status){
 		if (status == google.maps.GeocoderStatus.OK){
-			for(var i =0; i<results.length;i++){
-			findVenues(results[i].formatted_address);}
+			for(var i=0; i<results.length; i++){
+				//make a check for lenght of types
+				if(results[i].types.length == 2){
+					if(results[i].types[0] == "locality" && results[i].types[1] == "political"){
+						//document.getElementById("changeme").innerHTML = results[i].formatted_address;
+						findVenues(results[i].formatted_address);
+					}
+				}
+
+			}
+			
+			
+//			for(var i =0; i<results.length;i++){
+//			findVenues(results[i].formatted_address);}
 		}
 
 	});	
@@ -362,11 +401,16 @@ $(document).ready(function() {
 		deleteOverlays();
 		findVenues(origin);
 		findVenues(dest);
+
+		//findVenuesAlongPath();
+		
 		//findVenues("Hartford, CT");
 		if(bDate != null && eDate!= null && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
 			
 			calcRoute();
+
+			findVenuesAlongPath(); //not working
 			display();}
 			if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
 			calcRoute();
