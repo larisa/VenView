@@ -15,7 +15,9 @@ BODY
 	color:#b6dbd;
 	
    }
-
+#debug{
+	color: red;
+}
 .informationTable{
 
 	font-family: 'Oxygen', sans-serif;
