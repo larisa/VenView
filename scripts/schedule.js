@@ -325,13 +325,13 @@ function calcRoute() {
 		//			findVenues(results[j].formatted_address);}
 		//		}
 		
-		//var marker = new google.maps.Marker({
-	      //  position: response.routes[0].overview_path[i],
-	        //map: map
+		var marker = new google.maps.Marker({
+	        position: response.routes[0].overview_path[i],
+	        map: map
 	    
 
-			//});
-			//markersArray.push(marker);
+			});
+			markersArray.push(marker);
 			
 
 		}
@@ -376,6 +376,9 @@ $(document).ready(function() {
 	  	  	if (e.keyCode == '13' &&  this.value != '') {
 						$('#Enter').click();
 	  	  	}
+			else{
+			/// send warning	
+			}
 	});
 	$('.cities').keypress(function(e) {
 	  	  	if (e.keyCode == '13' &&  this.value != '') {
@@ -401,7 +404,7 @@ $(document).ready(function() {
 		deleteOverlays();
 		findVenues(origin);
 		findVenues(dest);
-
+		
 		//findVenuesAlongPath();
 		
 		//findVenues("Hartford, CT");
