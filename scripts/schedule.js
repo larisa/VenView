@@ -222,15 +222,13 @@ function findVenues(location){
 	          radius: 500, //change radius later
 	          types: ['food']
 	        };
-	        //infowindow = new google.maps.InfoWindow();
 	        var service = new google.maps.places.PlacesService(map);
 	        service.search(request, callback);
 
 				
 		}
 		else{
-			//document.getElementById("change").innerHTML="hi";
-			//return kan;
+
 		}
 	});
 
@@ -562,11 +560,11 @@ $(document).ready(function() {
 	});
 
 	draw();
-	drawButtons();
+	//drawButtons();
 });
 
 //var numberOfVenues= array.length; //set static for now, but then length pf listOfVenues
-var numberOfVenues = 5;
+var numberOfVenues = 20; //namesList.length;
 var namesList = [];
 var venuesData = ["Sandy's","Noor's club", "Burlesque Lounge","Larisa's night-club", "Hiba's pub", "Dahlia's coffee house",
 "Ammar Ammar", "Gypsy's Bar", "Cure", "House of Blues", "Tao", "Berklee Performance Center", "The Blue Room", "Random Lounge", 
@@ -585,11 +583,12 @@ function draw(){
 	var canvas = document.getElementById("canvasMoneyBtns");
 	//document.getElementById("debug").innerHTML= "hello"; 
 	var ctx = canvas.getContext('2d');
-	var theSize = 400/5;
+	var theSize = 80;
 	var theSize2 = 30;
+	var numberOfDays = 5;
 	
 	
-		for(i=0;i<numberOfVenues+1;i++){
+		for(i=0;i<numberOfDays+1;i++){
 			
 			ctx.fillStyle = "rgb(0,0,0)";
 			ctx.beginPath();
@@ -597,14 +596,16 @@ function draw(){
 			ctx.lineTo(i*theSize,numberOfVenues*fixedHeight);
 			ctx.stroke();
 			
-			ctx.fillStyle = "rgb(0,0,0)";
-			ctx.beginPath();
-			ctx.moveTo(0,i*fixedHeight);
-			ctx.lineTo(400,i*fixedHeight);
-			ctx.stroke();
 		
 			
 		}	
+		for(i=0;i<numberOfVenues+1;i++){
+		ctx.fillStyle = "rgb(0,0,0)";
+		ctx.beginPath();
+		ctx.moveTo(0,i*fixedHeight);
+		ctx.lineTo(400,i*fixedHeight);
+		ctx.stroke();
+	}
 }
 
 function get_venue_openings(){

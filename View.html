@@ -8,6 +8,7 @@
 
 <!-- Load style sheets -->
 <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
 <link rel="stylesheet" type="text/css" href="css/viewLayout.css" />
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" media = "all"/>
 <link rel="stylesheet" type="text/css" href="css/datePicker.css"/>
@@ -28,6 +29,7 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
 <script type="text/javascript" src="scripts/schedule.js"></script>
 <script type="text/javascript" src="scripts/Booking.js"></script>
+<script type="text/javascript" src="scripts/CSSPopUp.js"></script>
 <script type="text/javascript" src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.2.js"></script> 
 <script type="text/javascript" src="scripts/jquery-bubble-popup-v3.min.js" ></script>
 
@@ -36,7 +38,22 @@
 </head>
 
 <p id="title"><img id="logo" src="logo5.png" >Book a venue. Plan a tour. Become a star.</p>
+
+<div id="blanket" style="display:none;"></div>
+<div id="popUpDiv" style="display:none;">
+<table>
+	<tr width = "100%">
+
+		<td width = "300" align = "right">
+			<i onclick="popup('popUpDiv')" class="icon-remove-signage"></i>
+		</td>
+	</tr>
+</table>
+
+</div>
+
 <body onload="initialize()">
+	
 	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
 
 	<table class = "tables" id ="page">
@@ -127,11 +144,16 @@
 						</select></td>
 					</tr>
 					<tr>
+
 						<td align="right"><input id="Enter" type="button"
 						 value="Enter" class = "clickables btn btn-primary"></input></td>
+						
 					</tr>
 					<tr><p id="debug"></p></tr>
 				</table>
+				
+					<a href="#" onclick="popup('popUpDiv')">Click Here To View Schedule</a>
+				
 			</td>
 
 			<td id="Column2" style="visibility: hidden" width = "600">
@@ -156,7 +178,7 @@
 								</tr>
 								<tr id = "secondRow" width = "16.6%">
 									<td id="venues">
-										<table class= "tables" height = "150">
+										<table id = "venuesSched" class= "tables" height = "150">
 											<tr id = "v1"><td id = "Paradise" align = "right">Paradise</td></tr>
 											<tr id = "v2"><td id = "Beehive" align = "right">Beehive</td></tr>
 											<tr id = "v3"><td id = "House" align = "right">House</td></tr>
@@ -164,9 +186,11 @@
 											<tr id = "v5"><td id = "MiddleSex" align = "right">MiddleSex</td></tr>
 										</table>
 									</td>
+									<td id="schedTable">
+										<table id = "tableMe">
+											
+										</table><td>
 									<td valign = "top" id="content">
-										<canvas id="canvasMoneyBtns" width="500" height="2000" style ="z-index: 100; 																																						pointer-events: none; position: absolute;"></canvas>
-										<canvas id="canvasMoneyBtns2" width="500" height="2000" style ="z-index: 101; pointer-events: none; position: absolute;"></canvas>
 										<div id="selectBtns" style="position:absolute;"></div>
 										<div id="allMoneyBtns" style="position:absolute;"></div>
 										<div class="moneyBtn" type="button"></div>
