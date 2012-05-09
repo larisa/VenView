@@ -96,10 +96,11 @@ var service;
 var directionsService = new google.maps.DirectionsService();
 var map;
 var geocoder;
+var infowindow;
 function initialize() {
   directionsDisplay = new google.maps.DirectionsRenderer();
 
-	
+	infowindow = new google.maps.InfoWindow();
   var chicago = new google.maps.LatLng(41.850033, -87.6500523);
   var myOptions = {
     zoom:7,
@@ -150,7 +151,7 @@ function findVenues(location){
 	          radius: 500, //change radius later
 	          types: ['food']
 	        };
-	        infowindow = new google.maps.InfoWindow();
+	        //infowindow = new google.maps.InfoWindow();
 	        var service = new google.maps.places.PlacesService(map);
 	        service.search(request, callback);
 
@@ -182,12 +183,13 @@ function createMarker(place) {
     infowindow.setContent(place.name);
     infowindow.open(map, this);
   });
-	markersArray.push(marker);
+
+	markersArray.push([marker,place.name]);
 }
 function deleteOverlays() {
   if (markersArray) {
     for (i in markersArray) {
-      markersArray[i].setMap(null);
+      markersArray[i][0].setMap(null);
     }
     markersArray.length = 0;
   }
@@ -299,9 +301,12 @@ function calcRoute() {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
 	var a = "";
-
+		var len = response.routes[0].overview_path.length/10;
+		var num = Math.random();
+		var tot = Math.round(len*num);
 		for (var i = 0; i < response.routes[0].overview_path.length-10; i=i+10) {
 			var c = response.routes[0].overview_path[i];
+			var yesNo = Math.random();
 		//	c.slice(1, -1);
 			var k = ""+c;
 			var l = k.slice(1, -1);
@@ -324,14 +329,29 @@ function calcRoute() {
 		//			for(var j =0; j<results.length;j++){
 		//			findVenues(results[j].formatted_address);}
 		//		}
+		var len = venuesData.length;
+		var num = Math.random();
+		var ranNum = Math.round(len*num);
 		
-		var marker = new google.maps.Marker({
-	        position: response.routes[0].overview_path[i],
-	        map: map
-	    
+		var na = venuesData[ranNum];
+		if(yesNo>0.5){
+			//var na = chooseName();
 
+			var marker = new google.maps.Marker({
+		        position: response.routes[0].overview_path[i],
+		        map: map
+
+
+				});
+				google.maps.event.addListener(marker, 'click', function() {
+			   	infowindow.setContent(na); //static for now, change in a bit
+			    infowindow.open(map, this);
 			});
-			markersArray.push(marker);
+				
+				//markersArray.push(marker);
+				markersArray.push([marker,na]);
+		}
+
 			
 
 		}
@@ -340,7 +360,20 @@ function calcRoute() {
     
   });
 }
-
+function chooseName(){
+		var boo = true;
+		while(boo){
+			var ranNum = Math.round(Math.random()*(venuesData.length-1));
+			var name = venuesData[ranNum]; //choose a random name from venuesData 
+			for(var i=0; i<namesList.length; i++){
+				if(namesList[i] == name){
+					break;
+				}
+			}
+			boo = false;
+		}
+		return name;
+}
 function reverseGeocodeVenue(latlng){
 	//var latlng = new google.maps.LatLng(41.730330, -72.718506);
 	//var latlng = new google.maps.LatLng(lat, lng);
@@ -377,16 +410,17 @@ $(document).ready(function() {
 						$('#Enter').click();
 	  	  	}
 			else{
-				ocument.getElementById("debug").innerHTML = "";
+				document.getElementById("debug").innerHTML = "";
 			}
 
 	});
+
 	$('.cities').keypress(function(e) {
 	  	  	if (e.keyCode == '13' &&  this.value != '') {
 						$('#Enter').click();
 	  	  	}
 			else{
-				ocument.getElementById("debug").innerHTML = "";
+				document.getElementById("debug").innerHTML = "";
 			}
 
 	});
@@ -408,27 +442,40 @@ $(document).ready(function() {
 		var cit3 = document.getElementById('city3').value;
 		
 		deleteOverlays();
-		findVenues(origin);
-		findVenues(dest);
-		
+
+	//	if(cit1!=""){
+	//		findVenues(cit1);
+	//	}
+	//	if(cit2!=""){
+	//		findVenues(cit2);
+	//	}
+	//	if(cit3!=""){
+	//		findVenues(cit3);
+	//	}
 		//findVenuesAlongPath();
 		
 		//findVenues("Hartford, CT");
-		if(bDate != null && eDate!= null && genre != null && cap != null && style!= null && origin!="" && dest!=""){
+		if(bDate != "" && eDate!= "" && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
-			
-			calcRoute();
-
-			findVenuesAlongPath(); //not working
-			display();}
+				findVenues(origin);	//origin, Calcroute, then dest ensure that markers are put in array in the right order
+				calcRoute();
+				findVenues(dest);
+				findVenuesAlongPath(); //not working
+				display();}
 			else if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
-			calcRoute();
-			display();}
+				findVenues(origin);	
+				calcRoute();
+				findVenues(dest);
+				display();}
 			else if(citycount == 3 && (cit1!="" && cit2!="") || (cit2!="" && cit3!="") || (cit1!="" && cit3!="")){
-			calcRoute();
+				findVenues(origin);	
+				calcRoute();
+				findVenues(dest);
 			display();}
 			else if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
-			calcRoute();
+				findVenues(origin);	
+				calcRoute();
+				findVenues(dest);
 			display();}
 			else{
 			/// send warning, this should be in red
@@ -448,10 +495,25 @@ $(document).ready(function() {
 	drawButtons();
 });
 
-var numberOfVenues= 5; //set static for now, but then length pf listOfVenues
+//var numberOfVenues= array.length; //set static for now, but then length pf listOfVenues
+var numberOfVenues = 5;
+var namesList = [];
+var venuesData = ["Sandy's","Noor's club", "Burlesque Lounge","Larisa's night-club", "Hiba's pub", "Dahlia's coffee house",
+"Ammar Ammar", "Gypsy's Bar", "Cure", "House of Blues", "Tao", "Berklee Performance Center", "The Blue Room", "Random Lounge", 
+"LAX", "Estate", "FEVER", "The Middle East", "Beehive", "Lala rouge", "Moulin Rouge", "Three Brother's Jazz Bar", 
+"The E", "MiddleSex", "The Wedding Planner", "Roses for Ever", "Gypsy Rose", "The College of Music", "The Muesum of Arts", 
+"Linda's Private Parties Company", "The Bay", "Royale", "Menes", "Rock and Rose", "Spirit", "Fallen Angel", "George Altos, wedding planner", 
+"The Roof", "Little Asia", "Wonder Land", "Joe's Brunch", "Moonlight", "Escape", "Biju", "Fiesta", "Tory Row", "Kevin Bloom", "Serendipity", 
+"Jack and Jill", "Judy Jetson", "à la mode", "Nile Lounge", "Lee's Lounge", "Habibi", "The Drake", "Legands of Jazz", "Rock Basement", "Sheer",
+"6 Degrees", "Rumor", "Dogma", "Fierce Lounge", "Sundos", "Scorpio", "John Meyer's Center for Performing Arts", "Raja", "The Taj", "The Ritz Lounge", 
+"Voltage Cafe", "Blair's Tea Salon", "Monster's Garage", "FATAL", "Inde-Pen-Dence", "Flavors", "Storm", "Athena", "Zues", "El Sabado", 
+"Mirage Lounge", "L Nightclub", "Solomon's", "Roger Foldstein Music Center", "Bella", "Sportello", "Sapphire", "Narcissus", 
+"Binary", "Paradise", "Lulu's Lounge", "Fire", "Nightingale", "Roman Ruins", "The Apocalypse", "Night and Day", "Elements", 
+"Alphred Mayham", "Bobby Brown", "Descartes","Furious", "Angela Been's Lounge"];
 
 function draw(){
 	var canvas = document.getElementById("canvasMoneyBtns");
+	//document.getElementById("debug").innerHTML= "hello"; 
 	var ctx = canvas.getContext('2d');
 	var theSize = 400/5;
 	var theSize2 = 30;
