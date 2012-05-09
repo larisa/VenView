@@ -1,11 +1,77 @@
+/// Calendar code
+
+var startDate, endDate, today;
+var dates = [];
+
+function loadCalendars() {
+
+	$("#start_cal").datepicker({
+		// defaultDate: +0,
+		// changeMonth: true,
+		// changeYear: true,
+		minDate : 0,
+		onSelect : function(dateText, inst) {
+			today = new Date();
+			startDate = parseDate(dateText);
+			dayAfterStartDate = startDate;
+			dayAfterStartDate.setTime(startDate.getTime() + 86400000);
+
+			$("#end_cal").datepicker("option", "minDate", startDate);
+
+		}
+	});
+
+	$("#end_cal").datepicker({
+		minDate : 0,
+		// changeMonth: true,
+		// changeYear: true,
+		onSelect : function(dateText, inst) {
+		endDate = parseDate(dateText);
+		dates = getDates(startDate, endDate);
+		}
+	});
+
+}
+// parse date
+function parseDate(str) {
+	var mdy = str.split('/');
+	return new Date(mdy[2], mdy[0] - 1, mdy[1]);
+}
+
+
+function highlightDays(first, second) {
+	var difference = dateDifference(first, second);
+	for ( var i = 0; i < difference; i++) {
+		return [ true, 'highlight' ];
+	}
+}
+
+function getDates( d1, d2 ){
+	  var oneDay = 24*3600*1000;
+	  var results = []
+	  for (ms=d1*1,last=d2*1;ms<=last;ms+=oneDay){
+	    results.push( new Date(ms) );
+	  }
+	  return results;
+	}
+
+
+		
+	
+
+
+//////////// End of calendar Code
+
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
 }
+
 var heightt = 250;
 var fixedHeight = 30;
 var citycount = 1;
 var cityNum = 0;
 var activeCities =[];
+
 function contains(a, obj) {
     for (var i = 0; i < a.length; i++) {
         if (a[i] == obj) {
@@ -14,7 +80,8 @@ function contains(a, obj) {
     }
     return false;
 }
-function dosomething(){
+
+function addCities(){
 	if(citycount < 4){
 		if(contains(activeCities, "#city1") == false){
 			if(activeCities.length == 0){
@@ -98,9 +165,13 @@ var map;
 var geocoder;
 var infowindow;
 function initialize() {
-  directionsDisplay = new google.maps.DirectionsRenderer();
+
 
 	infowindow = new google.maps.InfoWindow();
+
+	loadCalendars();
+  directionsDisplay = new google.maps.DirectionsRenderer();
+
   var chicago = new google.maps.LatLng(41.850033, -87.6500523);
   var myOptions = {
     zoom:7,
@@ -110,7 +181,7 @@ function initialize() {
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	service = new google.maps.places.PlacesService(map);
 	geocoder = new google.maps.Geocoder();
-  directionsDisplay.setMap(map);
+	directionsDisplay.setMap(map);
 	var origin = document.getElementById('originInput');
 	var autocomplete = new google.maps.places.Autocomplete(origin);
 	var dest = document.getElementById('destInput');
