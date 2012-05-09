@@ -243,6 +243,30 @@ function callback(results, status) {
   }
 }
 var markersArray = [];
+function createAMarker(latlng) {
+  var marker = new google.maps.Marker({
+    map: map,
+    position: latlng
+  });
+	var name;
+	var boo = true;
+	name = chooseName();
+	while(boo){
+		if(name in namesList){
+			name = chooseName();
+		}
+		else{
+			namesList.push(name);
+			boo = false;
+		}
+	}
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.setContent(name);
+    infowindow.open(map, this);
+  });
+
+	markersArray.push([marker,name]);
+}
 function createMarker(place) {
   var placeLoc = place.geometry.location;
   var marker = new google.maps.Marker({
@@ -371,10 +395,13 @@ function calcRoute() {
   directionsService.route(request, function(response, status) {
     if (status == google.maps.DirectionsStatus.OK) {
       directionsDisplay.setDirections(response);
-	var a = "";
-		var len = response.routes[0].overview_path.length/10;
-		var num = Math.random();
-		var tot = Math.round(len*num);
+
+		var len = venuesData.length;
+		var num;
+		var ranNum;
+		
+		var na; 
+		
 		for (var i = 0; i < response.routes[0].overview_path.length-10; i=i+10) {
 			var c = response.routes[0].overview_path[i];
 			var yesNo = Math.random();
@@ -400,50 +427,22 @@ function calcRoute() {
 		//			for(var j =0; j<results.length;j++){
 		//			findVenues(results[j].formatted_address);}
 		//		}
-		var len = venuesData.length;
-		var num = Math.random();
-		var ranNum = Math.round(len*num);
 		
-		var na = venuesData[ranNum];
 		if(yesNo>0.5){
-			//var na = chooseName();
-
-			var marker = new google.maps.Marker({
-		        position: response.routes[0].overview_path[i],
-		        map: map
-
-
-				});
-				google.maps.event.addListener(marker, 'click', function() {
-			   	infowindow.setContent(na); //static for now, change in a bit
-			    infowindow.open(map, this);
-			});
-				
-				//markersArray.push(marker);
-				markersArray.push([marker,na]);
+			createAMarker(response.routes[0].overview_path[i]);
+		}
 		}
 
-			
-
-		}
-	//	document.getElementById("debug").innerHTML = a;
 	}
     
   });
 }
 function chooseName(){
-		var boo = true;
-		while(boo){
-			var ranNum = Math.round(Math.random()*(venuesData.length-1));
-			var name = venuesData[ranNum]; //choose a random name from venuesData 
-			for(var i=0; i<namesList.length; i++){
-				if(namesList[i] == name){
-					break;
-				}
-			}
-			boo = false;
-		}
-		return name;
+	var len = venuesData.length;
+	var num = Math.random();
+	var ranNum = Math.round(len*num);
+	var name = venuesData[ranNum];
+	return name;
 }
 function reverseGeocodeVenue(latlng){
 	//var latlng = new google.maps.LatLng(41.730330, -72.718506);
@@ -531,7 +530,7 @@ $(document).ready(function() {
 				findVenues(origin);	//origin, Calcroute, then dest ensure that markers are put in array in the right order
 				calcRoute();
 				findVenues(dest);
-				findVenuesAlongPath(); //not working
+				//findVenuesAlongPath(); //working for hartford!
 				display();}
 			else if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
 				findVenues(origin);	
