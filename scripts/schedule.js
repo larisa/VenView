@@ -225,15 +225,13 @@ function findVenues(location){
 	          radius: 500, //change radius later
 	          types: ['food']
 	        };
-	        //infowindow = new google.maps.InfoWindow();
 	        var service = new google.maps.places.PlacesService(map);
 	        service.search(request, callback);
 
 				
 		}
 		else{
-			//document.getElementById("change").innerHTML="hi";
-			//return kan;
+
 		}
 	});
 
@@ -564,12 +562,14 @@ $(document).ready(function() {
 		
 	});
 	
+
 //	draw();
 //	drawButtons();
+
 });
 
 //var numberOfVenues= array.length; //set static for now, but then length pf listOfVenues
-var numberOfVenues = 5;
+var numberOfVenues = 20; //namesList.length;
 var namesList = [];
 var venuesData = ["Sandy's","Noor's club", "Burlesque Lounge","Larisa's night-club", "Hiba's pub", "Dahlia's coffee house",
 "Ammar Ammar", "Gypsy's Bar", "Cure", "House of Blues", "Tao", "Berklee Performance Center", "The Blue Room", "Random Lounge", 
@@ -585,6 +585,7 @@ var venuesData = ["Sandy's","Noor's club", "Burlesque Lounge","Larisa's night-cl
 "Alphred Mayham", "Bobby Brown", "Descartes","Furious", "Angela Been's Lounge"];
 
 function draw(){
+
 //	var canvas = document.getElementById("canvasMoneyBtns");
 //	//document.getElementById("debug").innerHTML= "hello"; 
 //	var ctx = canvas.getContext('2d');
@@ -608,6 +609,7 @@ function draw(){
 //		
 //			
 //		}	
+
 }
 var allAdvertBtns = [];
 
