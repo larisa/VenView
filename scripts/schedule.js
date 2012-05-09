@@ -5,15 +5,15 @@ var dates = [];
 
 function loadCalendars() {
 
+	// send end date to begin at start date when a new start date is selected
 	$("#start_cal").datepicker({
-		// defaultDate: +0,
-		// changeMonth: true,
-		// changeYear: true,
+
 		minDate : 0,
 		onSelect : function(dateText, inst) {
 			today = new Date();
 			startDate = parseDate(dateText);
-			dayAfterStartDate = startDate;
+			dayAfterStartDate = new Date();
+			dayAfterStartDate.setTime(startDate.valueOf());
 			dayAfterStartDate.setTime(startDate.getTime() + 86400000);
 
 			$("#end_cal").datepicker("option", "minDate", startDate);
@@ -21,6 +21,7 @@ function loadCalendars() {
 		}
 	});
 
+	//save differences between the two dates when start and end date are selected
 	$("#end_cal").datepicker({
 		minDate : 0,
 		// changeMonth: true,
@@ -30,6 +31,9 @@ function loadCalendars() {
 		dates = getDates(startDate, endDate);
 		}
 	});
+	
+	//remove the div causing bug
+	document.getElementById("ui-datepicker-div").style.display="none";
 
 }
 // parse date
@@ -57,14 +61,13 @@ function getDates( d1, d2 ){
 
 
 		
-	
-
-
-//////////// End of calendar Code
+//// End of calendar Code
 
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
+	drawTable();
 }
+
 
 var heightt = 250;
 var fixedHeight = 30;
@@ -561,8 +564,8 @@ $(document).ready(function() {
 		
 	});
 	
-	draw();
-	drawButtons();
+//	draw();
+//	drawButtons();
 });
 
 //var numberOfVenues= array.length; //set static for now, but then length pf listOfVenues
@@ -607,19 +610,19 @@ function draw(){
 //		}	
 }
 var allAdvertBtns = [];
-function get_venue_openings(){
+
+/*function get_venue_openings(){
 		var venueOpenings = [];
-		var venueNames = ["Paradise", "Beehive", "House",
-											"Paradise", "Beehive", "House",
-										 "Paradise", "Beehive", "House"];
+		var venueNames = ["Paradise", "Beehive", "House", "Paradise", "Beehive", "House", "Paradise", "Beehive", "House"];
+		
 		var allDates = [1, 4, 3, 2, 3, 2, 4, 5, 5];
+		
 		var startTimes = [10, 15, 18, 19, 20, 10, 23, 22, 4]; 
 		var allDur = [40, 20, 30, 70, 20, 120, 60, 30, 40];
 		var numOpenings = [5, 4, 2, 3, 2, 4, 5, 5, 5];
 
-		for (var i=0; i<=8; i++){
-				var gig = new Booking(venueNames[i], allDates[i], startTimes[i], i, allDates[i] -1, 
-															allDur[i], numOpenings[i]);
+		for (var i=0; i<venueNames.length; i++){
+				var gig = new Booking(venueNames[i], allDates[i], startTimes[i], i, allDates[i] -1, allDur[i], numOpenings[i]);
 				venueOpenings.push(gig);
 		}
 
@@ -632,43 +635,128 @@ function drawButtons(){
 	for (var i=0; i<venueOpenings.length; i++){
 			var opening = venueOpenings[i];
 			
-			allAdvertBtns.push(drawButton(opening,i));
+			allAdvertBtns.push(createButton(opening,i));
 
-			}
+		}
 	//populate sched table with all buttons created
 	var schedulTable = document.getElementById("sched");
+
+}*/
+
+var venueOpenings = [];
+
+function drawTable(){
+	var container = document.getElementById("booking");	
+	
+	//remove old Table
+	var oldTable = document.getElementById("sched");
+	container.removeChild(oldTable);
+
+	var schedTable = document.createElement("TABLE");
+	schedTable.setAttribute("id", "sched");
+	var head = document.createElement("THEAD");
+	var body = document.createElement("TBODY");
+	 // Set the table's border width and colors.
+	schedTable.border=1;
+	schedTable.bgColor="lightslategray";
+	var row, cell;
+	var i, j;
+	container.appendChild(schedTable);
+	schedTable.appendChild(head);
+	schedTable.appendChild(body);
+	
+	 // Insert a row into the header and set its background color.
+	  row = document.createElement("TR");
+	  head.appendChild(row);
+	  head.setAttribute("bgColor","#B6DBD4");
+
+	  cell = document.createElement("TH");
+	  cell.style.width = "150px";
+	  row.appendChild(cell)
+	  
+	  // Create and insert cells into the header row.
+	  for (i=0; i<dates.length; i++)
+	  {
+	    cell = document.createElement("TH");
+	    cell.innerHTML = dates[i].toDateString();
+	    cell.style.width = "150px";
+	    row.appendChild(cell);
+	  }
+	  
+	
+	  for (i=0; i<namesList.length; i++)
+	  {	   
+	    row = document.createElement("TR");
+	    body.appendChild(row);
+	    for (j=0; j<dates.length + 1; j++){
+	    	cell = document.createElement("TD");
+	    	if (j==0){
+	    	 cell.innerHTML = namesList[i]; 
+	    	}
+	    	
+	    	//create a random booking a third of the time. 
+	    	if (j> 0){
+	    	emptyBooking = Math.random();
+	    	 if (emptyBooking < 0.3){
+	    		 //create a booking
+	    		 startTime = Math.floor(Math.random() * 14);
+	    		 numOpenings = Math.floor(Math.random() * 5);
+	    		 duration = Math.floor(Math.random() * 4);
+	    		 var gig = new Booking(namesList[i], dates[j-1], startTime + 10, i, j, duration, numOpenings);
+	    		 venueOpenings.push(gig);
+	    		 
+	    		 //then create a button for that gig opening;
+	    		 var button = createButton(gig,i, j);
+	    		 
+	    		 //add button to cell;
+	    		 cell.appendChild(button);
+	    		 
+	    	 }
+	    	}
+	    	cell.setAttribute("id", i+ "," + j);
+	  //    oCell.innerHTML = stock[i][j];
+	    	row.appendChild(cell);
+	    }
+	  }
+	  
+	/*  // Set the background color of the first body.
+	  oTBody0.setAttribute("bgColor","lemonchiffon");
+	  oTBody1.setAttribute("bgColor","goldenrod");
+	  
+	  // Create and insert rows and cells into the footer row.
+	  oRow = document.createElement("TR");
+	  oTFoot.appendChild(oRow);
+	  oCell = document.createElement("TD");
+	  oRow.appendChild(oCell);
+	  oCell.innerHTML = "Quotes are for example only.";
+	  oCell.colSpan = "4";
+	  oCell.bgColor = "lightskyblue";
+	  
+	  // Set the innerHTML of the caption and position it at the bottom of the table.
+	  oCaption.innerHTML = "Created using Document Object Model."
+	  oCaption.style.fontSize = "10px";
+	  oCaption.align = "bottom";*/
 	
 }
+//var VenueList = ["Paradise", "Beehive", "House"];
 
-var VenueList = ["Paradise", "Beehive", "House"];
 
-function showText() {
-	var cxt = document.getElementById("allMoneyBtns").getContext('2d');
-
-	ctx.font = 'bold 12px sans-serif';
-	cxt.textAlign = "left";
-	ctx.textBaseline = "top";
-	
-
-	for(var i=0; i<VenueList.length; i++){
-	}
-}
 
 var toppest = 10;
 
-function drawButton(gigOpening, i){
+function createButton(gigOpening, i, j){
 	//console.log("making button allegedly");
-	var bookBtnInfo = gigOpening;
+	
 	var bookBtn = document.createElement("button");
-	bookBtn.setAttribute("id", "moneyBtn" + i);
+	bookBtn.setAttribute("id", "openBtn" + i + "_" + j);
 //	bookBtn.setAttribute("class", "moneyBtn");
-	bookBtn.className = "moneyBtn";
+	bookBtn.className = "openBtn";
 	bookBtn.setAttribute("type", "button");
 	//bookBtn.type = "button";
 //	bookBtn.setAttribute("name", bookBtnInfo.dollars);
 	//bookBtn.name = bookBtnInfo.dollars;
-		bookBtn.innerHTML = bookBtnInfo.numOpenings;
-		bookBtn.label = bookBtnInfo;
+	bookBtn.innerHTML = gigOpening.numOpenings;
+	bookBtn.label = gigOpening;
 
 	//$("moneyButton" + i, "moneyBtn").click(function() { return false;});
 
@@ -676,24 +764,24 @@ function drawButton(gigOpening, i){
 	//TODO figure out position based on venue name + date
 //	bookBtn.style.position = "absolute";
 
-	$(bookBtn).css("position", "absolute");
-	$(bookBtn).css("left", (bookBtnInfo.date-1)*400/5);
-	var topDistance = 0;
-	if(bookBtnInfo.venue == "Paradise"){
-		topDistance = 0;
-	}
-	if(bookBtnInfo.venue == "Beehive"){topDistance=1;}
-	if(bookBtnInfo.venue == "House"){topDistance=2;}
-		bookBtnInfo.top = topDistance*fixedHeight + 5; //+heightt/24
-	$(bookBtn).css("top", topDistance*fixedHeight + 5); // + heightt/24
-	$(bookBtn).css("width", 400/5+ "px");
-	$(bookBtn).css("height", 20 + "px");
-	$(bookBtn).css("z-index", ++toppest);
+//	$(bookBtn).css("position", "absolute");
+//	$(bookBtn).css("left", (bookBtnInfo.date-1)*400/5);
+//	var topDistance = 0;
+//	if(bookBtnInfo.venue == "Paradise"){
+//		topDistance = 0;
+//	}
+//	if(bookBtnInfo.venue == "Beehive"){topDistance=1;}
+//	if(bookBtnInfo.venue == "House"){topDistance=2;}
+//		bookBtnInfo.top = topDistance*fixedHeight + 5; //+heightt/24
+//	$(bookBtn).css("top", topDistance*fixedHeight + 5); // + heightt/24
+//	$(bookBtn).css("width", 400/5+ "px");
+//	$(bookBtn).css("height", 20 + "px");
+//	$(bookBtn).css("z-index", ++toppest);
 	return bookBtn;
 }
 
 function drawSelectButton(booking){
-	var btn = document.createElement("button");
+	/*var btn = document.createElement("button");
 	var canvas = document.getElementById("canvasMoneyBtns2");
 	btn.className = "selectBtns";
 	btn.setAttribute("id", "temp");
@@ -709,7 +797,7 @@ function drawSelectButton(booking){
 	$(btn).css("width", 40+ "px");
 	$(btn).css("height", 10 + "px");
 	$(btn).css("z-index", 102);
-	return btn;
+	return btn;*/
 }
 
 $(function(){

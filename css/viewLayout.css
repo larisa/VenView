@@ -23,6 +23,29 @@ BODY
 #debug{
 	color: red;
 }
+
+#map_canvas {
+position: absolute;
+top: 4.7em;
+left: 29.32em;
+right: 0;
+bottom: 0;
+height: 20em;
+width: 55em;
+}
+
+
+#booking{
+position: absolute;
+top: 25em;
+left: 29.32em;
+right: 0;
+bottom: 0;
+height: 20em;
+width: 55em;
+overflow: scroll;
+}
+
 .informationTable{
 
 	font-family: 'Oxygen', sans-serif;
