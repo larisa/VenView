@@ -561,7 +561,7 @@ $(document).ready(function() {
 
 		
 	});
-
+	
 	draw();
 	drawButtons();
 });
@@ -583,31 +583,31 @@ var venuesData = ["Sandy's","Noor's club", "Burlesque Lounge","Larisa's night-cl
 "Alphred Mayham", "Bobby Brown", "Descartes","Furious", "Angela Been's Lounge"];
 
 function draw(){
-	var canvas = document.getElementById("canvasMoneyBtns");
-	//document.getElementById("debug").innerHTML= "hello"; 
-	var ctx = canvas.getContext('2d');
-	var theSize = 400/5;
-	var theSize2 = 30;
-	
-	
-		for(i=0;i<numberOfVenues+1;i++){
-			
-			ctx.fillStyle = "rgb(0,0,0)";
-			ctx.beginPath();
-			ctx.moveTo(i*theSize,0);
-			ctx.lineTo(i*theSize,numberOfVenues*fixedHeight);
-			ctx.stroke();
-			
-			ctx.fillStyle = "rgb(0,0,0)";
-			ctx.beginPath();
-			ctx.moveTo(0,i*fixedHeight);
-			ctx.lineTo(400,i*fixedHeight);
-			ctx.stroke();
-		
-			
-		}	
+//	var canvas = document.getElementById("canvasMoneyBtns");
+//	//document.getElementById("debug").innerHTML= "hello"; 
+//	var ctx = canvas.getContext('2d');
+//	var theSize = 400/5;
+//	var theSize2 = 30;
+//	
+//	
+//		for(i=0;i<numberOfVenues+1;i++){
+//			
+//			ctx.fillStyle = "rgb(0,0,0)";
+//			ctx.beginPath();
+//			ctx.moveTo(i*theSize,0);
+//			ctx.lineTo(i*theSize,numberOfVenues*fixedHeight);
+//			ctx.stroke();
+//			
+//			ctx.fillStyle = "rgb(0,0,0)";
+//			ctx.beginPath();
+//			ctx.moveTo(0,i*fixedHeight);
+//			ctx.lineTo(400,i*fixedHeight);
+//			ctx.stroke();
+//		
+//			
+//		}	
 }
-
+var allAdvertBtns = [];
 function get_venue_openings(){
 		var venueOpenings = [];
 		var venueNames = ["Paradise", "Beehive", "House",
@@ -616,26 +616,33 @@ function get_venue_openings(){
 		var allDates = [1, 4, 3, 2, 3, 2, 4, 5, 5];
 		var startTimes = [10, 15, 18, 19, 20, 10, 23, 22, 4]; 
 		var allDur = [40, 20, 30, 70, 20, 120, 60, 30, 40];
-		var allDollars = ["$$$", "$$", "$$", "$", "$$", "$", "$$$", "$$", "$"];
+		var numOpenings = [5, 4, 2, 3, 2, 4, 5, 5, 5];
 
 		for (var i=0; i<=8; i++){
-				var gig = new Booking(venueNames[i], allDates[i], startTimes[i], 
-															allDur[i], allDollars[i]);
+				var gig = new Booking(venueNames[i], allDates[i], startTimes[i], i, allDates[i] -1, 
+															allDur[i], numOpenings[i]);
 				venueOpenings.push(gig);
 		}
 
 		return venueOpenings;
 		
 }
+
 function drawButtons(){
 	var venueOpenings = get_venue_openings();
 	for (var i=0; i<venueOpenings.length; i++){
 			var opening = venueOpenings[i];
-			document.getElementById("allMoneyBtns").appendChild(drawButton(opening,i));
+			
+			allAdvertBtns.push(drawButton(opening,i));
 
 			}
+	//populate sched table with all buttons created
+	var schedulTable = document.getElementById("sched");
+	
 }
+
 var VenueList = ["Paradise", "Beehive", "House"];
+
 function showText() {
 	var cxt = document.getElementById("allMoneyBtns").getContext('2d');
 
@@ -649,15 +656,11 @@ function showText() {
 }
 
 var toppest = 10;
+
 function drawButton(gigOpening, i){
 	//console.log("making button allegedly");
 	var bookBtnInfo = gigOpening;
 	var bookBtn = document.createElement("button");
-
-		
-	//var bookBtn = document.createElement("img");
-	//bookBtn.setAttribute("src","map.png");
-	var canvas = document.getElementById("canvasMoneyBtns");
 	bookBtn.setAttribute("id", "moneyBtn" + i);
 //	bookBtn.setAttribute("class", "moneyBtn");
 	bookBtn.className = "moneyBtn";
@@ -665,7 +668,7 @@ function drawButton(gigOpening, i){
 	//bookBtn.type = "button";
 //	bookBtn.setAttribute("name", bookBtnInfo.dollars);
 	//bookBtn.name = bookBtnInfo.dollars;
-		bookBtn.innerHTML = bookBtnInfo.dollars;
+		bookBtn.innerHTML = bookBtnInfo.numOpenings;
 		bookBtn.label = bookBtnInfo;
 
 	//$("moneyButton" + i, "moneyBtn").click(function() { return false;});
