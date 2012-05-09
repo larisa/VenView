@@ -445,16 +445,22 @@ $(document).ready(function() {
 						$('#Enter').click();
 	  	  	}
 			else{
-			/// send warning	
+				ocument.getElementById("debug").innerHTML = "";
 			}
+
 	});
 	$('.cities').keypress(function(e) {
 	  	  	if (e.keyCode == '13' &&  this.value != '') {
 						$('#Enter').click();
 	  	  	}
+			else{
+				ocument.getElementById("debug").innerHTML = "";
+			}
+
 	});
 
 	$("#Enter").click(function(evt) {
+		document.getElementById("debug").innerHTML = "";
 		var bDate = document.getElementById('start_cal').value;
 		var eDate = document.getElementById('end_cal').value;
 		var genre = document.getElementById('genre').value;
@@ -483,15 +489,23 @@ $(document).ready(function() {
 
 			findVenuesAlongPath(); //not working
 			display();}
-			if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
+			else if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
 			calcRoute();
 			display();}
-			if(citycount == 3 && (cit1!="" && cit2!="") || (cit2!="" && cit3!="") || (cit1!="" && cit3!="")){
+			else if(citycount == 3 && (cit1!="" && cit2!="") || (cit2!="" && cit3!="") || (cit1!="" && cit3!="")){
 			calcRoute();
 			display();}
-			if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
+			else if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
 			calcRoute();
 			display();}
+			else{
+			/// send warning, this should be in red
+				document.getElementById("debug").innerHTML = "Please enter all fields";
+			}
+		}
+		else{
+		/// send warning, this should be in red
+			document.getElementById("debug").innerHTML = "Please enter all fields";
 		}
 		
 
