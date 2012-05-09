@@ -7,6 +7,7 @@
 		background-color: #b6dbd4;
 		
 }
+
 #blanket {
 background-color:#111;
 opacity: 0.65;
@@ -23,6 +24,14 @@ background-color:#eeeeee;
 width:300px;
 height:300px;
 z-index: 9002;}
+
+
+#sched{
+	border: 1;
+	
+}
+
+
 BODY
    {
     font-family: 'Oxygen', sans-serif;
