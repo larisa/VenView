@@ -30,34 +30,13 @@
 <script type="text/javascript" src="scripts/Booking.js"></script>
 <script type="text/javascript" src="http://www.html5canvastutorials.com/libraries/kinetic-v3.9.2.js"></script> 
 <script type="text/javascript" src="scripts/jquery-bubble-popup-v3.min.js" ></script>
-<script type="text/javascript" >
-$(document).ready(function() {
-
-	// Vars
-	var startDate, endDate, today;
-	var dates = [];
-	initialize();
-
-	// Calendars
-	$("#start_cal").datepicker();
-
-	$("#end_cal").datepicker();
-
-
-
-
-	});
-
-
-</script>
-
 
 
 <!--Title-->
 </head>
 
 <p id="title"><img id="logo" src="logo5.png" >Book a venue. Plan a tour. Become a star.</p>
-<body onload="init()">
+<body onload="initialize()">
 	<!--Layout days and venue names as static columns and rows, make a canvas of grid of buttons.-->
 
 	<table class = "tables" id ="page">
@@ -116,7 +95,7 @@ $(document).ready(function() {
 
 					</tr>
 <tr style = "float:right">
-						<td id="padme" ><a id = "citLink" class = "clickables" href="#" onclick="dosomething(); return(false);">Add
+						<td id="padme" ><a id = "citLink" class = "clickables" href="#" onclick="addCities(); return(false);">Add
 								cities along your tour</a></td>
 					</tr>
 					<tr>
