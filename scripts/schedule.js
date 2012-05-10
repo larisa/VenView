@@ -569,20 +569,24 @@ $(document).ready(function() {
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-				drawTable();
-				display();}
+				//drawTable();
+				//display();
+				timeMsg();
+				}
 			else if(citycount == 3 && (cit1!="" && cit2!="") || (cit2!="" && cit3!="") || (cit1!="" && cit3!="")){
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-				drawTable();
-			display();}
+				//drawTable();
+		//	display();
+		timeMsg();}
 			else if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-				drawTable();
-			display();}
+				//drawTable();
+			//display();
+			timeMsg();}
 			else{
 			/// send warning, this should be in red
 				document.getElementById("debug").innerHTML = "Please enter all fields";
