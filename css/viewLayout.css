@@ -16,7 +16,8 @@ position:absolute;
 z-index: 9001;
 top:0px;
 left:0px;
-width:100%;
+width:55em;
+height:10em;
 }
 #popUpDiv {
 position:absolute;
@@ -28,8 +29,16 @@ z-index: 9002;}
 
 #sched{
 	border: 1;
-	width:40em;
-	
+
+
+	width: 100%;
+	position: absolute;
+	top: 25em;
+	left: 29.32em;
+	right: 0;
+	bottom: 0;
+	height: 20em;
+	width: 55em;
 }
 
 
@@ -56,6 +65,8 @@ padding: 0 20px 0 0;
 }
 
 #booking{
+overflow-y: scroll;
+/*
 position: absolute;
 top: 25em;
 left: 29.32em;
@@ -64,7 +75,11 @@ bottom: 0;
 height: 20em;
 width: 55em;
 overflow: scroll;
+<<<<<<< HEAD
 padding: 0 20px 0 0;
+=======
+*/
+
 }
 
 .informationTable{
