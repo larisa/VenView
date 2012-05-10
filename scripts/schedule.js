@@ -733,6 +733,8 @@ function drawTable(){
 	    	cell = document.createElement("TD");
 	    	if (j==0){
 	    	 cell.innerHTML = markersArray[i][1]; 
+			cell.setAttribute("class", markersArray[i][1]);
+				
 	    	}
 	    	
 	    	//create a random booking a third of the time. 
@@ -751,10 +753,12 @@ function drawTable(){
 	    		 
 	    		 //add button to cell;
 	    		 cell.appendChild(button);
+				cell.setAttribute("class", markersArray[i][1]);
 	    		 
 	    	 }
 	    	}
 	    	cell.setAttribute("id", i+ "," + j);
+			
 	  //    oCell.innerHTML = stock[i][j];
 	    	row.appendChild(cell);
 	    }
