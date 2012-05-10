@@ -64,7 +64,7 @@ function getDates( d1, d2 ){
 //// End of calendar Code
 function timeMsg()
 {
-var t=setTimeout("display()",1000);
+var t=setTimeout("display()",500);
 }
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
