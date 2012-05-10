@@ -73,6 +73,9 @@ var display = function(){
 //	a = a + markersArray[i][1] + "<br/ >";	
 //	}
 //	document.getElementById("debug").innerHTML = a;
+//	document.getElementById("blanket").style("width":window.innerWidth);
+	//window.innerWidth, window.innerHeight 
+	//window.outerWidth, window.outerHeight
 	drawTable();
 	
 	
