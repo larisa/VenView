@@ -28,6 +28,7 @@ z-index: 9002;}
 
 #sched{
 	border: 1;
+	width:40em;
 	
 }
 
@@ -50,9 +51,9 @@ left: 29.32em;
 right: 0;
 bottom: 0;
 height: 20em;
-width: 55em;
+width: 40em;
+padding: 0 20px 0 0;
 }
-
 
 #booking{
 position: absolute;
@@ -63,6 +64,7 @@ bottom: 0;
 height: 20em;
 width: 55em;
 overflow: scroll;
+padding: 0 20px 0 0;
 }
 
 .informationTable{
