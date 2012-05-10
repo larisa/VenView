@@ -62,10 +62,21 @@ function getDates( d1, d2 ){
 
 		
 //// End of calendar Code
-
+function timeMsg()
+{
+var t=setTimeout("display()",500);
+}
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
+//	a = a + "<br />" + markersArray.length + "<br />" + counter;
+//	for(var i =0; i<20; i++){
+//	a = a + markersArray[i][1] + "<br/ >";	
+//	}
+//	document.getElementById("debug").innerHTML = a;
 	drawTable();
+	
+	
+	
 }
 
 
@@ -240,11 +251,14 @@ function callback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 0; i < results.length; i++) {
       createMarker(results[i]);
+		counter++;
     }
   }
 }
-var markersArray = [];
+var markersArray = []; //new Array(200); //[];
+var counter = 0;
 function createAMarker(latlng) {
+	counter++;
   var marker = new google.maps.Marker({
     map: map,
     position: latlng
@@ -267,6 +281,9 @@ function createAMarker(latlng) {
   });
 
 	markersArray.push([marker,name]);
+	//markersArray[counter]=[marker,name];
+	//counter++;
+	
 }
 function createMarker(place) {
   var placeLoc = place.geometry.location;
@@ -281,6 +298,8 @@ function createMarker(place) {
   });
 
 	markersArray.push([marker,place.name]);
+	//markersArray[counter]=[marker,name];
+	//counter++;
 }
 function deleteOverlays() {
   if (markersArray) {
@@ -288,6 +307,9 @@ function deleteOverlays() {
       markersArray[i][0].setMap(null);
     }
     markersArray.length = 0;
+	namesList.length = 0; //check if this was removed
+	//cpunter = 0;
+	//markersArray = new Array(200);
   }
 }
 
@@ -469,7 +491,7 @@ function reverseGeocodeVenue(latlng){
 	});	
 }
 
-
+	var a = "";
 
 var myBookings = [];
 var displayedGig = null;
@@ -479,6 +501,7 @@ $(document).ready(function() {
 	$('.clickables').keypress(function(e) {
 	  	  	if (e.keyCode == '13' &&  this.value != '') {
 						$('#Enter').click();
+						
 	  	  	}
 			else{
 				document.getElementById("debug").innerHTML = "";
@@ -528,26 +551,42 @@ $(document).ready(function() {
 		//findVenues("Hartford, CT");
 		if(bDate != "" && eDate!= "" && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
+			
 				findVenues(origin);	//origin, Calcroute, then dest ensure that markers are put in array in the right order
+				
 				calcRoute();
+				//a = a + markersArray.length + "<br />";
+				
 				findVenues(dest);
+				
 				//findVenuesAlongPath(); //working for hartford!
-				display();}
+				//drawTable();
+				//check if length is equal to a count and then displau
+				timeMsg();
+				//display();
+				}
 			else if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-				display();}
+				//drawTable();
+				//display();
+				timeMsg();
+				}
 			else if(citycount == 3 && (cit1!="" && cit2!="") || (cit2!="" && cit3!="") || (cit1!="" && cit3!="")){
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-			display();}
+				//drawTable();
+		//	display();
+		timeMsg();}
 			else if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-			display();}
+				//drawTable();
+			//display();
+			timeMsg();}
 			else{
 			/// send warning, this should be in red
 				document.getElementById("debug").innerHTML = "Please enter all fields";
@@ -561,7 +600,7 @@ $(document).ready(function() {
 
 		
 	});
-	
+//	drawTable();
 
 //	draw();
 //	drawButtons();
@@ -686,14 +725,14 @@ function drawTable(){
 	  }
 	  
 	
-	  for (i=0; i<namesList.length; i++)
+	  for (i=0; i<markersArray.length; i++)
 	  {	   
 	    row = document.createElement("TR");
 	    body.appendChild(row);
 	    for (j=0; j<dates.length + 1; j++){
 	    	cell = document.createElement("TD");
 	    	if (j==0){
-	    	 cell.innerHTML = namesList[i]; 
+	    	 cell.innerHTML = markersArray[i][1]; 
 	    	}
 	    	
 	    	//create a random booking a third of the time. 
@@ -704,7 +743,7 @@ function drawTable(){
 	    		 startTime = Math.floor(Math.random() * 14);
 	    		 numOpenings = Math.floor(Math.random() * 5);
 	    		 duration = Math.floor(Math.random() * 4);
-	    		 var gig = new Booking(namesList[i], dates[j-1], startTime + 10, i, j, duration, numOpenings);
+	    		 var gig = new Booking(markersArray[i][1], dates[j-1], startTime + 10, i, j, duration, numOpenings);
 	    		 venueOpenings.push(gig);
 	    		 
 	    		 //then create a button for that gig opening;
