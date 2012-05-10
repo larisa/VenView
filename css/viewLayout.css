@@ -17,6 +17,7 @@ z-index: 9001;
 top:0px;
 left:0px;
 width:55em;
+height:10em;
 }
 #popUpDiv {
 position:absolute;
@@ -62,7 +63,7 @@ width: 55em;
 
 
 #booking{
-overflow-x: scroll;
+overflow-y: scroll;
 /*
 position: absolute;
 top: 25em;
