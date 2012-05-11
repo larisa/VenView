@@ -11,6 +11,7 @@ function blanket_size(popUpDivVar) {
 	}
 	if ((viewportheight > document.body.parentNode.scrollHeight) && (viewportheight > document.body.parentNode.clientHeight)) {
 		blanket_height = viewportheight;
+
 	} else {
 		if (document.body.parentNode.clientHeight > document.body.parentNode.scrollHeight) {
 			blanket_height = document.body.parentNode.clientHeight;
@@ -20,6 +21,7 @@ function blanket_size(popUpDivVar) {
 	}
 	var blanket = document.getElementById('blanket');
 	blanket.style.height = blanket_height + 'px';
+	
 	var popUpDiv = document.getElementById(popUpDivVar);
 	popUpDiv_height=blanket_height/2-200;//150 is half popup's height
 	popUpDiv.style.top = popUpDiv_height + 'px';
@@ -37,11 +39,13 @@ function window_pos(popUpDivVar) {
 			window_width = document.body.parentNode.clientWidth;
 		} else {
 			window_width = document.body.parentNode.scrollWidth;
+			//use this lateron
 		}
 	}
 	var popUpDiv = document.getElementById(popUpDivVar);
-	window_width=window_width/2-200;//150 is half popup's width
-	popUpDiv.style.left = window_width + 'px';
+	w_width=window_width/2-200;//150 is half popup's width
+	popUpDiv.style.left = w_width + 'px';
+	blanket.style.width = window_width + 'px';
 }
 function popup(windowname) {
 	blanket_size(windowname);
