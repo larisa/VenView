@@ -82,7 +82,7 @@ var display = function(){
 	//window.outerWidth, window.outerHeight
 	//drawTable();
 	a = a + namesList.length + "<br />";
-	document.getElementById("debug").innerHTML = a;
+	//document.getElementById("debug").innerHTML = a;
 	divideVenues(dates.length);
 	showDayMarkers(0);
 	
