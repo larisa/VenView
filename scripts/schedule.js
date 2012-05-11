@@ -271,6 +271,7 @@ function callback(results, status) {
 }
 var markersArray = []; //new Array(200); //[];
 var counter = 0;
+// an array of arrays, each array beung the day 
 var venuesPerDay = [];
 
 function createAMarker(latlng) {
@@ -292,6 +293,8 @@ function createMarker(place) {
 	namesList.push([placeLoc,place.name]);
 
 }
+
+//give it location and name. create marker and make it appear
 function letThereBeLight(latlng, name){
 	
 	var marker = new google.maps.Marker({
@@ -308,7 +311,7 @@ function letThereBeLight(latlng, name){
   
 }
 
-
+// 
 function deleteOverlays() {
   if (markersArray) {
     for (i in markersArray) {
@@ -319,6 +322,7 @@ function deleteOverlays() {
 	namesList.length = 0; //check if this was removed
 	venuesPerDay.length = 0;
 	daycount = 0;
+	//TODO: reset array booked here. 
 	//cpunter = 0;
 	//markersArray = new Array(200);
   }
@@ -478,6 +482,7 @@ function chooseName(){
 	var name = venuesData[ranNum];
 	return name;
 }
+
 function showDayMarkers(day){
 	//hide markers that are not in that day and show ones that are
 	if (markersArray) {
@@ -490,6 +495,8 @@ function showDayMarkers(day){
 		
 		//showMarker(venuesPerDay[day][i][0], venuesPerDay[day][i][1]);
 		//venuesPerDay[day][i][0].setMap(map);
+		
+		//TODO: if they make a booking then we add the booing to an array and call it here
 	}
 	
 }
