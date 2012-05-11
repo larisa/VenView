@@ -492,14 +492,7 @@ function showDayMarkers(day){
 	}
 	for(i in venuesPerDay[day]){
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1]);
-<<<<<<< HEAD
-=======
-		
-		//showMarker(venuesPerDay[day][i][0], venuesPerDay[day][i][1]);
-		//venuesPerDay[day][i][0].setMap(map);
-		
-		//TODO: if they make a booking then we add the booing to an array and call it here
->>>>>>> 3912c934c1dea13f77e7721cb9d1a346ab919913
+
 	}
 	
 }
