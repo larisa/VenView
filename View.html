@@ -154,24 +154,33 @@
 					<tr><p id="debug"></p></tr>
 				</table>
 				
-					<a href="#" onclick="popup('popUpDiv')">Click Here To View Schedule</a>
+					
 					
 				
 			</td>
 			
 			
 
+
 			<td id="Column2" style="visibility: hidden" width = "750px" >
+
 				<table>
-					<tr>
+					<tr width = "500">
+						
 					<td align="left"><input id="ArrowBackward" type="button"
-					 value="Previous Day" class = "clickables btn btn-primary" disabled = "true"></input></td>
+					 value="Previous Day" class = "btn btn-primary" disabled = "true"></input></td>
 					<td align="right"><input id="ArrowForward" type="button"
-				 		value="Next Day" class = "clickables btn btn-primary"></input></td>
+				 		value="Next Day" class = "btn btn-primary"></input></td>
 					</tr>
 					<tr>
 					
-						<td><div id="map_canvas"></div></td>
+						<td width = "500"><div id="map_canvas"></div></td>
+					</tr>
+					<tr>
+						<td align = "right">
+							<input id="finishSched" type="button"
+							 value="View Schedule" disabled = "true" class = "btn btn-primary" onclick="popup('popUpDiv')" ></input>
+							
 					</tr>
 				</table>
 			</td>
@@ -182,6 +191,7 @@
 			</td>
 		</tr>
 		</table>
+
 
 </body>
 </html>

@@ -492,11 +492,7 @@ function showDayMarkers(day){
 	}
 	for(i in venuesPerDay[day]){
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1]);
-		
-		//showMarker(venuesPerDay[day][i][0], venuesPerDay[day][i][1]);
-		//venuesPerDay[day][i][0].setMap(map);
-		
-		//TODO: if they make a booking then we add the booing to an array and call it here
+
 	}
 	
 }
@@ -540,10 +536,7 @@ function doNothing(){
 	
 }
 var daycount = 0;
-function incrementCount(){
-	daycount++;
-	showDayMarkers(daycount);
-}
+
 function reverseGeocodeVenue(latlng){
 	//var latlng = new google.maps.LatLng(41.730330, -72.718506);
 	//var latlng = new google.maps.LatLng(lat, lng);

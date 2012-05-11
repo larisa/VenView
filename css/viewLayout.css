@@ -58,13 +58,11 @@ left: 2em;
 right: 0;
 bottom: 0;
 height: 20em;
-width: 40em;
-padding: 0 20px 0 0;
+width: 100%;
 }
 
 #booking{
 overflow-y: scroll;
-/*
 position: absolute;
 top: 25em;
 left: 29.32em;
@@ -73,10 +71,7 @@ bottom: 0;
 height: 20em;
 width: 55em;
 overflow: scroll;
-<<<<<<< HEAD
 padding: 0 20px 0 0;
-=======
-*/
 
 }
 
