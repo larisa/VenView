@@ -66,6 +66,10 @@ function timeMsg()
 {
 var t=setTimeout("display()",500);
 }
+function venMsg()
+{
+var t=setTimeout("divideVenues(5)",500);
+}
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
 //	a = a + "<br />" + markersArray.length + "<br />" + counter;
@@ -76,7 +80,9 @@ var display = function(){
 //	document.getElementById("blanket").style("width":window.innerWidth);
 	//window.innerWidth, window.innerHeight 
 	//window.outerWidth, window.outerHeight
-	drawTable();
+	//drawTable();
+	divideVenues(5);
+	showDayMarkers(0);
 	
 	
 	
@@ -253,19 +259,17 @@ function findVenues(location){
 function callback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 0; i < results.length; i++) {
+		venues
       createMarker(results[i]);
-		counter++;
+
     }
   }
 }
 var markersArray = []; //new Array(200); //[];
 var counter = 0;
+var venuesPerDay = [];
+
 function createAMarker(latlng) {
-	counter++;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: latlng
-  });
 	var name;
 	var boo = true;
 	name = chooseName();
@@ -274,43 +278,43 @@ function createAMarker(latlng) {
 			name = chooseName();
 		}
 		else{
-			namesList.push(name);
+			namesList.push([latlng, name]);
 			boo = false;
 		}
 	}
-  google.maps.event.addListener(marker, 'click', function() {
+}
+function createMarker(place) {
+  var placeLoc = place.geometry.location;
+	namesList.push([placeLoc,place.name]);
+
+}
+function letThereBeLight(latlng, name){
+	
+	var marker = new google.maps.Marker({
+    map: map,
+    position: latlng
+  });
+	
+	google.maps.event.addListener(marker, 'click', function() {
     infowindow.setContent(name);
     infowindow.open(map, this);
   });
 
 	markersArray.push([marker,name]);
-	//markersArray[counter]=[marker,name];
-	//counter++;
-	
+  
 }
-function createMarker(place) {
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: place.geometry.location
-  });
 
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
 
-	markersArray.push([marker,place.name]);
-	//markersArray[counter]=[marker,name];
-	//counter++;
-}
 function deleteOverlays() {
   if (markersArray) {
     for (i in markersArray) {
-      markersArray[i][0].setMap(null);
+      //markersArray[i][0].setMap(null); //.hide(); doesn't work
+	markersArray[i][0].setVisible(false);
     }
     markersArray.length = 0;
 	namesList.length = 0; //check if this was removed
+	venuesPerDay.length = 0;
+	daycount = 0;
 	//cpunter = 0;
 	//markersArray = new Array(200);
   }
@@ -470,6 +474,65 @@ function chooseName(){
 	var name = venuesData[ranNum];
 	return name;
 }
+function showDayMarkers(day){
+	//hide markers that are not in that day and show ones that are
+	if (markersArray) {
+    for (i in markersArray) {
+      markersArray[i][0].setVisible(false); //hide
+    }
+	}
+	for(i in venuesPerDay[day]){
+		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1]);
+		
+		//showMarker(venuesPerDay[day][i][0], venuesPerDay[day][i][1]);
+		//venuesPerDay[day][i][0].setMap(map);
+	}
+	
+}
+
+function showMarker(latlng, name){
+	  var marker = new google.maps.Marker({
+	    map: map,
+	    position: latlng
+	  });
+	  google.maps.event.addListener(marker, 'click', function() {
+	    infowindow.setContent(name);
+	    infowindow.open(map, this);
+	  });
+}
+function perDay(){
+	var arrayish = [];
+	var len = namesList.length;
+	for(var i =0; i<len; i++){
+		var num = Math.random();
+		if(num < 0.3){
+			arrayish.push(namesList[i]);
+		}
+
+
+	}
+	return arrayish;
+
+}
+function divMsg()
+{
+var t=setTimeout("doNothing()",500);
+}
+function divideVenues(numberOfDays){
+	for(var i =0; i<numberOfDays; i++){
+		var dayArray = perDay();
+		divMsg();
+		venuesPerDay.push(dayArray);
+	}
+}
+function doNothing(){
+	
+}
+var daycount = 0;
+function incrementCount(){
+	daycount++;
+	showDayMarkers(daycount);
+}
 function reverseGeocodeVenue(latlng){
 	//var latlng = new google.maps.LatLng(41.730330, -72.718506);
 	//var latlng = new google.maps.LatLng(lat, lng);
@@ -521,7 +584,14 @@ $(document).ready(function() {
 			}
 
 	});
-
+	$("#ArrowForward").click(function(evt) {
+		daycount++;
+		showDayMarkers(daycount);
+	});
+	$("#ArrowBackward").click(function(evt) {
+		daycount--;
+		showDayMarkers(daycount);
+	});
 	$("#Enter").click(function(evt) {
 		document.getElementById("debug").innerHTML = "";
 		var bDate = document.getElementById('start_cal').value;
