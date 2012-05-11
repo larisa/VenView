@@ -16,7 +16,7 @@ function loadCalendars() {
 			dayAfterStartDate.setTime(startDate.valueOf());
 			dayAfterStartDate.setTime(startDate.getTime() + 86400000);
 
-			$("#end_cal").datepicker("option", "minDate", startDate);
+			$("#end_cal").datepicker("option", "minDate", dayAfterStartDate);
 
 		}
 	});
@@ -73,9 +73,6 @@ var display = function(){
 //	a = a + markersArray[i][1] + "<br/ >";	
 //	}
 //	document.getElementById("debug").innerHTML = a;
-//	document.getElementById("blanket").style("width":window.innerWidth);
-	//window.innerWidth, window.innerHeight 
-	//window.outerWidth, window.outerHeight
 	drawTable();
 	
 	
@@ -736,8 +733,6 @@ function drawTable(){
 	    	cell = document.createElement("TD");
 	    	if (j==0){
 	    	 cell.innerHTML = markersArray[i][1]; 
-			cell.setAttribute("class", markersArray[i][1]);
-				
 	    	}
 	    	
 	    	//create a random booking a third of the time. 
@@ -756,12 +751,10 @@ function drawTable(){
 	    		 
 	    		 //add button to cell;
 	    		 cell.appendChild(button);
-				cell.setAttribute("class", markersArray[i][1]);
 	    		 
 	    	 }
 	    	}
 	    	cell.setAttribute("id", i+ "," + j);
-			
 	  //    oCell.innerHTML = stock[i][j];
 	    	row.appendChild(cell);
 	    }
