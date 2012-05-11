@@ -48,9 +48,9 @@ BODY
 }
 
 #map_canvas {
-position: absolute;
-top: 4.7em;
-left: 29.32em;
+position: relative;
+top: 0em;
+left: 2em;
 right: 0;
 bottom: 0;
 height: 20em;
