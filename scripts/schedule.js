@@ -81,7 +81,9 @@ var display = function(){
 	//window.innerWidth, window.innerHeight 
 	//window.outerWidth, window.outerHeight
 	//drawTable();
-	divideVenues(5);
+	a = a + namesList.length + "<br />";
+	document.getElementById("debug").innerHTML = a;
+	divideVenues(dates.length);
 	showDayMarkers(0);
 	
 	
@@ -259,7 +261,6 @@ function findVenues(location){
 function callback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     for (var i = 0; i < results.length; i++) {
-		venues
       createMarker(results[i]);
 
     }
@@ -557,7 +558,7 @@ function reverseGeocodeVenue(latlng){
 	});	
 }
 
-	var a = "";
+var a = "";
 
 var myBookings = [];
 var displayedGig = null;
@@ -586,11 +587,22 @@ $(document).ready(function() {
 	});
 	$("#ArrowForward").click(function(evt) {
 		daycount++;
+		document.getElementById("ArrowBackward").disabled = false;
 		showDayMarkers(daycount);
+		if(daycount === dates.length-1){
+			//disable button
+			this.disabled=true;
+		}
 	});
 	$("#ArrowBackward").click(function(evt) {
 		daycount--;
+		document.getElementById("ArrowForward").disabled = false;
+		
 		showDayMarkers(daycount);
+		if(daycount === 0){
+			this.disabled=true;
+			//disable button
+		}
 	});
 	$("#Enter").click(function(evt) {
 		document.getElementById("debug").innerHTML = "";
@@ -624,14 +636,14 @@ $(document).ready(function() {
 		//findVenues("Hartford, CT");
 		if(bDate != "" && eDate!= "" && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
-			
+
 				findVenues(origin);	//origin, Calcroute, then dest ensure that markers are put in array in the right order
-				
+				a = a + namesList.length + "<br />";
 				calcRoute();
 				//a = a + markersArray.length + "<br />";
-				
+				a = a + namesList.length + "<br />";
 				findVenues(dest);
-				
+				a = a + namesList.length + "<br />";
 				//findVenuesAlongPath(); //working for hartford!
 				//drawTable();
 				//check if length is equal to a count and then displau
