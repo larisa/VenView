@@ -54,7 +54,6 @@ BODY
 #map_canvas {
 position: relative;
 top: 0em;
-left: 2em;
 right: 0;
 bottom: 0;
 height: 20em;
@@ -143,6 +142,7 @@ margin: 0;
 padding: 0;
 border: 0;
 -moz-user-select: none;
+vertical-align: -16%;
 }
 
 .res .icon {
