@@ -87,6 +87,7 @@ var display = function(){
 	//document.getElementById("debug").innerHTML = a;
 	divideVenues(dates.length);
 	showDayMarkers(0);
+	showDayMarkers2();
 
 	
 	
@@ -206,6 +207,7 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     center: chicago
   }
+//	map = new GMap2(document.getElementById("map_canvas"));
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	service = new google.maps.places.PlacesService(map);
 	geocoder = new google.maps.Geocoder();
@@ -496,16 +498,12 @@ function showDayMarkers(day){
 	}
 	
 }
-
-function showMarker(latlng, name){
-	  var marker = new google.maps.Marker({
-	    map: map,
-	    position: latlng
-	  });
-	  google.maps.event.addListener(marker, 'click', function() {
-	    infowindow.setContent(name);
-	    infowindow.open(map, this);
-	  });
+function showDayMarkers2(){
+	//41.730330
+	//-72.718506
+	var point = new GLatLng(41.730330, -72.718506);
+	var marker = new GMarker(point);
+	map.addOverlay(marker);
 }
 function perDay(){
 	var arrayish = [];
