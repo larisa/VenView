@@ -72,6 +72,7 @@ var t=setTimeout("divideVenues(5)",500);
 }
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
+	document.getElementById("Column3").style.visibility="visible";
 //	a = a + "<br />" + markersArray.length + "<br />" + counter;
 //	for(var i =0; i<20; i++){
 //	a = a + markersArray[i][1] + "<br/ >";	
@@ -87,6 +88,7 @@ var display = function(){
 	//document.getElementById("debug").innerHTML = a;
 	divideVenues(dates.length);
 	showDayMarkers(0);
+
 	drawList(0);
 	
 }
@@ -204,6 +206,7 @@ function initialize() {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     center: chicago
   }
+//	map = new GMap2(document.getElementById("map_canvas"));
   map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 	service = new google.maps.places.PlacesService(map);
 	geocoder = new google.maps.Geocoder();
@@ -219,6 +222,11 @@ function initialize() {
 	var city3 = document.getElementById('city3');
 	var autocomplete = new google.maps.places.Autocomplete(city3);
 	setRemoveCommentHandlers();
+	google.maps.event.addListener(map, 'click', function() {
+      infowindow.close();
+		if(bufferMarker){
+			bufferMarker.styleIcon.set("color","#20b2aa");}
+    });
 	
 }
 function findVenuesAlongPath(){
@@ -293,22 +301,41 @@ function createMarker(place) {
 }
 
 //give it location and name. create marker and make it appear
+
+var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
+var bufferMarker;
+
 function letThereBeLight(latlng, name, venue){
 	
-	var marker = new google.maps.Marker({
-    map: map,
-    position: latlng
-  });
-	
+	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{text: "."},styleIconClass),position:latlng,map:map});
+//	var marker = new google.maps.Marker({
+  //  map: map,
+   // position: latlng
+  //});
+	bufferMarker = marker;
 	google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(name);
+	if(bufferMarker){
+		bufferMarker.styleIcon.set("color","#20b2aa");
+		bufferMarker = marker;
+	}
+	infowindow.setContent('<div id="information">'+name+'</div>');
+    //infowindow.setContent(name);
     infowindow.open(map, this);
+	this.styleIcon.set("color","#00ff00");
+
+	//styleIconClass.set("color"," #ff4040");
+//	this.set("color","#ff0000");
   });
+	google.maps.event.addListener(infowindow, 'closeclick', closeMarker);
 	venue.push(marker);
 	markersArray.push([marker,name]);
   
 }
-
+function closeMarker(){
+	if(bufferMarker){
+		bufferMarker.styleIcon.set("color","#20b2aa");
+	}
+}
 // 
 function deleteOverlays() {
   if (markersArray) {
@@ -489,21 +516,19 @@ function showDayMarkers(day){
     }
 	}
 	for(i in venuesPerDay[day]){
+
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
+
 
 	}
 	
 }
-
-function showMarker(latlng, name){
-	  var marker = new google.maps.Marker({
-	    map: map,
-	    position: latlng
-	  });
-	  google.maps.event.addListener(marker, 'click', function() {
-	    infowindow.setContent(name);
-	    infowindow.open(map, this);
-	  });
+function showDayMarkers2(){
+	//41.730330
+	//-72.718506
+	var point = new GLatLng(41.730330, -72.718506);
+	var marker = new GMarker(point);
+	map.addOverlay(marker);
 }
 function perDay(){
 	var arrayish = [];
@@ -595,6 +620,10 @@ $(document).ready(function() {
 			//disable button
 			this.disabled=true;
 		}
+		infowindow.close();
+			if(bufferMarker){
+				bufferMarker.styleIcon.set("color","#20b2aa");}
+		document.getElementById("finishSched").disabled = false;
 	});
 	$("#ArrowBackward").click(function(evt) {
 		daycount--;
@@ -605,6 +634,10 @@ $(document).ready(function() {
 			this.disabled=true;
 			//disable button
 		}
+		infowindow.close();
+			if(bufferMarker){
+				bufferMarker.styleIcon.set("color","#20b2aa");}
+		
 	});
 	$("#Enter").click(function(evt) {
 		document.getElementById("debug").innerHTML = "";
@@ -638,42 +671,29 @@ $(document).ready(function() {
 		//findVenues("Hartford, CT");
 		if(bDate != "" && eDate!= "" && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
-
 				findVenues(origin);	//origin, Calcroute, then dest ensure that markers are put in array in the right order
-				a = a + namesList.length + "<br />";
 				calcRoute();
-				//a = a + markersArray.length + "<br />";
-				a = a + namesList.length + "<br />";
 				findVenues(dest);
-				a = a + namesList.length + "<br />";
-				//findVenuesAlongPath(); //working for hartford!
-				//drawTable();
-				//check if length is equal to a count and then displau
 				timeMsg();
-				//display();
 				}
 			else if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-				//drawTable();
-				//display();
 				timeMsg();
 				}
 			else if(citycount == 3 && (cit1!="" && cit2!="") || (cit2!="" && cit3!="") || (cit1!="" && cit3!="")){
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-				//drawTable();
-		//	display();
-		timeMsg();}
+				timeMsg();
+				}
 			else if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-				//drawTable();
-			//display();
-			timeMsg();}
+				timeMsg();
+				}
 			else{
 			/// send warning, this should be in red
 				document.getElementById("debug").innerHTML = "Please enter all fields";
