@@ -658,6 +658,7 @@ function breakMsg2(dest)
 var t=setTimeout("findVenues(dest)",500);
 }
 $(document).ready(function() {
+	
 	$('.clickables').keypress(function(e) {
 	  	  	if (e.keyCode == '13' &&  this.value != '') {
 						$('#Enter').click();
@@ -1002,6 +1003,7 @@ function createGig(venueName, date, startTime, duration, latlng){
 	toBookLink.href = 'javascript:void(0);';
 	toBookLink.onclick =  function (){
 		bookings.push(gig);
+		gig.book();
 		bufferMarker.styleIcon.set("color","#0000ff");
 		permanantOnes.push(bufferMarker); //maybe later something else. up to you
 		bufferMarker = null;

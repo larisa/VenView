@@ -91,6 +91,16 @@ overflow: scroll;
 padding: 0 20px 0 0; */
 
 } 
+#finalView{
+overflow-y: scroll;
+height: 380px;
+width:400px;
+
+}
+#dayAndTime{
+	border: 1;
+	width: 100%;
+}
 
 .informationTable{
 	font-family: 'Oxygen', sans-serif;
