@@ -302,13 +302,19 @@ function createMarker(place) {
 }
 
 //give it location and name. create marker and make it appear
+function move_up() {
+    document.getElementById('booking').scrollTop += 10;
+  }
 
+  function move_down() {
+    document.getElementById('booking').scrollTop -= 10;
+  }
 var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
 var bufferMarker;
 
 function letThereBeLight(latlng, name, venue){
 	
-	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{text: "."},styleIconClass),position:latlng,map:map});
+	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{},styleIconClass),position:latlng,map:map});
 //	var marker = new google.maps.Marker({
   //  map: map,
    // position: latlng
@@ -325,6 +331,9 @@ function letThereBeLight(latlng, name, venue){
     //infowindow.setContent(name);
     infowindow.open(map, this);
 	this.styleIcon.set("color","#00ff00");
+	move_down();
+
+
 	//styleIconClass.set("color"," #ff4040");
 //	this.set("color","#ff0000");
   });
@@ -794,16 +803,30 @@ function drawButtons(){
 }*/
 
 var venueOpenings = [];
-var bookings = []
-
-generateTriggerCallback = function(object, eventType, row) {
+var bookings = [];
+var tempRow;
+var tempIcon;
+generateTriggerCallback = function(object, eventType, row, icon) {
     return function() {
-      google.maps.event.trigger(object, eventType);
+		if(tempRow){
+			if(tempRow!= row){
+				tempRow.style.display = "none";
+				tempIcon.setAttribute("class" ,"icon-chevron-right");
+			}
+		}
+	
+	  tempRow = row;
+	  tempIcon = icon;
+		
       if (row.style.display == "block"){
     	  row.style.display = "none";
+    	  icon.setAttribute("class" ,"icon-chevron-right");
+		  google.maps.event.trigger(map, 'click');
       }
       else {
     	  row.style.display = "block";
+    	  icon.setAttribute("class" ,"icon-chevron-down");
+    	  google.maps.event.trigger(object, eventType);
       }
     };
   }
@@ -861,7 +884,7 @@ function drawList(day){
 		row.setAttribute("id", day+ "," + name + "book");
 		row.setAttribute("class", "openings");
 		row.style.display = "none";
-		cell.onclick =  generateTriggerCallback(marker, 'click', row);
+		cell.onclick =  generateTriggerCallback(marker, 'click', row, icon);
 
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);  
