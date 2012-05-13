@@ -26,6 +26,9 @@ background-color:#eeeeee;
 width:400px;
 height:400px;
 z-index: 9002;}
+#information{
+    overflow: hidden;
+}
 
 #Column2 {
 vertical-align: top;

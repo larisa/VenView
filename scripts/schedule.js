@@ -318,7 +318,8 @@ function letThereBeLight(latlng, name, venue){
 		bufferMarker.styleIcon.set("color","#20b2aa");
 		bufferMarker = marker;
 	}
-    infowindow.setContent(name);
+	infowindow.setContent('<div id="information">'+name+'</div>');
+    //infowindow.setContent(name);
     infowindow.open(map, this);
 	this.styleIcon.set("color","#00ff00");
 
