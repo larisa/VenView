@@ -656,7 +656,6 @@ $(document).ready(function() {
 		infowindow.close();
 			if(bufferMarker){
 				bufferMarker.styleIcon.set("color","#20b2aa");}
-		document.getElementById("finishSched").disabled = false;
 	});
 	$("#ArrowBackward").click(function(evt) {
 		daycount--;
@@ -967,6 +966,9 @@ function createGig(venueName, date, startTime, duration){
 	toBookLink.href = 'javascript:void(0);';
 	toBookLink.onclick =  function (){
 		bookings.push(gig);
+		if(bookings.length>0){
+			document.getElementById("finishSched").disabled = false;
+		}
 	}
 	return div;
 	
