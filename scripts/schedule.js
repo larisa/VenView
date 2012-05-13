@@ -330,6 +330,7 @@ function move_up(latlng) {
 
 
 var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
+var styleIconClass2 = new StyledIcon(StyledIconTypes.CLASS,{color:"#0000ff"});
 var bufferMarker;
 function clickclick(marker, name){
 	if(bufferMarker){
@@ -342,6 +343,22 @@ function clickclick(marker, name){
     //infowindow.setContent(name);
     infowindow.open(map, marker);
 	marker.styleIcon.set("color","#00ff00");
+}
+function permanentMarkers(latlng, name){
+	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{},styleIconClass2),position:latlng,map:map});
+//	var marker = new google.maps.Marker({
+  //  map: map,
+   // position: latlng
+  //});
+	//bufferMarker = marker;
+	google.maps.event.addListener(marker, 'click', function() {
+		infowindow.setContent('<div id="information">'+name+'</div>');
+	    //infowindow.setContent(name);
+	    infowindow.open(map, marker);
+		//marker.styleIcon.set("color","#00ff00");
+  });
+	google.maps.event.addListener(infowindow, 'closeclick', closeMarker);
+	markersArray.push([marker, name]);
 }
 function letThereBeLight(latlng, name, venue){
 	
@@ -383,7 +400,9 @@ function deleteOverlays() {
     markersArray.length = 0;
 	namesList.length = 0; //check if this was removed
 	venuesPerDay.length = 0;
+	bookings.length= 0;
 	daycount = 0;
+	permanantOnes.length = 0;
 	document.getElementById("ArrowBackward").disabled = true;
 	document.getElementById("ArrowForward").disabled = false;
 	//TODO: reset array booked here. 
@@ -557,6 +576,12 @@ function showDayMarkers(day){
 	for(i in venuesPerDay[day]){
 
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
+
+
+	}
+	for(i in bookings){
+
+		permanentMarkers(bookings[i].latlng,bookings[i].venue);
 
 
 	}
@@ -929,7 +954,7 @@ function drawList(day){
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);  
 	    
-	    booking = createOpenings(day, name);
+	    booking = createOpenings(day, name, venuesPerDay[day][i][0]);
 	    for (j=0;j<booking.length;j++){
 	    	cell.appendChild(booking[j]);
 	    }
@@ -937,7 +962,7 @@ function drawList(day){
 	    }
 }
 
-function createOpenings(day, venueName){
+function createOpenings(day, venueName, latlng){
 	listOfDivs = [];
 	numOpenings = Math.floor(Math.random() * 4);
 	div = document.createElement("DIV");
@@ -946,15 +971,15 @@ function createOpenings(day, venueName){
 	for (k=0; k<=numOpenings; k++){
 		startTime = Math.floor(Math.random() * 14) + 10;
 		duration = Math.floor(Math.random() * 4);
-		gigDiv = createGig(venueName, day, startTime, duration)
+		gigDiv = createGig(venueName, day, startTime, duration, latlng)
 		listOfDivs.push(gigDiv);
 	}
 	return listOfDivs;
 	
 }
-
-function createGig(venueName, date, startTime, duration){
-	var gig = new Booking(venueName, date, startTime,  duration);
+permanantOnes =[]; //maybe later [marker, count#bookings]
+function createGig(venueName, date, startTime, duration, latlng){
+	var gig = new Booking(venueName, date, startTime,  duration, latlng);
 	div = document.createElement("DIV");
 	div.setAttribute("class", "gig");
 	div.setAttribute("id", gig);
@@ -966,6 +991,9 @@ function createGig(venueName, date, startTime, duration){
 	toBookLink.href = 'javascript:void(0);';
 	toBookLink.onclick =  function (){
 		bookings.push(gig);
+		bufferMarker.styleIcon.set("color","#0000ff");
+		permanantOnes.push(bufferMarker); //maybe later something else. up to you
+		bufferMarker = null;
 		if(bookings.length>0){
 			document.getElementById("finishSched").disabled = false;
 		}
