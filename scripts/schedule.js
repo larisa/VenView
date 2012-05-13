@@ -297,16 +297,27 @@ function createMarker(place) {
 }
 
 //give it location and name. create marker and make it appear
+var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
+var bufferMarker;
 function letThereBeLight(latlng, name){
 	
-	var marker = new google.maps.Marker({
-    map: map,
-    position: latlng
-  });
-	
+	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{text: "."},styleIconClass),position:latlng,map:map});
+//	var marker = new google.maps.Marker({
+  //  map: map,
+   // position: latlng
+  //});
+	bufferMarker = marker;
 	google.maps.event.addListener(marker, 'click', function() {
+	if(bufferMarker){
+		bufferMarker.styleIcon.set("color","#20b2aa");
+		bufferMarker = marker;
+	}
     infowindow.setContent(name);
     infowindow.open(map, this);
+	this.styleIcon.set("color","#00ff00");
+
+	//styleIconClass.set("color"," #ff4040");
+//	this.set("color","#ff0000");
   });
 
 	markersArray.push([marker,name]);
@@ -493,6 +504,7 @@ function showDayMarkers(day){
     }
 	}
 	for(i in venuesPerDay[day]){
+		
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1]);
 
 	}
