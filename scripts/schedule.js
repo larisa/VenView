@@ -280,16 +280,17 @@ var markersArray = []; //new Array(200); //[];
 var counter = 0;
 // an array of arrays, each array being the day 
 var venuesPerDay = [];
-
+var namesTaken = [];
 function createAMarker(latlng) {
 	var name;
 	var boo = true;
 	name = chooseName();
 	while(boo){
-		if(name in namesList){
+		if(name in namesTaken){
 			name = chooseName();
 		}
 		else{
+			namesTaken.push(name);
 			namesList.push([latlng, name]);
 			boo = false;
 		}
@@ -403,6 +404,7 @@ function deleteOverlays() {
 	bookings.length= 0;
 	daycount = 0;
 	permanantOnes.length = 0;
+	namesTaken.length = 0;
 	document.getElementById("ArrowBackward").disabled = true;
 	document.getElementById("ArrowForward").disabled = false;
 	//TODO: reset array booked here. 
@@ -559,7 +561,7 @@ function calcRoute() {
   });
 }
 function chooseName(){
-	var len = venuesData.length;
+	var len = venuesData.length-1;
 	var num = Math.random();
 	var ranNum = Math.round(len*num);
 	var name = venuesData[ranNum];
@@ -647,7 +649,14 @@ var a = "";
 var myBookings = [];
 var displayedGig = null;
 
-
+function breakMsg()
+{
+var t=setTimeout("calcroute()",500);
+}
+function breakMsg2(dest)
+{
+var t=setTimeout("findVenues(dest)",500);
+}
 $(document).ready(function() {
 	$('.clickables').keypress(function(e) {
 	  	  	if (e.keyCode == '13' &&  this.value != '') {
@@ -728,9 +737,11 @@ $(document).ready(function() {
 		//findVenues("Hartford, CT");
 		if(bDate != "" && eDate!= "" && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
-				findVenues(origin);	//origin, Calcroute, then dest ensure that markers are put in array in the right order
+					//origin, Calcroute, then dest ensure that markers are put in array in the right order
+				findVenues(origin);
 				calcRoute();
 				findVenues(dest);
+				
 				timeMsg();
 				}
 			else if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
