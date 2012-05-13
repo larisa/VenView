@@ -300,10 +300,32 @@ function createMarker(place) {
 	namesList.push([placeLoc,place.name]);
 
 }
+//var topPos = document.getElementById('0,').offsetTop;
+function someScrollFunction(){
+	document.getElementById('booking').scrollTop = topPos;
+}
+
+function ScrollToElement(theElement){
+
+  var selectedPosX = 0;
+  var selectedPosY = 0;
+
+  while(theElement != null){
+    selectedPosX += theElement.offsetLeft;
+    selectedPosY += theElement.offsetTop;
+    theElement = theElement.offsetParent;
+  }
+
+ window.scrollTo(selectedPosX,selectedPosY);
+
+}
 
 //give it location and name. create marker and make it appear
-function move_up() {
-    document.getElementById('booking').scrollTop += 10;
+function move_up(latlng) {
+	var sTr = daycount+"," +latlng;
+	var topPos = document.getElementById(sTr).offsetTop;
+	document.getElementById('booking').scrollTop = topPos;
+    //document.getElementById('booking').scrollTop += 10;
   }
 
   function move_down() {
@@ -325,13 +347,13 @@ function letThereBeLight(latlng, name, venue){
 		bufferMarker.styleIcon.set("color","#20b2aa");
 		bufferMarker = marker;
 	}else{
-		bufferMarker = marker;
+		bufferMarker = marker; //is this right. marker is type, no?
 	}
 	infowindow.setContent('<div id="information">'+name+'</div>');
     //infowindow.setContent(name);
     infowindow.open(map, this);
 	this.styleIcon.set("color","#00ff00");
-	move_down();
+	move_up(this.position);
 
 	//styleIconClass.set("color"," #ff4040");
 //	this.set("color","#ff0000");
@@ -535,13 +557,7 @@ function showDayMarkers(day){
 	}
 	document.getElementById("dateToDay").innerHTML = dates[day].toDateString();
 }
-function showDayMarkers2(){
-	//41.730330
-	//-72.718506
-	var point = new GLatLng(41.730330, -72.718506);
-	var marker = new GMarker(point);
-	map.addOverlay(marker);
-}
+
 function perDay(){
 	var arrayish = [];
 	var len = namesList.length;
@@ -872,7 +888,7 @@ function drawList(day){
 	    var marker = venuesPerDay[day][i][2];
 	   
 	    
-	    cell.setAttribute("id", day+ "," + i);
+	    cell.setAttribute("id", day+ "," + venuesPerDay[day][i][0]);
 	    cell.setAttribute("class", "venue");
 	    
 	    row = document.createElement("TR");
