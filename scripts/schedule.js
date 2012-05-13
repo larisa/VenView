@@ -772,10 +772,17 @@ function drawButtons(){
 }*/
 
 var venueOpenings = [];
+var bookings = []
 
-generateTriggerCallback = function(object, eventType) {
+generateTriggerCallback = function(object, eventType, row) {
     return function() {
       google.maps.event.trigger(object, eventType);
+      if (row.style.display == "block"){
+    	  row.style.display = "none";
+      }
+      else {
+    	  row.style.display = "block";
+      }
     };
   }
 
@@ -810,6 +817,10 @@ function drawList(day){
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);    
 	    
+	    icon = document.createElement("I");
+	    cell.appendChild(icon);
+	    icon.setAttribute("class", "icon-chevron-right");
+	    
 	    link = document.createElement("A");
 	    cell.appendChild(link);
 	    
@@ -817,13 +828,61 @@ function drawList(day){
 	    link.innerHTML = name;
 	    link.href = 'javascript:void(0);';
 	    var marker = venuesPerDay[day][i][2];
-	    link.onclick =  generateTriggerCallback(marker, 'click');
-	        
+	   
+	    
 	    cell.setAttribute("id", day+ "," + i);
 	    cell.setAttribute("class", "venue");
+	    
+	    row = document.createElement("TR");
+		body.appendChild(row);
+		row.style.display = "none";
+		cell.onclick =  generateTriggerCallback(marker, 'click', row);
+
+	    cell = document.createElement("TD");
+	    row.appendChild(cell);  
+	    
+	    booking = createOpenings(day, name);
+	    for (j=0;j<booking.length;j++){
+	    	cell.appendChild(booking[j]);
+	    }
 	   
 	    }
 }
+
+function createOpenings(day, venueName){
+	listOfDivs = [];
+	numOpenings = Math.floor(Math.random() * 4);
+	div = document.createElement("DIV");
+	div.setAttribute("class", "booking");
+	div.innerHTML = "availableItems"
+	for (k=0; k<=numOpenings; k++){
+		startTime = Math.floor(Math.random() * 14) + 10;
+		duration = Math.floor(Math.random() * 4);
+		gigDiv = createGig(venueName, day, startTime, duration)
+		listOfDivs.push(gigDiv);
+	}
+	return listOfDivs;
+	
+}
+
+function createGig(venueName, date, startTime, duration){
+	var gig = new Booking(venueName, date, startTime,  duration);
+	div = document.createElement("DIV");
+	div.setAttribute("class", "gig");
+	div.setAttribute("id", gig);
+	endTime = startTime + duration;
+	div.innerHTML ="Available from " + startTime + ": " +  endTime;
+	toBookLink = document.createElement("A");
+	div.appendChild(toBookLink);
+	toBookLink.innerHTML = "Book this time";
+	toBookLink.href = 'javascript:void(0);';
+	toBookLink.onclick =  function (){
+		bookings.push(gig);
+	}
+	return div;
+	
+}
+ 
 
 function drawTable(){
 	var container = document.getElementById("booking");	
