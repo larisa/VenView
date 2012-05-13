@@ -86,6 +86,7 @@ padding: 0 20px 0 0; */
 .venue{
 cursor:pointer;
 padding: 6px 10px;
+border: 1px solid #BBB;
 }
 select, label {
 	width:100px;    /*Or however much space you need for the form’s labels*/

@@ -293,7 +293,7 @@ function createMarker(place) {
 }
 
 //give it location and name. create marker and make it appear
-function letThereBeLight(latlng, name){
+function letThereBeLight(latlng, name, venue){
 	
 	var marker = new google.maps.Marker({
     map: map,
@@ -304,7 +304,7 @@ function letThereBeLight(latlng, name){
     infowindow.setContent(name);
     infowindow.open(map, this);
   });
-
+	venue.push(marker);
 	markersArray.push([marker,name]);
   
 }
@@ -489,7 +489,7 @@ function showDayMarkers(day){
     }
 	}
 	for(i in venuesPerDay[day]){
-		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1]);
+		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
 
 	}
 	
@@ -816,7 +816,7 @@ function drawList(day){
 	    var name =  venuesPerDay[day][i][1];
 	    link.innerHTML = name;
 	    link.href = 'javascript:void(0);';
-	    var marker = venuesPerDay[day][i][1];
+	    var marker = venuesPerDay[day][i][2];
 	    link.onclick =  generateTriggerCallback(marker, 'click');
 	        
 	    cell.setAttribute("id", day+ "," + i);
