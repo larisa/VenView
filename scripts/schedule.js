@@ -72,6 +72,7 @@ var t=setTimeout("divideVenues(5)",500);
 }
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
+	document.getElementById("Column3").style.visibility="visible";
 //	a = a + "<br />" + markersArray.length + "<br />" + counter;
 //	for(var i =0; i<20; i++){
 //	a = a + markersArray[i][1] + "<br/ >";	
@@ -221,6 +222,11 @@ function initialize() {
 	var city3 = document.getElementById('city3');
 	var autocomplete = new google.maps.places.Autocomplete(city3);
 	setRemoveCommentHandlers();
+	google.maps.event.addListener(map, 'click', function() {
+      infowindow.close();
+		if(bufferMarker){
+			bufferMarker.styleIcon.set("color","#20b2aa");}
+    });
 	
 }
 function findVenuesAlongPath(){
@@ -295,9 +301,11 @@ function createMarker(place) {
 }
 
 //give it location and name. create marker and make it appear
+
 var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
 var bufferMarker;
-function letThereBeLight(latlng, name){
+
+function letThereBeLight(latlng, name, venue){
 	
 	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{text: "."},styleIconClass),position:latlng,map:map});
 //	var marker = new google.maps.Marker({
@@ -317,11 +325,16 @@ function letThereBeLight(latlng, name){
 	//styleIconClass.set("color"," #ff4040");
 //	this.set("color","#ff0000");
   });
-
+	google.maps.event.addListener(infowindow, 'closeclick', closeMarker);
+	venue.push(marker);
 	markersArray.push([marker,name]);
   
 }
-
+function closeMarker(){
+	if(bufferMarker){
+		bufferMarker.styleIcon.set("color","#20b2aa");
+	}
+}
 // 
 function deleteOverlays() {
   if (markersArray) {
@@ -502,8 +515,9 @@ function showDayMarkers(day){
     }
 	}
 	for(i in venuesPerDay[day]){
-		
-		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1]);
+
+		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
+
 
 	}
 	
@@ -605,6 +619,9 @@ $(document).ready(function() {
 			//disable button
 			this.disabled=true;
 		}
+		infowindow.close();
+			if(bufferMarker){
+				bufferMarker.styleIcon.set("color","#20b2aa");}
 	});
 	$("#ArrowBackward").click(function(evt) {
 		daycount--;
@@ -615,6 +632,10 @@ $(document).ready(function() {
 			this.disabled=true;
 			//disable button
 		}
+		infowindow.close();
+			if(bufferMarker){
+				bufferMarker.styleIcon.set("color","#20b2aa");}
+		
 	});
 	$("#Enter").click(function(evt) {
 		document.getElementById("debug").innerHTML = "";
@@ -648,42 +669,29 @@ $(document).ready(function() {
 		//findVenues("Hartford, CT");
 		if(bDate != "" && eDate!= "" && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
-
 				findVenues(origin);	//origin, Calcroute, then dest ensure that markers are put in array in the right order
-				a = a + namesList.length + "<br />";
 				calcRoute();
-				//a = a + markersArray.length + "<br />";
-				a = a + namesList.length + "<br />";
 				findVenues(dest);
-				a = a + namesList.length + "<br />";
-				//findVenuesAlongPath(); //working for hartford!
-				//drawTable();
-				//check if length is equal to a count and then displau
 				timeMsg();
-				//display();
 				}
 			else if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-				//drawTable();
-				//display();
 				timeMsg();
 				}
 			else if(citycount == 3 && (cit1!="" && cit2!="") || (cit2!="" && cit3!="") || (cit1!="" && cit3!="")){
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-				//drawTable();
-		//	display();
-		timeMsg();}
+				timeMsg();
+				}
 			else if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
 				findVenues(origin);	
 				calcRoute();
 				findVenues(dest);
-				//drawTable();
-			//display();
-			timeMsg();}
+				timeMsg();
+				}
 			else{
 			/// send warning, this should be in red
 				document.getElementById("debug").innerHTML = "Please enter all fields";
@@ -826,7 +834,7 @@ function drawList(day){
 	    var name =  venuesPerDay[day][i][1];
 	    link.innerHTML = name;
 	    link.href = 'javascript:void(0);';
-	    var marker = venuesPerDay[day][i][1];
+	    var marker = venuesPerDay[day][i][2];
 	    link.onclick =  generateTriggerCallback(marker, 'click');
 	        
 	    cell.setAttribute("id", day+ "," + i);

@@ -162,10 +162,10 @@
 			
 
 
-			<td id="Column2" style="visibility: hidden" width = "650px" >
+			<td id="Column2" style="visibility: hidden">
 
 				<table>
-					<tr>
+					<tr height="28">
 						
 					<td align="left"><input id="ArrowBackward" type="button"
 					 value="Previous Day" class = "btn btn-primary" disabled = "true"></input>
@@ -174,20 +174,20 @@
 					</tr>
 					<tr>
 					
-						<td width = "650px"><div id="map_canvas"></div></td>
+						<td width = "650px" height="400px"><div id="map_canvas"></div></td>
 					</tr>
-					<tr>
-						<td align = "right">
-							<input id="finishSched" type="button"
-							 value="View Schedule" disabled = "true" class = "btn btn-primary" onclick="popup('popUpDiv')" ></input>
-							
-					</tr>
+
 				</table>
 			</td>
-			<td id = "Column3" class = column>
-			<div id = "booking">
-			<table id = sched></table>
+			<td id = "Column3" style="visibility: hidden" class = "column">
+				<table><tr><td height="28px" id="todayDate">
+				</td></tr></table>
+			<div id = "booking" >
+			<table id = "sched"></table>
 			</div>
+			<table><tr><td align= "right"height="28px"><input id="finishSched" type="button"
+			 value="View Schedule" disabled = "true" class = "btn btn-primary" onclick="popup('popUpDiv')" ></input>
+			</td></tr></table>
 			</td>
 		</tr>
 		</table>
