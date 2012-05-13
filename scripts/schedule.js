@@ -388,7 +388,9 @@ function closeMarker(){
 	}
 	if(tempRow){
 		tempRow.style.display = "none";
+		tempIcon.setAttribute("class" ,"icon-chevron-right");
 		tempRow = null;
+		tempIcon = null;
 		
 	}
 }
@@ -1017,6 +1019,20 @@ function createGig(venueName, date, startTime, duration, latlng){
 		if(bookings.length>0){
 			document.getElementById("finishSched").disabled = false;
 		}
+	}
+	unbookLink = document.createElement("A");
+	unbookLink.innerHTML = "Unbook";
+	unbookLink.href = 'javascript:void(0);';
+	unbookLink.style.display = 'none';
+	toBookLink.onclick =  function (){
+		gig.unbook();
+		bufferMarker.styleIcon.set("color","#0000ff");
+		permanantOnes.push(bufferMarker); //maybe later something else. up to you
+		bufferMarker = null;
+		if(bookings.length == 0){
+			document.getElementById("finishSched").disabled = false;
+		}
+		
 	}
 	return div;
 	
