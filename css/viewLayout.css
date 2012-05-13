@@ -41,7 +41,10 @@ vertical-align: top;
 	border: 1;
 	width: 100%;
 }
-
+#finishSched{
+	height:40px;
+	width:13em;
+}
 
 BODY
    {
