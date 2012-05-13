@@ -302,7 +302,13 @@ function createMarker(place) {
 }
 
 //give it location and name. create marker and make it appear
+function move_up() {
+    document.getElementById('divElem').scrollTop += 10;
+  }
 
+  function move_down() {
+    document.getElementById('divElem').scrollTop -= 10;
+  }
 var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
 var bufferMarker;
 
@@ -795,16 +801,17 @@ function drawButtons(){
 }*/
 
 var venueOpenings = [];
-var bookings = []
-
+var bookings = [];
 generateTriggerCallback = function(object, eventType, row) {
     return function() {
-      google.maps.event.trigger(object, eventType);
+
       if (row.style.display == "block"){
     	  row.style.display = "none";
+		google.maps.event.trigger(map, 'click');
       }
       else {
     	  row.style.display = "block";
+		google.maps.event.trigger(object, eventType);
       }
     };
   }
