@@ -357,6 +357,8 @@ function deleteOverlays() {
 	namesList.length = 0; //check if this was removed
 	venuesPerDay.length = 0;
 	daycount = 0;
+	document.getElementById("ArrowBackward").disabled = true;
+	document.getElementById("ArrowForward").disabled = false;
 	//TODO: reset array booked here. 
 	//cpunter = 0;
 	//markersArray = new Array(200);
