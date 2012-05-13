@@ -773,6 +773,12 @@ function drawButtons(){
 
 var venueOpenings = [];
 
+generateTriggerCallback = function(object, eventType) {
+    return function() {
+      google.maps.event.trigger(object, eventType);
+    };
+  }
+
 function drawList(day){
 	var container = document.getElementById("booking");	
 	var oldTable = document.getElementById("sched");
@@ -794,15 +800,28 @@ function drawList(day){
 	  for (i=0; i<venuesPerDay[day].length; i++){	   
 	    
 		row = document.createElement("TR");
-	    body.appendChild(row);
+		body.appendChild(row);
+		if (i%2 == 0){
+		    row.style.backgroundColor = "#F0F0F0";}
+		else {
+		    row.style.backgroundColor = "white";}
+		
+		
 	    cell = document.createElement("TD");
+	    row.appendChild(cell);    
+	    
 	    link = document.createElement("A");
-	    link.innerHTML = venuesPerDay[day][i][1];
-	    		 
-	    //add button to cell;
 	    cell.appendChild(link);
-	    cell.setAttribute("id", day+ "," + markersArray[i][1]);
-	    row.appendChild(cell);
+	    
+	    var name =  venuesPerDay[day][i][1];
+	    link.innerHTML = name;
+	    link.href = 'javascript:void(0);';
+	    var marker = venuesPerDay[day][i][1];
+	    link.onclick =  generateTriggerCallback(marker, 'click');
+	        
+	    cell.setAttribute("id", day+ "," + i);
+	    cell.setAttribute("class", "venue");
+	   
 	    }
 }
 

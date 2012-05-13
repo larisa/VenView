@@ -58,8 +58,12 @@ height: 33em;
 width: 100%;
 }
 
-/* #booking{
-overflow-y: scroll;
+#booking{
+overflow: scroll;
+height: 35em;
+width:12em;
+
+/* overflow-y: scroll;
 position: absolute;
 top: 25em;
 left: 29.32em;
@@ -68,15 +72,20 @@ bottom: 0;
 height: 20em;
 width: 55em;
 overflow: scroll;
-padding: 0 20px 0 0;
+padding: 0 20px 0 0; */
 
-} */
+} 
 
 .informationTable{
 	font-family: 'Oxygen', sans-serif;
 }
 
 #information{
+}
+
+.venue{
+cursor:pointer;
+padding: 6px 10px;
 }
 select, label {
 	width:100px;    /*Or however much space you need for the form’s labels*/
