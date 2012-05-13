@@ -26,7 +26,6 @@
 <script type="text/javascript" src="scripts/styledMarker.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
-<script type="text/javascript" src="jquery.gmap.min.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
 <script type="text/javascript" src="scripts/schedule.js"></script>
 <script type="text/javascript" src="scripts/Booking.js"></script>
@@ -163,19 +162,19 @@
 			
 
 
-			<td id="Column2"  width = "750px" >
+			<td id="Column2" style="visibility: hidden" width = "650px" >
 
 				<table>
-					<tr width = "500">
+					<tr>
 						
 					<td align="left"><input id="ArrowBackward" type="button"
 					 value="Previous Day" class = "btn btn-primary" disabled = "true"></input>
 					<input id="ArrowForward" type="button"
-				 		value="Next Day" class = "btn btn-primary"></input></td>
+				 		value="Next Day" class = "btn btn-primary" ></input></td>
 					</tr>
 					<tr>
 					
-						<td width = "500"><div id="map_canvas"></div></td>
+						<td width = "650px"><div id="map_canvas"></div></td>
 					</tr>
 					<tr>
 						<td align = "right">
@@ -185,10 +184,10 @@
 					</tr>
 				</table>
 			</td>
-			<td>
-			<table id = "venueTable">
-				
-			</table>
+			<td id = "Column3" class = column>
+			<div id = "booking">
+			<table id = sched></table>
+			</div>
 			</td>
 		</tr>
 		</table>
