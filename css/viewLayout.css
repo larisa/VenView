@@ -172,7 +172,9 @@ vertical-align: -16%;
 cursor: pointer;
 text-align: center;
 }
-
+#curseMe{
+	cursor: pointer;
+}
 
 .popup {
 	position:relative;

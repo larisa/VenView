@@ -280,16 +280,17 @@ var markersArray = []; //new Array(200); //[];
 var counter = 0;
 // an array of arrays, each array being the day 
 var venuesPerDay = [];
-
+var namesTaken = [];
 function createAMarker(latlng) {
 	var name;
 	var boo = true;
 	name = chooseName();
 	while(boo){
-		if(name in namesList){
+		if(name in namesTaken){
 			name = chooseName();
 		}
 		else{
+			namesTaken.push(name);
 			namesList.push([latlng, name]);
 			boo = false;
 		}
@@ -300,18 +301,66 @@ function createMarker(place) {
 	namesList.push([placeLoc,place.name]);
 
 }
+//var topPos = document.getElementById('0,').offsetTop;
+function someScrollFunction(){
+	document.getElementById('booking').scrollTop = topPos;
+}
+
+function ScrollToElement(theElement){
+
+  var selectedPosX = 0;
+  var selectedPosY = 0;
+
+  while(theElement != null){
+    selectedPosX += theElement.offsetLeft;
+    selectedPosY += theElement.offsetTop;
+    theElement = theElement.offsetParent;
+  }
+
+ window.scrollTo(selectedPosX,selectedPosY);
+
+}
 
 //give it location and name. create marker and make it appear
-function move_up() {
-    document.getElementById('booking').scrollTop += 10;
+function move_up(latlng) {
+	var sTr = daycount+"," +latlng;
+	var topPos = document.getElementById(sTr).offsetTop;
+	document.getElementById('booking').scrollTop = topPos;
+    //document.getElementById('booking').scrollTop += 10;
   }
 
-  function move_down() {
-    document.getElementById('booking').scrollTop -= 10;
-  }
+
 var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
+var styleIconClass2 = new StyledIcon(StyledIconTypes.CLASS,{color:"#0000ff"});
 var bufferMarker;
-
+function showVenuMap(marker, name){
+	if(bufferMarker){
+		bufferMarker.styleIcon.set("color","#20b2aa");
+		bufferMarker = marker;
+	}else{
+		bufferMarker = marker; //is this right. marker is type, no?
+	}
+	infowindow.setContent('<div id="information">'+name+'</div>');
+    //infowindow.setContent(name);
+    infowindow.open(map, marker);
+	marker.styleIcon.set("color","#00ff00");
+}
+function permanentMarkers(latlng, name){
+	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{},styleIconClass2),position:latlng,map:map});
+//	var marker = new google.maps.Marker({
+  //  map: map,
+   // position: latlng
+  //});
+	//bufferMarker = marker;
+	google.maps.event.addListener(marker, 'click', function() {
+		infowindow.setContent('<div id="information">'+name+'</div>');
+	    //infowindow.setContent(name);
+	    infowindow.open(map, marker);
+		//marker.styleIcon.set("color","#00ff00");
+  });
+	google.maps.event.addListener(infowindow, 'closeclick', closeMarker);
+	markersArray.push([marker, name]);
+}
 function letThereBeLight(latlng, name, venue){
 	
 	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{},styleIconClass),position:latlng,map:map});
@@ -321,17 +370,8 @@ function letThereBeLight(latlng, name, venue){
   //});
 	bufferMarker = marker;
 	google.maps.event.addListener(marker, 'click', function() {
-	if(bufferMarker){
-		bufferMarker.styleIcon.set("color","#20b2aa");
-		bufferMarker = marker;
-	}else{
-		bufferMarker = marker;
-	}
-	infowindow.setContent('<div id="information">'+name+'</div>');
-    //infowindow.setContent(name);
-    infowindow.open(map, this);
-	this.styleIcon.set("color","#00ff00");
-	move_down();
+		showListing(marker, name);
+		move_up(marker.position);
 
 
 	//styleIconClass.set("color"," #ff4040");
@@ -346,6 +386,11 @@ function closeMarker(){
 	if(bufferMarker){
 		bufferMarker.styleIcon.set("color","#20b2aa");
 	}
+	if(tempRow){
+		tempRow.style.display = "none";
+		tempRow = null;
+		
+	}
 }
 // 
 function deleteOverlays() {
@@ -357,7 +402,12 @@ function deleteOverlays() {
     markersArray.length = 0;
 	namesList.length = 0; //check if this was removed
 	venuesPerDay.length = 0;
+	bookings.length= 0;
 	daycount = 0;
+	permanantOnes.length = 0;
+	namesTaken.length = 0;
+	document.getElementById("ArrowBackward").disabled = true;
+	document.getElementById("ArrowForward").disabled = false;
 	//TODO: reset array booked here. 
 	bookings = [];
 	//cpunter = 0;
@@ -513,7 +563,7 @@ function calcRoute() {
   });
 }
 function chooseName(){
-	var len = venuesData.length;
+	var len = venuesData.length-1;
 	var num = Math.random();
 	var ranNum = Math.round(len*num);
 	var name = venuesData[ranNum];
@@ -537,15 +587,15 @@ function showDayMarkers(day){
 		
 		showBooking
 	}
+	for(i in bookings){
+
+		permanentMarkers(bookings[i].latlng,bookings[i].venue);
+
+
+	}
 	document.getElementById("dateToDay").innerHTML = dates[day].toDateString();
 }
-function showDayMarkers2(){
-	//41.730330
-	//-72.718506
-	var point = new GLatLng(41.730330, -72.718506);
-	var marker = new GMarker(point);
-	map.addOverlay(marker);
-}
+
 function perDay(){
 	var arrayish = [];
 	var len = namesList.length;
@@ -605,7 +655,14 @@ var a = "";
 var myBookings = [];
 var displayedGig = null;
 
-
+function breakMsg()
+{
+var t=setTimeout("calcroute()",500);
+}
+function breakMsg2(dest)
+{
+var t=setTimeout("findVenues(dest)",500);
+}
 $(document).ready(function() {
 	$('.clickables').keypress(function(e) {
 	  	  	if (e.keyCode == '13' &&  this.value != '') {
@@ -639,7 +696,6 @@ $(document).ready(function() {
 		infowindow.close();
 			if(bufferMarker){
 				bufferMarker.styleIcon.set("color","#20b2aa");}
-		document.getElementById("finishSched").disabled = false;
 	});
 	$("#ArrowBackward").click(function(evt) {
 		daycount--;
@@ -687,9 +743,11 @@ $(document).ready(function() {
 		//findVenues("Hartford, CT");
 		if(bDate != "" && eDate!= "" && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
-				findVenues(origin);	//origin, Calcroute, then dest ensure that markers are put in array in the right order
+					//origin, Calcroute, then dest ensure that markers are put in array in the right order
+				findVenues(origin);
 				calcRoute();
 				findVenues(dest);
+				
 				timeMsg();
 				}
 			else if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
@@ -811,30 +869,40 @@ var venueOpenings = [];
 var bookings = [];
 var tempRow;
 var tempIcon;
-generateTriggerCallback = function(object, eventType, row, icon) {
-    return function() {
+
+generateTriggerCallback = function (object, name){
+	return function (){ 
+		showListing(object,name);
+	}
+}
+
+function showListing(object, name){
+	var row = document.getElementById(daycount+","+name+"0");
+	var icon = document.getElementById(daycount+ "," + name + "icon");
 		if(tempRow){
 			if(tempRow!= row){
 				tempRow.style.display = "none";
-				tempIcon.setAttribute("class" ,"icon-chevron-right");
+				tempIcon.setAttribute("class" ,"icon-chevron-right");				
+				}
 			}
-		}
-	
-	  tempRow = row;
-	  tempIcon = icon;
 		
+	tempRow = row;
+	tempIcon = icon;	
       if (row.style.display == "block"){
     	  row.style.display = "none";
     	  icon.setAttribute("class" ,"icon-chevron-right");
-		  google.maps.event.trigger(map, 'click');
+    	  google.maps.event.trigger(map, 'click');
+		
       }
       else {
     	  row.style.display = "block";
     	  icon.setAttribute("class" ,"icon-chevron-down");
-    	  google.maps.event.trigger(object, eventType);
+    	  showVenuMap(object, name);
+	//	google.maps.event.trigger(object, eventType);
       }
-    };
-  }
+ 
+}
+
 
 function drawList(day){
 	var container = document.getElementById("booking");	
@@ -863,6 +931,10 @@ function drawList(day){
 		else {
 		    row.style.backgroundColor = "white";}
 		
+		 
+	    var latlong = venuesPerDay[day][i][0];
+	    var name =  venuesPerDay[day][i][1];
+	    var marker = venuesPerDay[day][i][2];
 		
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);    
@@ -870,39 +942,42 @@ function drawList(day){
 	    icon = document.createElement("I");
 	    cell.appendChild(icon);
 	    icon.setAttribute("class", "icon-chevron-right");
+	    icon.setAttribute("id", day+ "," +name +"icon");
 	    
 	    link = document.createElement("A");
 	    cell.appendChild(link);
-	    
-	    var name =  venuesPerDay[day][i][1];
-	    link.innerHTML = name;
-	    link.href = 'javascript:void(0);';
-	    var marker = venuesPerDay[day][i][2];
 	   
 	    
-	    cell.setAttribute("id", day+ "," + name);
+	    link.innerHTML = name;
+	    link.href = 'javascript:void(0);';
+	   	   
+	    cell.setAttribute("id", day+ "," + latlong);
 	    cell.setAttribute("class", "venue");
 	    
 	    row = document.createElement("TR");
-	    
-		body.appendChild(row);
-		row.setAttribute("id", day+ "," + name + "book");
+	    body.appendChild(row);
+		
+	    row.setAttribute("id",day+ "," +name +"0");
 		row.setAttribute("class", "openings");
 		row.style.display = "none";
-		cell.onclick =  generateTriggerCallback(marker, 'click', row, icon);
+
+		cell.onclick = generateTriggerCallback(marker,name); 
+
 
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);  
 	    
-	    openings = createOpenings(day, name, marker);
-	    for (j=0;j<openings.length;j++){
-	    	cell.appendChild(openings[j]);
+
+	    booking = createOpenings(day, name, latlong);
+	    for (j=0;j<booking.length;j++){
+	    	cell.appendChild(booking[j]);
 	    }
 	   
 	    }
 }
 
-function createOpenings(day, venueName, marker){
+
+function createOpenings(day, venueName, latlng){
 	listOfDivs = [];
 	numOpenings = Math.floor(Math.random() * 4);
 	div = document.createElement("DIV");
@@ -911,15 +986,17 @@ function createOpenings(day, venueName, marker){
 	for (k=0; k<=numOpenings; k++){
 		startTime = Math.floor(Math.random() * 14) + 10;
 		duration = Math.floor(Math.random() * 4);
-		gigDiv = createGig(venueName, day, startTime, duration)
+		gigDiv = createGig(venueName, day, startTime, duration, latlng)
 		listOfDivs.push(gigDiv);
 	}
 	return listOfDivs;
 	
 }
 
-function createGig(venueName, date, startTime, duration, marker){
-	var gig = new Booking(venueName, date, startTime,  duration, marker);
+permanantOnes =[]; //maybe later [marker, count#bookings]
+function createGig(venueName, date, startTime, duration, latlng){
+	var gig = new Booking(venueName, date, startTime,  duration, latlng);
+
 	div = document.createElement("DIV");
 	div.setAttribute("class", "gig");
 	div.setAttribute("id", gig);
@@ -931,6 +1008,12 @@ function createGig(venueName, date, startTime, duration, marker){
 	toBookLink.href = 'javascript:void(0);';
 	toBookLink.onclick =  function (){
 		bookings.push(gig);
+		bufferMarker.styleIcon.set("color","#0000ff");
+		permanantOnes.push(bufferMarker); //maybe later something else. up to you
+		bufferMarker = null;
+		if(bookings.length>0){
+			document.getElementById("finishSched").disabled = false;
+		}
 	}
 	return div;
 	
@@ -950,7 +1033,7 @@ function drawTable(){
 	var body = document.createElement("TBODY");
 	 // Set the table's border width and colors.
 	schedTable.border=1;
-	schedTable.bgColor="lightslategray";
+	//schedTable.bgColor="lightslategray";
 	var row, cell;
 	var i, j;
 	container.appendChild(schedTable);
