@@ -333,7 +333,18 @@ function move_up(latlng) {
   }
 var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
 var bufferMarker;
-
+function clickclick(marker, name){
+	if(bufferMarker){
+		bufferMarker.styleIcon.set("color","#20b2aa");
+		bufferMarker = marker;
+	}else{
+		bufferMarker = marker; //is this right. marker is type, no?
+	}
+	infowindow.setContent('<div id="information">'+name+'</div>');
+    //infowindow.setContent(name);
+    infowindow.open(map, marker);
+	marker.styleIcon.set("color","#00ff00");
+}
 function letThereBeLight(latlng, name, venue){
 	
 	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{},styleIconClass),position:latlng,map:map});
@@ -343,17 +354,8 @@ function letThereBeLight(latlng, name, venue){
   //});
 	bufferMarker = marker;
 	google.maps.event.addListener(marker, 'click', function() {
-	if(bufferMarker){
-		bufferMarker.styleIcon.set("color","#20b2aa");
-		bufferMarker = marker;
-	}else{
-		bufferMarker = marker; //is this right. marker is type, no?
-	}
-	infowindow.setContent('<div id="information">'+name+'</div>');
-    //infowindow.setContent(name);
-    infowindow.open(map, this);
-	this.styleIcon.set("color","#00ff00");
-	move_up(this.position);
+		clickclick(marker, name);
+	move_up(marker.position);
 
 	//styleIconClass.set("color"," #ff4040");
 //	this.set("color","#ff0000");
@@ -822,7 +824,7 @@ function drawButtons(){
 var venueOpenings = [];
 var bookings = [];
 var tempRow;
-generateTriggerCallback = function(object, eventType, row) {
+generateTriggerCallback = function(object, eventType, row, name) {
     return function() {
 		if(tempRow){
 			if(tempRow!= row){
@@ -835,11 +837,13 @@ generateTriggerCallback = function(object, eventType, row) {
 		}
       if (row.style.display == "block"){
     	  row.style.display = "none";
+		
 		google.maps.event.trigger(map, 'click');
       }
       else {
     	  row.style.display = "block";
-		google.maps.event.trigger(object, eventType);
+		clickclick(object, name);
+	//	google.maps.event.trigger(object, eventType);
       }
     };
   }
@@ -892,9 +896,10 @@ function drawList(day){
 	    cell.setAttribute("class", "venue");
 	    
 	    row = document.createElement("TR");
+		row.setAttribute("id", venuesPerDay[day][i][1])
 		body.appendChild(row);
 		row.style.display = "none";
-		cell.onclick =  generateTriggerCallback(marker, 'click', row);
+		cell.onclick =  generateTriggerCallback(marker, 'click', row, venuesPerDay[day][i][1]);
 
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);  
