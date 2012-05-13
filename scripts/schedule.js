@@ -359,6 +359,7 @@ function deleteOverlays() {
 	venuesPerDay.length = 0;
 	daycount = 0;
 	//TODO: reset array booked here. 
+	bookings = [];
 	//cpunter = 0;
 	//markersArray = new Array(200);
   }
@@ -530,7 +531,11 @@ function showDayMarkers(day){
 
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
 
-
+	}
+	
+	for (j = 0; j<bookings.legnth; j++){
+		
+		showBooking
 	}
 	document.getElementById("dateToDay").innerHTML = dates[day].toDateString();
 }
@@ -889,15 +894,15 @@ function drawList(day){
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);  
 	    
-	    booking = createOpenings(day, name);
-	    for (j=0;j<booking.length;j++){
-	    	cell.appendChild(booking[j]);
+	    openings = createOpenings(day, name, marker);
+	    for (j=0;j<openings.length;j++){
+	    	cell.appendChild(openings[j]);
 	    }
 	   
 	    }
 }
 
-function createOpenings(day, venueName){
+function createOpenings(day, venueName, marker){
 	listOfDivs = [];
 	numOpenings = Math.floor(Math.random() * 4);
 	div = document.createElement("DIV");
@@ -913,8 +918,8 @@ function createOpenings(day, venueName){
 	
 }
 
-function createGig(venueName, date, startTime, duration){
-	var gig = new Booking(venueName, date, startTime,  duration);
+function createGig(venueName, date, startTime, duration, marker){
+	var gig = new Booking(venueName, date, startTime,  duration, marker);
 	div = document.createElement("DIV");
 	div.setAttribute("class", "gig");
 	div.setAttribute("id", gig);
