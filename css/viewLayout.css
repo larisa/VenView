@@ -58,9 +58,13 @@ BODY
 }
 
 #ArrowForward{
-float:right;	
+float:right;
+width:100px;	
 }
-
+#ArrowBackward{
+float:left;
+width:100px;	
+}
 #map_canvas {
 position: relative;
 top: 0em;

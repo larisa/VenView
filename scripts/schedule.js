@@ -90,6 +90,7 @@ var display = function(){
 	showDayMarkers(0);
 
 	drawList(0);
+	document.getElementById("dateToDay").innerHTML = dates[0].toDateString();
 	
 }
 
@@ -521,7 +522,7 @@ function showDayMarkers(day){
 
 
 	}
-	
+	document.getElementById("dateToDay").innerHTML = dates[day].toDateString();
 }
 function showDayMarkers2(){
 	//41.730330
