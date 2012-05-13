@@ -328,9 +328,7 @@ function move_up(latlng) {
     //document.getElementById('booking').scrollTop += 10;
   }
 
-  function move_down() {
-    document.getElementById('booking').scrollTop -= 10;
-  }
+
 var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
 var bufferMarker;
 function clickclick(marker, name){
@@ -354,7 +352,7 @@ function letThereBeLight(latlng, name, venue){
   //});
 	bufferMarker = marker;
 	google.maps.event.addListener(marker, 'click', function() {
-		clickclick(marker, name);
+	abraKadabra(marker, name);
 	move_up(marker.position);
 
 	//styleIconClass.set("color"," #ff4040");
@@ -368,6 +366,11 @@ function letThereBeLight(latlng, name, venue){
 function closeMarker(){
 	if(bufferMarker){
 		bufferMarker.styleIcon.set("color","#20b2aa");
+	}
+	if(tempRow){
+		tempRow.style.display = "none";
+		tempRow = null;
+		
 	}
 }
 // 
@@ -824,6 +827,29 @@ function drawButtons(){
 var venueOpenings = [];
 var bookings = [];
 var tempRow;
+function abraKadabra(object, name){
+	var row = document.getElementById(daycount+","+name+"0");
+		if(tempRow){
+			if(tempRow!= row){
+				tempRow.style.display = "none";
+				tempRow = row;
+			}
+		}
+		else{
+			tempRow = row;
+		}
+      if (row.style.display == "block"){
+    	  row.style.display = "none";
+		
+		google.maps.event.trigger(map, 'click');
+      }
+      else {
+    	  row.style.display = "block";
+			clickclick(object, name);
+	//	google.maps.event.trigger(object, eventType);
+      }
+ 
+}
 generateTriggerCallback = function(object, eventType, row, name) {
     return function() {
 		if(tempRow){
@@ -896,7 +922,7 @@ function drawList(day){
 	    cell.setAttribute("class", "venue");
 	    
 	    row = document.createElement("TR");
-		row.setAttribute("id", venuesPerDay[day][i][1])
+		row.setAttribute("id",day+ "," + venuesPerDay[day][i][1]+"0");
 		body.appendChild(row);
 		row.style.display = "none";
 		cell.onclick =  generateTriggerCallback(marker, 'click', row, venuesPerDay[day][i][1]);
