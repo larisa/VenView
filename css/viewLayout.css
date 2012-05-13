@@ -18,8 +18,14 @@
 	left:0px;
 	width:55em;
 	height:10em;
-	z-index:3;
 }
+
+#popUpDiv {
+position:absolute;
+background-color:#eeeeee;
+width:400px;
+height:400px;
+z-index: 9002;}
 
 #Column2 {
 vertical-align: top;

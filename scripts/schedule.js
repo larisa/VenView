@@ -622,6 +622,7 @@ $(document).ready(function() {
 		infowindow.close();
 			if(bufferMarker){
 				bufferMarker.styleIcon.set("color","#20b2aa");}
+		document.getElementById("finishSched").disabled = false;
 	});
 	$("#ArrowBackward").click(function(evt) {
 		daycount--;
