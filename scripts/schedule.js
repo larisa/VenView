@@ -325,7 +325,6 @@ function letThereBeLight(latlng, name, venue){
     //infowindow.setContent(name);
     infowindow.open(map, this);
 	this.styleIcon.set("color","#00ff00");
-
 	//styleIconClass.set("color"," #ff4040");
 //	this.set("color","#ff0000");
   });
@@ -853,11 +852,14 @@ function drawList(day){
 	    var marker = venuesPerDay[day][i][2];
 	   
 	    
-	    cell.setAttribute("id", day+ "," + i);
+	    cell.setAttribute("id", day+ "," + name);
 	    cell.setAttribute("class", "venue");
 	    
 	    row = document.createElement("TR");
+	    
 		body.appendChild(row);
+		row.setAttribute("id", day+ "," + name + "book");
+		row.setAttribute("class", "openings");
 		row.style.display = "none";
 		cell.onclick =  generateTriggerCallback(marker, 'click', row);
 
