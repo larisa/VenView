@@ -333,7 +333,7 @@ function move_up(latlng) {
 var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
 var styleIconClass2 = new StyledIcon(StyledIconTypes.CLASS,{color:"#0000ff"});
 var bufferMarker;
-function clickclick(marker, name){
+function showVenuMap(marker, name){
 	if(bufferMarker){
 		bufferMarker.styleIcon.set("color","#20b2aa");
 		bufferMarker = marker;
@@ -370,8 +370,9 @@ function letThereBeLight(latlng, name, venue){
   //});
 	bufferMarker = marker;
 	google.maps.event.addListener(marker, 'click', function() {
-	abraKadabra(marker, name);
-	move_up(marker.position);
+		showListing(marker, name);
+		move_up(marker.position);
+
 
 	//styleIconClass.set("color"," #ff4040");
 //	this.set("color","#ff0000");
@@ -407,7 +408,9 @@ function deleteOverlays() {
 	namesTaken.length = 0;
 	document.getElementById("ArrowBackward").disabled = true;
 	document.getElementById("ArrowForward").disabled = false;
+	document.getElementById("finishSched").disabled = true;
 	//TODO: reset array booked here. 
+	bookings = [];
 	//cpunter = 0;
 	//markersArray = new Array(200);
   }
@@ -579,7 +582,11 @@ function showDayMarkers(day){
 
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
 
-
+	}
+	
+	for (j = 0; j<bookings.legnth; j++){
+		
+		showBooking
 	}
 	for(i in bookings){
 
@@ -863,52 +870,41 @@ function drawButtons(){
 var venueOpenings = [];
 var bookings = [];
 var tempRow;
-function abraKadabra(object, name){
+var tempIcon;
+
+generateTriggerCallback = function (object, name){
+	return function (){ 
+		showListing(object,name);
+	}
+}
+
+function showListing(object, name){
 	var row = document.getElementById(daycount+","+name+"0");
+	var icon = document.getElementById(daycount+ "," + name + "icon");
 		if(tempRow){
 			if(tempRow!= row){
 				tempRow.style.display = "none";
-				tempRow = row;
+				tempIcon.setAttribute("class" ,"icon-chevron-right");				
+				}
 			}
-		}
-		else{
-			tempRow = row;
-		}
+		
+	tempRow = row;
+	tempIcon = icon;	
       if (row.style.display == "block"){
     	  row.style.display = "none";
+    	  icon.setAttribute("class" ,"icon-chevron-right");
+    	  google.maps.event.trigger(map, 'click');
 		
-		google.maps.event.trigger(map, 'click');
       }
       else {
     	  row.style.display = "block";
-			clickclick(object, name);
+    	  icon.setAttribute("class" ,"icon-chevron-down");
+    	  showVenuMap(object, name);
 	//	google.maps.event.trigger(object, eventType);
       }
  
 }
-generateTriggerCallback = function(object, eventType, row, name) {
-    return function() {
-		if(tempRow){
-			if(tempRow!= row){
-				tempRow.style.display = "none";
-				tempRow = row;
-			}
-		}
-		else{
-			tempRow = row;
-		}
-      if (row.style.display == "block"){
-    	  row.style.display = "none";
-		
-		google.maps.event.trigger(map, 'click');
-      }
-      else {
-    	  row.style.display = "block";
-		clickclick(object, name);
-	//	google.maps.event.trigger(object, eventType);
-      }
-    };
-  }
+
 
 function drawList(day){
 	var container = document.getElementById("booking");	
@@ -937,6 +933,10 @@ function drawList(day){
 		else {
 		    row.style.backgroundColor = "white";}
 		
+		 
+	    var latlong = venuesPerDay[day][i][0];
+	    var name =  venuesPerDay[day][i][1];
+	    var marker = venuesPerDay[day][i][2];
 		
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);    
@@ -944,35 +944,40 @@ function drawList(day){
 	    icon = document.createElement("I");
 	    cell.appendChild(icon);
 	    icon.setAttribute("class", "icon-chevron-right");
+	    icon.setAttribute("id", day+ "," +name +"icon");
 	    
 	    link = document.createElement("A");
 	    cell.appendChild(link);
-	    
-	    var name =  venuesPerDay[day][i][1];
-	    link.innerHTML = name;
-	    link.href = 'javascript:void(0);';
-	    var marker = venuesPerDay[day][i][2];
 	   
 	    
-	    cell.setAttribute("id", day+ "," + venuesPerDay[day][i][0]);
+	    link.innerHTML = name;
+	    link.href = 'javascript:void(0);';
+	   	   
+	    cell.setAttribute("id", day+ "," + latlong);
 	    cell.setAttribute("class", "venue");
 	    
 	    row = document.createElement("TR");
-		row.setAttribute("id",day+ "," + venuesPerDay[day][i][1]+"0");
-		body.appendChild(row);
+	    body.appendChild(row);
+		
+	    row.setAttribute("id",day+ "," +name +"0");
+		row.setAttribute("class", "openings");
 		row.style.display = "none";
-		cell.onclick =  generateTriggerCallback(marker, 'click', row, venuesPerDay[day][i][1]);
+
+		cell.onclick = generateTriggerCallback(marker,name); 
+
 
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);  
 	    
-	    booking = createOpenings(day, name, venuesPerDay[day][i][0]);
+
+	    booking = createOpenings(day, name, latlong);
 	    for (j=0;j<booking.length;j++){
 	    	cell.appendChild(booking[j]);
 	    }
 	   
 	    }
 }
+
 
 function createOpenings(day, venueName, latlng){
 	listOfDivs = [];
@@ -989,9 +994,11 @@ function createOpenings(day, venueName, latlng){
 	return listOfDivs;
 	
 }
+
 permanantOnes =[]; //maybe later [marker, count#bookings]
 function createGig(venueName, date, startTime, duration, latlng){
 	var gig = new Booking(venueName, date, startTime,  duration, latlng);
+
 	div = document.createElement("DIV");
 	div.setAttribute("class", "gig");
 	div.setAttribute("id", gig);
@@ -1029,7 +1036,7 @@ function drawTable(){
 	var body = document.createElement("TBODY");
 	 // Set the table's border width and colors.
 	schedTable.border=1;
-	schedTable.bgColor="lightslategray";
+	//schedTable.bgColor="lightslategray";
 	var row, cell;
 	var i, j;
 	container.appendChild(schedTable);
