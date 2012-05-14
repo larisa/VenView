@@ -231,7 +231,7 @@ function initialize() {
 	geocoder = new google.maps.Geocoder();
 	directionsDisplay.setMap(map);
 	var origin = document.getElementById('originInput');
-	var autocomplete = new google.maps.places.Autocomplete(origin);
+	var autocompleteOr = new google.maps.places.Autocomplete(origin);
 	var dest = document.getElementById('destInput');
 	var autocomplete = new google.maps.places.Autocomplete(dest);
 	var city1 = document.getElementById('city1');
@@ -267,6 +267,28 @@ function findVenues(location){
 	        service.search(request, callback);
 		}
 	});
+}
+function findVenuesOr(location){
+	geocoder.geocode({"address": location}, function(results, status){
+		if (status == google.maps.GeocoderStatus.OK){
+			var c = results[0].geometry.location;
+			var request = {
+	          location: c,
+	          radius: 500, //change radius later
+	          types: ['food']
+	        };
+	        var service = new google.maps.places.PlacesService(map);
+	        service.search(request, callbackOr);
+		}
+	});
+}
+function callbackOr(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      createMarkerOr(results[i]);
+
+    }
+  }
 }
 function callback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -417,6 +439,13 @@ function divideVenues(numberOfDays){
 function perDay(){
 	var arrayish = [];
 	var len = namesList.length;
+	var len2 = namesListOr.length;
+	for(var i =0; i<len2; i++){
+		var num = Math.random();
+		if(num < 0.3){
+			arrayish.push(namesListOr[i]);
+		}
+	}
 	for(var i =0; i<len; i++){
 		var num = Math.random();
 		if(num < 0.3){
@@ -452,7 +481,7 @@ var t=setTimeout("findVenues(dest)",500);
 
 ///Begin of markers code
 var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
-var styleIconClass2 = new StyledIcon(StyledIconTypes.CLASS,{color:"#0000ff"});
+var styleIconClass2 = new StyledIcon(StyledIconTypes.CLASS,{color:"#0000ff"}); //double check fallbacks
 var bufferMarker;
 var markersArray = []; 
 var venuesPerDay = []; // an array of arrays, each array being the day 
@@ -475,6 +504,12 @@ function createAMarker(latlng) {
 function createMarker(place) {
   var placeLoc = place.geometry.location;
 	namesList.push([placeLoc,place.name]);
+
+}
+var namesListOr = [];
+function createMarkerOr(place) {
+  var placeLoc = place.geometry.location;
+	namesListOr.push([placeLoc,place.name]);
 
 }
 
@@ -536,6 +571,7 @@ function deleteOverlays() {
     markersArray.length = 0;
 	namesList.length = 0; //check if this was removed
 	venuesPerDay.length = 0;
+	namesListOr.length = 0;
 	bookings.length= 0;
 	daycount = 0;
 	permanantOnes.length = 0;
@@ -771,6 +807,8 @@ $(document).ready(function() {
 				bufferMarker.styleIcon.set("color","#20b2aa");}
 
 	});
+
+	
 	$("#Enter").click(function(evt) {
 		document.getElementById("debug").innerHTML = "";
 		var bDate = document.getElementById('start_cal').value;
@@ -780,50 +818,35 @@ $(document).ready(function() {
 		var style = document.getElementById('style').value;
 		var origin = document.getElementById('originInput').value;
 		var dest = document.getElementById('destInput').value;
-
-		//cities shouldn't be ordered, one can hav cities 1 through 5, then delete 3, this should not affect behavior
-		//also I can try to call initiate at every Enter. That would be better in terms of the autocompelte elements. 
 		var cit1 = document.getElementById('city1').value;
 		var cit2 = document.getElementById('city2').value;
 		var cit3 = document.getElementById('city3').value;
 
 		deleteOverlays();
-
-	//	if(cit1!=""){
-	//		findVenues(cit1);
-	//	}
-	//	if(cit2!=""){
-	//		findVenues(cit2);
-	//	}
-	//	if(cit3!=""){
-	//		findVenues(cit3);
-	//	}
-		//findVenuesAlongPath();
-
-		//findVenues("Hartford, CT");
+		
 		if(bDate != "" && eDate!= "" && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
 					//origin, Calcroute, then dest ensure that markers are put in array in the right order
-				findVenues(origin);
+				findVenuesOr(origin);	
 				calcRoute();
 				findVenues(dest);
-
+				//document.getElementById("debug").innerHTML = dest;
 				timeMsg();
 				}
 			else if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
-				findVenues(origin);	
+				findVenuesOr(origin);	
 				calcRoute();
 				findVenues(dest);
 				timeMsg();
 				}
 			else if(citycount == 3 && (cit1!="" && cit2!="") || (cit2!="" && cit3!="") || (cit1!="" && cit3!="")){
-				findVenues(origin);	
+				findVenuesOr(origin);	
 				calcRoute();
 				findVenues(dest);
 				timeMsg();
 				}
 			else if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
-				findVenues(origin);	
+				findVenuesOr(origin);	
 				calcRoute();
 				findVenues(dest);
 				timeMsg();
