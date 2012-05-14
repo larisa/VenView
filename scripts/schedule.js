@@ -886,13 +886,12 @@ showUnBook = function(unbookLink, gig){
 		}
 		this.style.display = "none";
 		unbookLink.style.display = 'block';
-		popup('popUpDiv');
-		index = daycount%4
+		popup('popUpDiv');			
 		drawCal(daycount, daycount+4);
 		move_up_sched(gig);
 	//	}
-	};
-}
+	}
+
 
 showBook = function (toBookLink, gig){
 	return function (){
@@ -1001,16 +1000,10 @@ function checkConflict(gig){
 //// End of bookings create code
 
 function goToNextFiveDays(){
-		console.log("in goToNextFiveDays");
 		drawCal(currEndDayI + 1, currEndDayI + 5);
 }
 
 function goToPrevFiveDays(){
-		console.log("start" + currStartDayI);
-		console.log("end" + currEndDayI);
-		console.log(dates);
-
-		console.log("in goToPrevFiveDays");
 		if ((currStartDayI - 5) < 0){
 				drawCal(0, 4);
 		}
@@ -1202,7 +1195,7 @@ $(document).ready(function() {
 
 	$("#finishSched").click(function(evt) {
 			popup('popUpDiv');
-			drawCal(0, 4);
+			drawCal(0, 4); //ASSUMES NO BOOKING
 		//	drawCalBookings(3);
 	});
 
