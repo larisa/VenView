@@ -255,12 +255,8 @@ function initialize() {
 /// Begin of Data accumelation code
 
 function findVenues(location){
-	var kan = new google.maps.LatLng(38.891033, -94.526367);
-	//document.getElementById("change").innerHTML="hi";
-	//return kan;
 	geocoder.geocode({"address": location}, function(results, status){
 		if (status == google.maps.GeocoderStatus.OK){
-			//map.setCenter(results[0].geometry.location);
 			var c = results[0].geometry.location;
 			var request = {
 	          location: c,
@@ -269,16 +265,17 @@ function findVenues(location){
 	        };
 	        var service = new google.maps.places.PlacesService(map);
 	        service.search(request, callback);
-
-
-		}
-		else{
-
 		}
 	});
-
 }
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      createMarker(results[i]);
 
+    }
+  }
+}
 function calcRoute() {
 
   var ori = $("#originInput").val();
@@ -481,14 +478,7 @@ function createMarker(place) {
 
 }
 
-function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
 
-    }
-  }
-}
 
 
 ///Similar marker and link behavior
