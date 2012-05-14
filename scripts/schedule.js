@@ -848,6 +848,8 @@ function drawList(day){
 /// End of listings code
 
 //// Begin of bookings create code
+var updatedBookingI;
+
 
 function createOpenings(listOfbookings){
 	listOfDivs = [];
@@ -861,6 +863,9 @@ function createOpenings(listOfbookings){
 }
 var selectedMarker;
 var madeBookingsPerDay = [];
+
+
+
 showUnBook = function(unbookLink, gig){
 	return function (){
 		//conflict = checkConflict(gig);
@@ -887,10 +892,13 @@ showUnBook = function(unbookLink, gig){
 		this.style.display = "none";
 		unbookLink.style.display = 'block';
 		popup('popUpDiv');
-		drawCal(daycount, daycount+4);
+			updatedBookingI = daycount;
+			startI = pickSchedDayStartI(daycount);
+			drawCal(startI, startI+4);
 		move_up_sched(gig);
 	//	}
-	}
+	};
+}
 
 
 showBook = function (toBookLink, gig){
@@ -918,12 +926,20 @@ showBook = function (toBookLink, gig){
 		this.style.display = 'none';
 		toBookLink.style.display = 'block';
 		popup('popUpDiv');
-		drawCal(daycount, daycount+4);
+			updatedBookingI = daycount;
+			startI = pickSchedDayStartI(daycount);
+			drawCal(startI, startI+4);
 		move_up_sched(gig);
 		
 	};
-	
 }
+
+function pickSchedDayStartI(currBookDateI){
+		return (Math.floor(currBookDateI/4))*4;
+}
+	
+
+
 permanantOnes =[]; //maybe later [marker, count#bookings]
 function createGig(opening){
 	
