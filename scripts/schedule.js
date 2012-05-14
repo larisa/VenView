@@ -243,8 +243,11 @@ function initialize() {
 	setRemoveCommentHandlers();
 	google.maps.event.addListener(map, 'click', function() {
       infowindow.close();
-		if(bufferMarker){
-			bufferMarker.styleIcon.set("color","#20b2aa");}
+		closeMarker();
+	//	if(bufferMarker){
+	//		bufferMarker.styleIcon.set("color","#20b2aa");}
+			
+			//findme
     });
 
 }
@@ -468,14 +471,6 @@ var a = "";
 var myBookings = [];
 var displayedGig = null;
 
-function breakMsg()
-{
-var t=setTimeout("calcroute()",500);
-}
-function breakMsg2(dest)
-{
-var t=setTimeout("findVenues(dest)",500);
-}
 
 //// End of data distribution code
 
@@ -512,8 +507,6 @@ function createMarkerOr(place) {
 	namesListOr.push([placeLoc,place.name]);
 
 }
-
-
 
 
 ///Similar marker and link behavior
@@ -790,6 +783,7 @@ $(document).ready(function() {
 			this.disabled=true;
 		}
 		infowindow.close();
+		//closeMarker();
 			if(bufferMarker){
 				bufferMarker.styleIcon.set("color","#20b2aa");}
 	});
@@ -803,6 +797,7 @@ $(document).ready(function() {
 			//disable button
 		}
 		infowindow.close();
+		//closeMarker();
 			if(bufferMarker){
 				bufferMarker.styleIcon.set("color","#20b2aa");}
 
