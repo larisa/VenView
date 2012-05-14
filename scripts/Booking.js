@@ -13,7 +13,7 @@ var Booking = function(venueName, date, startTime, duration, latlng){
 		this.booked = false;
 		this.top = 0; //assigned later
 		this.left = (date-1)*400/5;
-
+		this.marker = null;
 
 
 		this.toString = function(){
