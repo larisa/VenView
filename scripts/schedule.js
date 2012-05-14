@@ -727,6 +727,80 @@ function createGig(venueName, date, startTime, duration, latlng){
 //// End of bookings create code
 
 
+////popUpSchedule stuff START
+//specify start and end day indexes into Bookings. 5 day range, no matter what.
+function drawCal(startDayI, endDayI){
+		var container = document.getElementById("finalView");
+		var dayHeadings = document.createElement("TABLE");
+		dayHeadings.setAttribute("id", "popUpSchedDayHeadings");
+		var schedTable = document.createElement("TABLE");
+		schedTable.setAttribute("id", "popUpSchedule");
+
+		container.appendChild(dayHeadings);
+		container.appendChild(schedTable);
+		for (i=0; i<96; i++){ //rows
+				row = document.createElement("TR");
+				schedTable.appendChild(row);
+				for (j=0; j<6; j++){ //cols
+						var blankCell = document.createElement("TD");
+						blankCell.setAttribute("id", "schedCell" + i+ "," + j);
+						console.log(i, j, blankCell);
+						row.appendChild(blankCell);
+
+				}
+		}
+
+		//create times
+		for (i=0; i<96; i++){
+				var cell = document.getElementById("schedCell" + i + "," + "0");
+				cell.setAttribute("class", "times");
+				if (i==0){
+						cell.innerHTML = "all day";
+				}
+				else if ((i-2)/4==0){ cell.innerHTML = "12 am";}
+				else if ((i-2)/4==1){ cell.innerHTML = "1 am";}
+				else if ((i-2)/4==2){ cell.innerHTML = "2 am";}
+				else if ((i-2)/4==3){ cell.innerHTML = "3 am";}
+				else if ((i-2)/4==4){ cell.innerHTML = "4 am";}
+				else if ((i-2)/4==5){ cell.innerHTML = "5 am";}
+				else if ((i-2)/4==6){ cell.innerHTML = "6 am";}
+				else if ((i-2)/4==7){ cell.innerHTML = "7 am";}
+				else if ((i-2)/4==8){ cell.innerHTML = "8 am";}
+				else if ((i-2)/4==9){ cell.innerHTML = "9 am";}
+				else if ((i-2)/4==10){ cell.innerHTML = "10 am";}
+				else if ((i-2)/4==11){ cell.innerHTML = "11 am";}
+				else if ((i-2)/4==12){ cell.innerHTML = "12 pm";}
+				else if ((i-2)/4==13){ cell.innerHTML = "1 pm";}
+				else if ((i-2)/4==14){ cell.innerHTML = "2 pm";}
+				else if ((i-2)/4==15){ cell.innerHTML = "3 pm";}
+				else if ((i-2)/4==16){ cell.innerHTML = "4 pm";}
+				else if ((i-2)/4==17){ cell.innerHTML = "5 pm";}
+				else if ((i-2)/4==18){ cell.innerHTML = "6 pm";}
+				else if ((i-2)/4==19){ cell.innerHTML = "7 pm";}
+				else if ((i-2)/4==20){ cell.innerHTML = "8 pm";}
+				else if ((i-2)/4==21){ cell.innerHTML = "9 pm";}
+				else if ((i-2)/4==22){ cell.innerHTML = "10 pm";}
+				else if ((i-2)/4==23){ cell.innerHTML = "11 pm";}
+		}
+
+		//create headings
+		headingsRow = document.createElement("TR");
+		dayHeadings.appendChild(headingsRow);
+		headingsRow.appendChild(document.createElement("TD"));
+		for (j=1; j<6; j++){ 
+				headingsCell = document.createElement("TD");
+				headingsRow.appendChild(headingsCell);
+				//set date text
+				dateString = dates[startDayI + j -1].toDateString();
+				headingsCell.innerHTML = dateString.slice(0, dateString.length-4);
+		}
+		
+
+}
+
+///popUpSchedule stuff END
+
+
 
 // Docuemnt Ready Function
 $(document).ready(function() {
@@ -751,6 +825,12 @@ $(document).ready(function() {
 			}
 
 	});
+
+	$("#finishSched").click(function(evt) {
+			popup('popUpDiv');
+			drawCal(0, 4);
+	});
+
 	$("#ArrowForward").click(function(evt) {
 		daycount++;
 		document.getElementById("ArrowBackward").disabled = false;
