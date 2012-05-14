@@ -936,6 +936,7 @@ function drawCalTemplate(startDayI, endDayI){
 		for (i=0; i<96; i++){
 				var cell = document.getElementById("schedCell" + i + "," + "0");
 				cell.setAttribute("class", "times");
+				cell.style.width = "35px";
 				if (i==0){
 						cell.innerHTML = "all day";
 				}
@@ -965,18 +966,12 @@ function drawCalTemplate(startDayI, endDayI){
 				else if ((i-2)/4==23){ cell.innerHTML = "11 pm";}
 		}
 
-		//create headings (includes buttons)
+		//create headings
 		headingsRow = document.createElement("TR");
 		dayHeadings.appendChild(headingsRow);
 
-		//make PrevDay Button
 		var firstCell = document.createElement("TD");
-		var prevButton = document.createElement('input');
-		prevButton.type = "button";
-		prevButton.name = "Previous";
-		//disable if necessary
-		if (startDayI==0){ prevButton.disabled = true;}
-		firstCell.appendChild(prevButton);
+		firstCell.style.width = "35px";
 		headingsRow.appendChild(firstCell);
 
 		for (j=1; j<6; j++){ 
@@ -987,15 +982,6 @@ function drawCalTemplate(startDayI, endDayI){
 				headingsCell.innerHTML = dateString.slice(0, dateString.length-4);
 		}
 
-		//make NextDay Button
-		var lastCell = document.createElement("TD");
-		var nextButton = document.createElement('input');
-		nextButton.type = "button";
-		nextButton.name = "Next";
-		//disable if necessary
-		if (endDayI==dates.length-1){ nextButton.disabled = true;}
-		lastCell.appendChild(nextButton);
-		headingsRow.appendChild(lastCell);
 		
 
 }

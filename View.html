@@ -44,13 +44,23 @@
 <div id="popUpDiv" style="display:none;">
 <table border = "1">
 	<tr width = "100%">
-		<td width = "100%" align = "right">
-			<i onclick="popup('popUpDiv')" id="curseMe"class="icon-remove-sign"></i></td></tr>
+	<td width = "50%" align = "center" style ="height:50px">
+			<input id="schedArrowPrev" type="button" class="schedArrowButtons"
+						 value="Last Five Days"></input></td>
+	
+		<td width = "50%" align = "center" style ="height:50px">
+			<input id="schedArrowNext" type="button" class="schedArrowsButtons"
+						 value="Next Five Days"></input></td>
+		<td width = "10%" align = "right" style ="height:50px">
+			<i onclick="popup('popUpDiv')" id="curseMe"class="icon-remove-sign"></i></td>
+		
+
+	</tr>
 	<tr><td>
-			<div border = "1" id="finalView">
-				<div id = "finalViewHeading" >
+			<div border = "2" id = "finalCalendarContainer">
+				<div border = "1" id = "finalViewHeading" >
 				</div>
-				<div id = "finalViewBody" >				
+				<div border = "1" id = "finalViewBody" >				
 				</div>
 			</div>
 		</td></td>
