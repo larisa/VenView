@@ -161,12 +161,12 @@ height: 20px;
 
 #schedArrowNext{
 	position:absolute;
-	top: 15px;
 	right: 25px;
 }
 
-curseMeSched{
+#curseMeSched{
 	float:right;
+	cursor:pointer;
 }
 .venue{
 cursor:pointer;

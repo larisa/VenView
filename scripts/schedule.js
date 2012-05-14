@@ -945,10 +945,11 @@ function drawCalTemplate(startDayI, endDayI){
 				document.getElementById("finalViewHeading").removeChild(
 						document.getElementById("popUpSchedDayHeadings"));
 		}
+	
 		var dayHeadings = document.createElement("TABLE");
 		dayHeadings.setAttribute("id", "popUpSchedDayHeadings");
-		dayHeadings.setAttribute("class", "table");
-		//dayHeadings.setAttribute("border", "1");
+		//dayHeadings.setAttribute("class", "table");
+		dayHeadings.setAttribute("border", "1");
 		var oldTable = document.getElementById("popUpSchedule");
 		if (oldTable){
 			document.getElementById("finalViewBody").removeChild(oldTable);
@@ -1004,10 +1005,9 @@ function drawCalTemplate(startDayI, endDayI){
 				else if ((i-2)/4==23){ cell.innerHTML = "11 pm";}
 		}
 
-		//create headings
 		headingsRow = document.createElement("TR");
 		dayHeadings.appendChild(headingsRow);
-
+		//create headers;
 		var firstCell = document.createElement("TD");
 		firstCell.style.width = "35px";
 		headingsRow.appendChild(firstCell);
@@ -1040,9 +1040,11 @@ function drawCalTemplate(startDayI, endDayI){
 			headingsCell = document.createElement("TD");
 			headingsRow.appendChild(headingsCell);
 			//set date text
-			dateString = dates[startDayI + j -1].toDateString();
+			index = startDayI + j - 1;
+			dateString = dates[index].toDateString();
 			headingsCell.innerHTML = dateString.slice(0, dateString.length-4);
-	}
+			
+		}
 
 }
 
