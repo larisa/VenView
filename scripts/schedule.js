@@ -548,6 +548,7 @@ function showVenuMap(marker, name){
 	}
 	infowindow.setContent('<div id="information">'+name+'</div>');
     infowindow.open(map, marker);
+    map.setCenter(marker.latlng);
 	marker.styleIcon.set("color","#00ff00");
 	//showBookings();
 }
