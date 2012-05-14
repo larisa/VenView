@@ -441,6 +441,7 @@ function showBookings(){
 	for(i in bookings){
 		if (!bookings[i].booked){
 			bookings[i].marker.styleIcon.set("color","#20b2aa");
+			//never remove from bookings
 		}
 	}
 	//then book items that were booked
