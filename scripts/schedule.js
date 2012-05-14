@@ -31,7 +31,7 @@ function loadCalendars() {
 		dates = getDates(startDate, endDate);
 		}
 	});
-	
+
 	//remove the div causing bug
 	document.getElementById("ui-datepicker-div").style.display="none";
 
@@ -60,7 +60,7 @@ function getDates( d1, d2 ){
 	}
 
 
-		
+
 //// End of calendar Code
 function timeMsg()
 {
@@ -80,7 +80,7 @@ var display = function(){
 	showDayMarkers(0);
 	drawList(0);
 	document.getElementById("dateToDay").innerHTML = dates[0].toDateString();
-	
+
 }
 // Begin of order cities input fields fucntions, for input 
 var citycount = 1;
@@ -123,7 +123,7 @@ function addCities(){
 					activeCities.push("#city1");
 					activeCities.push("#city2");	
 				}
-				
+
 			}
 			else if(activeCities.length == 2){
 				//take the value of 2 
@@ -140,7 +140,7 @@ function addCities(){
 				activeCities.push("#city1");
 				activeCities.push(b);
 				activeCities.push(a);
-				
+
 			}
 
 		}
@@ -246,13 +246,18 @@ function initialize() {
 		if(bufferMarker){
 			bufferMarker.styleIcon.set("color","#20b2aa");}
     });
-	
+
 }
+
+
 /// End of Google Maps code
 
 /// Begin of Data accumelation code
 
 function findVenues(location){
+	var kan = new google.maps.LatLng(38.891033, -94.526367);
+	//document.getElementById("change").innerHTML="hi";
+	//return kan;
 	geocoder.geocode({"address": location}, function(results, status){
 		if (status == google.maps.GeocoderStatus.OK){
 			//map.setCenter(results[0].geometry.location);
@@ -264,21 +269,18 @@ function findVenues(location){
 	        };
 	        var service = new google.maps.places.PlacesService(map);
 	        service.search(request, callback);
-	
+
+
+		}
+		else{
+
 		}
 	});
 
 }
-function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
 
-    }
-  }
-}
 function calcRoute() {
-	
+
   var ori = $("#originInput").val();
   var en = $("#destInput").val();
   var request;
@@ -350,9 +352,9 @@ function calcRoute() {
 		var len = venuesData.length;
 		var num;
 		var ranNum;
-		
+
 		var na; 
-		
+
 		for (var i = 0; i < response.routes[0].overview_path.length-10; i=i+10) {
 
 			var yesNo = Math.random();
@@ -402,7 +404,7 @@ function showDayMarkers(day){
 	for(i in venuesPerDay[day]){
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
 	}
-	
+
 	for(i in bookings){
 		permanentMarkers(bookings[i].latlng,bookings[i].venue);
 	}
@@ -433,12 +435,21 @@ var t=setTimeout("doNothing()",500);
 }
 
 function doNothing(){
-	
+
 }
 var daycount = 0;
 var a = "";
 var myBookings = [];
 var displayedGig = null;
+
+function breakMsg()
+{
+var t=setTimeout("calcroute()",500);
+}
+function breakMsg2(dest)
+{
+var t=setTimeout("findVenues(dest)",500);
+}
 
 //// End of data distribution code
 
@@ -448,7 +459,7 @@ var styleIconClass2 = new StyledIcon(StyledIconTypes.CLASS,{color:"#0000ff"});
 var bufferMarker;
 var markersArray = []; 
 var venuesPerDay = []; // an array of arrays, each array being the day 
-var namesTaken = []; // arrray to keep track of taken names
+var namesTaken = [];
 function createAMarker(latlng) {
 	var name;
 	var boo = true;
@@ -469,6 +480,16 @@ function createMarker(place) {
 	namesList.push([placeLoc,place.name]);
 
 }
+
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      createMarker(results[i]);
+
+    }
+  }
+}
+
 
 ///Similar marker and link behavior
 function showVenuMap(marker, name){
@@ -507,9 +528,12 @@ function closeMarker(){
 	if(bufferMarker){
 		bufferMarker.styleIcon.set("color","#20b2aa");
 	}
+
 	if(tempRow){
 		tempRow.style.display = "none";
+		tempIcon.setAttribute("class" ,"icon-chevron-right");
 		tempRow = null;
+		tempIcon = null;
 		
 	}
 }
@@ -558,14 +582,14 @@ function showListing(object, name){
 				tempIcon.setAttribute("class" ,"icon-chevron-right");				
 				}
 			}
-		
+
 	tempRow = row;
 	tempIcon = icon;	
       if (row.style.display == "block"){
     	  row.style.display = "none";
     	  icon.setAttribute("class" ,"icon-chevron-right");
     	  google.maps.event.trigger(map, 'click');
-		
+
       }
       else {
     	  row.style.display = "block";
@@ -597,47 +621,47 @@ function drawList(day){
 	schedTable.border=1;
 	schedTable.bgColor="lightslategray";
 	var row, cell;
-	
+
 	container.appendChild(schedTable);
 	schedTable.appendChild(body);
-	
+
 	 // Insert a row into the header and set its background color
-	
+
 	  for (i=0; i<venuesPerDay[day].length; i++){	   
-	    
+
 		row = document.createElement("TR");
 		body.appendChild(row);
 		if (i%2 == 0){
 		    row.style.backgroundColor = "#F0F0F0";}
 		else {
 		    row.style.backgroundColor = "white";}
-		
-		 
+
+
 	    var latlong = venuesPerDay[day][i][0];
 	    var name =  venuesPerDay[day][i][1];
 	    var marker = venuesPerDay[day][i][2];
-		
+
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);    
-	    
+
 	    icon = document.createElement("I");
 	    cell.appendChild(icon);
 	    icon.setAttribute("class", "icon-chevron-right");
 	    icon.setAttribute("id", day+ "," +name +"icon");
-	    
+
 	    link = document.createElement("A");
 	    cell.appendChild(link);
-	   
-	    
+
+
 	    link.innerHTML = name;
 	    link.href = 'javascript:void(0);';
-	   	   
+
 	    cell.setAttribute("id", day+ "," + latlong);
 	    cell.setAttribute("class", "venue");
-	    
+
 	    row = document.createElement("TR");
 	    body.appendChild(row);
-		
+
 	    row.setAttribute("id",day+ "," +name +"0");
 		row.setAttribute("class", "openings");
 		row.style.display = "none";
@@ -647,13 +671,13 @@ function drawList(day){
 
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);  
-	    
+
 
 	    booking = createOpenings(day, name, latlong);
 	    for (j=0;j<booking.length;j++){
 	    	cell.appendChild(booking[j]);
 	    }
-	   
+
 	    }
 }
 /// End of listings code
@@ -673,7 +697,7 @@ function createOpenings(day, venueName, latlng){
 		listOfDivs.push(gigDiv);
 	}
 	return listOfDivs;
-	
+
 }
 
 permanantOnes =[]; //maybe later [marker, count#bookings]
@@ -700,18 +724,20 @@ function createGig(venueName, date, startTime, duration, latlng){
 		}
 	}
 	return div;
-	
+
 }
  
 //// End of bookings create code
 
+
+
 // Docuemnt Ready Function
 $(document).ready(function() {
-	
+
 	$('.clickables').keypress(function(e) {
 	  	  	if (e.keyCode == '13' &&  this.value != '') {
 						$('#Enter').click();
-						
+
 	  	  	}
 			else{
 				document.getElementById("debug").innerHTML = "";
@@ -753,9 +779,10 @@ $(document).ready(function() {
 		infowindow.close();
 			if(bufferMarker){
 				bufferMarker.styleIcon.set("color","#20b2aa");}
-		
+
 	});
 	$("#Enter").click(function(evt) {
+		document.getElementById("debug").innerHTML = "";
 		var bDate = document.getElementById('start_cal').value;
 		var eDate = document.getElementById('end_cal').value;
 		var genre = document.getElementById('genre').value;
@@ -763,10 +790,13 @@ $(document).ready(function() {
 		var style = document.getElementById('style').value;
 		var origin = document.getElementById('originInput').value;
 		var dest = document.getElementById('destInput').value;
+
+		//cities shouldn't be ordered, one can hav cities 1 through 5, then delete 3, this should not affect behavior
+		//also I can try to call initiate at every Enter. That would be better in terms of the autocompelte elements. 
 		var cit1 = document.getElementById('city1').value;
 		var cit2 = document.getElementById('city2').value;
 		var cit3 = document.getElementById('city3').value;
-		
+
 		deleteOverlays();
 
 	//	if(cit1!=""){
@@ -779,16 +809,15 @@ $(document).ready(function() {
 	//		findVenues(cit3);
 	//	}
 		//findVenuesAlongPath();
-		
+
 		//findVenues("Hartford, CT");
 		if(bDate != "" && eDate!= "" && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
 					//origin, Calcroute, then dest ensure that markers are put in array in the right order
 				findVenues(origin);
-				
 				calcRoute();
-				indVenues(dest);
-				
+				findVenues(dest);
+
 				timeMsg();
 				}
 			else if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
@@ -818,8 +847,8 @@ $(document).ready(function() {
 		/// send warning, this should be in red
 			document.getElementById("debug").innerHTML = "Please enter all fields";
 		}
-		
 
-		
+
+
 	});
 });
