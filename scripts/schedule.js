@@ -922,6 +922,7 @@ showBook = function (toBookLink, gig){
 		}
 		this.style.display = 'none';
 		toBookLink.style.display = 'block';
+		
 		popup('popUpDiv');
 			updatedBookingI = daycount;
 			startI = pickSchedDayStartI(daycount);
@@ -969,7 +970,7 @@ function createGig(opening){
 	
 	toBookLink.innerHTML =  start + amPmStart + "-" + end + amPmEnd;
 	toBookLink.href = 'javascript:void(0);';
-	 
+	toBookLink.style.width = "150px";
 
 	//unbookLink = document.createElement("A");
 	unbookLink = document.createElement("button");
@@ -977,6 +978,7 @@ function createGig(opening){
 	div.appendChild(unbookLink);
 	unbookLink.innerHTML = "Unbook: " + start + amPmStart + "-" + end + amPmEnd;;
 	unbookLink.href = 'javascript:void(0);';
+	unbookLink.style.width = "150px";
 	
 	if (gig.booked){
 		toBookLink.style.display = "none";
