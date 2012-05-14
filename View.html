@@ -45,9 +45,9 @@
 <button class = "close" onclick="popup('popUpDiv')" id="curseMeSched">&times;</button>
 <table class = "table" >
 	<tr><td>
-		<input id="schedArrowPrev" type="button" class="btn btn-primary" value="Previous Five Days"></input>
+		<input id="schedArrowPrev" onclick="goToPrevFiveDays" type="button" class="btn btn-primary" value="Previous Five Days"></input>
 	
-			<input id="schedArrowNext" type="button" class="btn btn-primary"
+			<input id="schedArrowNext" onclick= "goToNextFiveDays" type="button" class="btn btn-primary"
 						 value="Next Five Days"></input>
 		<td>
 		</tr>

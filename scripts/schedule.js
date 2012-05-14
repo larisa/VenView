@@ -888,7 +888,7 @@ showUnBook = function(unbookLink, gig){
 		unbookLink.style.display = 'block';
 		popup('popUpDiv');
 		index = daycount%4
-		drawCalTemplate(daycount, daycount+4);
+		drawCal(daycount, daycount+4);
 		move_up_sched(gig);
 	//	}
 	};
@@ -919,7 +919,7 @@ showBook = function (toBookLink, gig){
 		this.style.display = 'none';
 		toBookLink.style.display = 'block';
 		popup('popUpDiv');
-		drawCalTemplate(daycount, daycount+4);
+		drawCal(daycount, daycount+4);
 		move_up_sched(gig);
 		
 	};
@@ -1000,10 +1000,37 @@ function checkConflict(gig){
  
 //// End of bookings create code
 
+function goToNextFiveDays(){
+		console.log("in goToNextFiveDays");
+		drawCal(currEndDayI + 1, currEndDayI + 5);
+}
+
+function goToPrevFiveDays(){
+		console.log("start" + currStartDayI);
+		console.log("end" + currEndDayI);
+		console.log(dates);
+
+		console.log("in goToPrevFiveDays");
+		if ((currStartDayI - 5) < 0){
+				drawCal(0, 4);
+		}
+		else{
+				drawCal(currStartDay-5, currStartDayI-1);
+		}
+}
+
+
+
+var currStartDayI;
+var currEndDayI;
 
 ////popUpSchedule stuff START
 //specify start and end day indexes into Bookings. 5 day range, no matter what.
-function drawCalTemplate(startDayI, endDayI){
+//ONLY drawCal can update global currStartDayI and currEndDayI
+function drawCal(startDayI, endDayI){
+		currStartDayI = startDayI;
+		currEndDayI = endDayI;
+
 		var dateSize = dates.length;
 		if (endDayI > dateSize){
 			
@@ -1171,7 +1198,7 @@ $(document).ready(function() {
 
 	$("#finishSched").click(function(evt) {
 			popup('popUpDiv');
-			drawCalTemplate(0, 4);
+			drawCal(0, 4);
 		//	drawCalBookings(3);
 	});
 
