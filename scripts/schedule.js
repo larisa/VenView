@@ -427,35 +427,18 @@ function showDayMarkers(day){
 	for(i in venuesPerDay[day]){
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
 	}
-	for(i in bookings){
-		if(bookings[i].booked){
-			permanentMarkers(bookings[i].latlng,bookings[i].venue);}
-	}
+	showPermBookings();
 	document.getElementById("dateToDay").innerHTML = dates[day].toDateString();
 
 }
 
-function showBookings(){
-	
-	//first clear markers were unbooked
+function showPermBookings(){
 	for(i in bookings){
-		if (!bookings[i].booked){
-			bookings[i].marker.styleIcon.set("color","#20b2aa");
-			//never remove from bookings
-		}
+		if(bookings[i].booked){
+			permanentMarkers(bookings[i].latlng,bookings[i].venue);}
 	}
-	//then book items that were booked
-	for(i in bookings){
-		if (bookings[i].booked){
-			bookings[i].marker.styleIcon.set("color","#0000ff");
-			google.maps.event.addListener(bookings[i].marker, 'click', function() {
-				infowindow.setContent('<div id="information">'+bookings[i].venue+'</div>');
-			    infowindow.open(map, marker);
-			});
-		}
-	}	
-		
 }
+
 
 function divideVenues(numberOfDays){
 	for(var i =0; i<numberOfDays; i++){
@@ -540,6 +523,7 @@ function createMarkerOr(place) {
 function showVenuMap(marker, name){
 	if(bufferMarker){
 		bufferMarker.styleIcon.set("color","#20b2aa");
+//// codeNo
 		bufferMarker = marker;
 	}else{
 		bufferMarker = marker; //is this right. marker is type, no?
@@ -552,6 +536,7 @@ function showVenuMap(marker, name){
 function showVenuMapPerm(marker, name){
 	if(bufferMarker){
 		bufferMarker.styleIcon.set("color","#20b2aa");
+///codeNo
 		bufferMarker = null;
 	}else{
 		bufferMarker = null; //is this right. marker is type, no?
@@ -561,7 +546,6 @@ function showVenuMapPerm(marker, name){
 	//marker.styleIcon.set("color","#00ff00");
 	//showBookings();
 }
-
 
 
 
@@ -615,8 +599,10 @@ function letThereBeLight(latlng, name, venue){
   
 }
 function closeMarker(){
+	infowindow.close();
 	if(bufferMarker){
 		bufferMarker.styleIcon.set("color","#20b2aa");
+///codeNo
 	}
 
 	if(tempRow){
@@ -627,8 +613,22 @@ function closeMarker(){
 		
 	}
 	
-	showBookings();
+
 }
+
+//function closeBufMarker(){
+//	infowindow.close();
+
+//	if(tempRow){
+//		tempRow.style.display = "none";
+//		tempIcon.setAttribute("class" ,"icon-chevron-right");
+//		tempRow = null;
+//		tempIcon = null;
+		
+//	}
+
+//}
+
 
 function deleteOverlays() {
   if (markersArray) {
@@ -709,12 +709,12 @@ function move_up(latlng, name) {
 	document.getElementById(sTr2).style.backgroundColor = "#FEF1B5";
   }
 
-var bookingsPerDay = []
+var bookingsPerDay = [];
 
 function createBookingPerDay(day){
-	bookingPerday = []
+	bookingPerday = [];
 	 for (j=0; j<venuesPerDay[day].length; j++){
-		 	bookingPerVenu = []
+		 	bookingPerVenu = [];
 		 	openings = [];
 		 	var latlong = venuesPerDay[day][j][0];
 		    var name =  venuesPerDay[day][j][1];
@@ -827,21 +827,13 @@ function createOpenings(listOfbookings){
 	return listOfDivs;
 
 }
-var selectedMarker; 
+
 showUnBook = function(unbookLink, gig){
 	return function (){
-		
+
 		bookings.push(gig);
 		gig.book();
-		if (!bufferMarker){
-			bufferMarker = selectedMarker;
-		}
-		gig.marker = bufferMarker;
-		//bufferMarker.styleIcon.set("color","#0000ff");
-		//showBookings();
 		showDayMarkers(daycount);
-		permanantOnes.push(bufferMarker); //maybe later something else. up to you
-		selectedMarker = bufferMarker;
 		bufferMarker = null;
 		if(bookings.length>0){
 			document.getElementById("finishSched").disabled = false;
@@ -854,15 +846,9 @@ showUnBook = function(unbookLink, gig){
 showBook = function (toBookLink, gig){
 	return function (){
 		gig.unbook();
-		
-		//permanantOnes.push(bufferMarker); //maybe later something else. up to you
-		//bufferMarker = null;
-		//selectedMarker.styleIcon.set("color","#20b2aa");
-		//showDayMarkers(daycount);
-		//showBookings();
 		showDayMarkers(daycount);
 		if(bookings.length == 0){
-			document.getElementById("finishSched").disabled = false;
+			document.getElementById("finishSched").disabled = true;
 		}
 		this.style.display = 'none';
 		toBookLink.style.display = 'block';
@@ -878,7 +864,7 @@ function createGig(opening){
 	div.setAttribute("class", "gig");
 	div.setAttribute("id", gig);
 	endTime = startTime + duration;
-	div.innerHTML ="Available from " + startTime + ": " +  endTime;
+	div.innerHTML ="Book from " + startTime + ": " +  endTime;
 	toBookLink = document.createElement("A");
 	div.appendChild(toBookLink);
 	toBookLink.innerHTML = "Book this time";
@@ -1017,7 +1003,7 @@ function drawCalBookings(numFifteenMinIntervals){
 		cell.appendChild(rect);
 }
 ///popUpSchedule stuff END
-
+var aa = ""; 
 // Docuemnt Ready Function
 $(document).ready(function() {
 
@@ -1060,7 +1046,10 @@ $(document).ready(function() {
 		infowindow.close();
 		//closeMarker();
 			if(bufferMarker){
-				bufferMarker.styleIcon.set("color","#20b2aa");}
+				bufferMarker.styleIcon.set("color","#20b2aa");
+				
+/// codeNo
+				}
 	});
 	$("#ArrowBackward").click(function(evt) {
 		daycount--;
@@ -1074,7 +1063,9 @@ $(document).ready(function() {
 		infowindow.close();
 		//closeMarker();
 			if(bufferMarker){
-				bufferMarker.styleIcon.set("color","#20b2aa");}
+				bufferMarker.styleIcon.set("color","#20b2aa");
+///codeNo
+				}
 
 	});
 
