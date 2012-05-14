@@ -42,18 +42,20 @@
 
 <div id="blanket" style="display:none;"></div>
 <div id="popUpDiv" style="display:none;">
-<table border = "1">
-	<tr width = "100%">
-		<td width = "100%" align = "right">
-			<i onclick="popup('popUpDiv')" id="curseMe"class="icon-remove-sign"></i></td></tr>
+<i onclick="popup('popUpDiv')" id="curseMeSched"class="icon-remove-sign"></i>
+<table class = "table" >
 	<tr><td>
-			<div border = "1" id="finalView">
-				<div id = "finalViewHeading" >
-				</div>
-				<div id = "finalViewBody" >				
-				</div>
-			</div>
-		</td></td>
+		<input id="schedArrowPrev" type="button" class="btn btn-primary" value="Last Five Days"></input>
+	
+			<input id="schedArrowNext" type="button" class="btn btn-primary"
+						 value="Next Five Days"></input>
+		<td>
+		</tr>
+		<tr id = "finalViewHeading"></tr>
+		<tr><td>
+			
+		<div border = "1" id = "finalViewBody" ></div>
+		</td></tr>
 </table>
 
 </div>
