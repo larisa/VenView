@@ -428,8 +428,8 @@ function showDayMarkers(day){
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
 	}
 	for(i in bookings){
-		if (bookings[i].booked)
-		permanentMarkers(bookings[i].latlng,bookings[i].venue);
+		if(bookings[i].booked){
+			permanentMarkers(bookings[i].latlng,bookings[i].venue);}
 	}
 	document.getElementById("dateToDay").innerHTML = dates[day].toDateString();
 
@@ -548,18 +548,21 @@ function showVenuMap(marker, name){
 	marker.styleIcon.set("color","#00ff00");
 	//showBookings();
 }
-
-function showVenuMapPermanent(marker, name){
+function showVenuMapPerm(marker, name){
 	if(bufferMarker){
 		bufferMarker.styleIcon.set("color","#20b2aa");
-		bufferMarker = marker;
+		bufferMarker = null;
 	}else{
-		bufferMarker = marker; //is this right. marker is type, no?
+		bufferMarker = null; //is this right. marker is type, no?
 	}
-//	infowindow.setContent('<div id="information">'+name+'</div>');
- //   infowindow.open(map, marker);
+	infowindow.setContent('<div id="information">'+name+'</div>');
+    infowindow.open(map, marker);
 	//marker.styleIcon.set("color","#00ff00");
+	//showBookings();
 }
+
+
+
 
 function permanentMarkers(latlng, name){
 	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{},styleIconClass2),position:latlng,map:map});
@@ -585,9 +588,13 @@ function permanentMarkers(latlng, name){
 
 	     }
 	      else {
-	    	  row.style.display = "block";
+			showVenuMapPerm(marker, name); //
+		//	bufferMarker = null;
+	    	row.style.display = "block";
+			move_up(marker.position, name);
 	    	  icon.setAttribute("class" ,"icon-chevron-down");
-	    	  showVenuMap(object, name);
+	    	   ///is this being called?
+			
 	      }
 	    }
 	});
