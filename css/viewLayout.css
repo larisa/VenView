@@ -101,6 +101,7 @@ width: 620px;
 }
 
 #finalViewHeading{
+border: none;
 position:absolute;
 top: 55px;
 left: 0px;
@@ -146,6 +147,7 @@ height: 20px;
 }
  
 #popUpSchedDayHeadings{
+		border: none;
 		width: 600px;
 		height:40px;
 		text-align: center;
