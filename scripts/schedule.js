@@ -887,7 +887,6 @@ showUnBook = function(unbookLink, gig){
 		this.style.display = "none";
 		unbookLink.style.display = 'block';
 		popup('popUpDiv');
-		index = daycount%4
 		drawCal(daycount, daycount+4);
 		move_up_sched(gig);
 	//	}
