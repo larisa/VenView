@@ -428,8 +428,9 @@ function showDayMarkers(day){
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
 	}
 	for(i in bookings){
-		if (bookings[i].booked)
+		if (bookings[i].booked){
 		permanentMarkers(bookings[i].latlng,bookings[i].venue);
+		}
 	}
 	document.getElementById("dateToDay").innerHTML = dates[day].toDateString();
 
@@ -619,7 +620,7 @@ function closeMarker(){
 		
 	}
 	
-	showBookings();
+	//showBookings();
 }
 
 function deleteOverlays() {
@@ -831,8 +832,9 @@ showUnBook = function(unbookLink, gig){
 		gig.marker = bufferMarker;
 		//bufferMarker.styleIcon.set("color","#0000ff");
 		//showBookings();
+		permanantOnes.push(bufferMarker);
 		showDayMarkers(daycount);
-		permanantOnes.push(bufferMarker); //maybe later something else. up to you
+		//permanantOnes.push(bufferMarker); //maybe later something else. up to you
 		selectedMarker = bufferMarker;
 		bufferMarker = null;
 		if(bookings.length>0){
