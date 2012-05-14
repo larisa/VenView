@@ -23,7 +23,7 @@ function blanket_size(popUpDivVar) {
 	blanket.style.height = blanket_height + 'px';
 	
 	var popUpDiv = document.getElementById(popUpDivVar);
-		popUpDiv_height=blanket_height/2-(535/2);//150 is half popup's height
+		popUpDiv_height=blanket_height/2-(620/2);//150 is half popup's height
 	popUpDiv.style.top = popUpDiv_height + 'px';
 }
 function window_pos(popUpDivVar) {
@@ -43,7 +43,7 @@ function window_pos(popUpDivVar) {
 		}
 	}
 	var popUpDiv = document.getElementById(popUpDivVar);
-		w_width=window_width/2-(535/2);//150 is half popup's width
+		w_width=window_width/2-(620/2);//150 is half popup's width
 	popUpDiv.style.left = w_width + 'px';
 	blanket.style.width = window_width + 'px';
 }
