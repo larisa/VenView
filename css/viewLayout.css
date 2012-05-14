@@ -115,6 +115,20 @@ top: 100px;
 left: 0px
 }
 
+.bookButton{
+	
+	width: "100px";
+	
+}
+
+.gig{
+padding-left: 5px;
+padding-bottom: 5px;
+padding-right: 5px;
+padding-top: 5px;
+	
+}
+
 
 .times{
 width: 50px;

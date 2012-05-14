@@ -822,12 +822,13 @@ function drawList(day){
 		cell.onclick = generateTriggerCallback(marker,name); 
 
 
-	    cell = document.createElement("TD");
-	    row.appendChild(cell);  
+	    newCell = document.createElement("TD");
+	    newCell.style.border = "none";
+	    row.appendChild(newCell);  
 	   
 	    divs = createOpenings(listOfbookings);
 	    for (j=0;j<divs.length;j++){
-	    	cell.appendChild(divs[j]);
+	    	newCell.appendChild(divs[j]);
 	    }
 	    
 	    
@@ -910,16 +911,33 @@ function createGig(opening){
 	div.setAttribute("class", "gig");
 	div.setAttribute("id", gig);
 	endTime = gig.startTime + gig.duration;
-	div.innerHTML ="Available from " + gig.startTime + ": " +  endTime;
-	toBookLink = document.createElement("A");
+	//div.innerHTML ="Available from " + gig.startTime + ": " +  endTime;
+	//toBookLink = document.createElement("A");
+	toBookLink = document.createElement("button");
+	toBookLink.setAttribute("class", "btn btn-primary bookButton");
 	div.appendChild(toBookLink);
-	toBookLink.innerHTML = "Book this time";
+	start = gig.startTime;
+	end = endTime;
+	amPmStart = "am";
+	if (start>12){
+		start = start-12;
+		amPmStart =  "pm";	
+		}
+	amPmEnd = "am";
+	if (end>12){
+		end = end-12;
+		amPmEnd =  "pm";	
+		}
+	
+	toBookLink.innerHTML =  start + amPmStart + "-" + end + amPmEnd;
 	toBookLink.href = 'javascript:void(0);';
 	 
-	
-	unbookLink = document.createElement("A");
+
+	//unbookLink = document.createElement("A");
+	unbookLink = document.createElement("button");
+	unbookLink.setAttribute("class", "btn btn-primary active bookButton");
 	div.appendChild(unbookLink);
-	unbookLink.innerHTML = "Unbook";
+	unbookLink.innerHTML = "Unbook: " + start + amPmStart + "-" + end + amPmEnd;;
 	unbookLink.href = 'javascript:void(0);';
 	
 	if (gig.booked){
@@ -949,7 +967,7 @@ function drawCalTemplate(startDayI, endDayI){
 		var dayHeadings = document.createElement("TABLE");
 		dayHeadings.setAttribute("id", "popUpSchedDayHeadings");
 		//dayHeadings.setAttribute("class", "table");
-		dayHeadings.setAttribute("border", "1");
+		//dayHeadings.setAttribute("border", "1");
 		var oldTable = document.getElementById("popUpSchedule");
 		if (oldTable){
 			document.getElementById("finalViewBody").removeChild(oldTable);
