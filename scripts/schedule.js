@@ -77,9 +77,10 @@ var display = function(){
 	document.getElementById("Column3").style.visibility="visible";
 
 	divideVenues(dates.length);
+	createBookingsForTrip(dates.length);
 	showDayMarkers(0);
 	drawList(0);
-	document.getElementById("dateToDay").innerHTML = dates[0].toDateString();
+//	document.getElementById("dateToDay").innerHTML = dates[0].toDateString();
 
 }
 // Begin of order cities input fields fucntions, for input 
@@ -243,8 +244,7 @@ function initialize() {
 	setRemoveCommentHandlers();
 	google.maps.event.addListener(map, 'click', function() {
       infowindow.close();
-		if(bufferMarker){
-			bufferMarker.styleIcon.set("color","#20b2aa");}
+		closeMarker();
     });
 
 }
@@ -401,12 +401,35 @@ function showDayMarkers(day){
 	for(i in venuesPerDay[day]){
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
 	}
-
 	for(i in bookings){
+		if (bookings[i].booked)
 		permanentMarkers(bookings[i].latlng,bookings[i].venue);
 	}
 	document.getElementById("dateToDay").innerHTML = dates[day].toDateString();
+
 }
+
+function showBookings(){
+	
+	//first clear markers were unbooked
+	for(i in bookings){
+		if (!bookings[i].booked){
+			bookings[i].marker.styleIcon.set("color","#20b2aa");
+		}
+	}
+	//then book items that were booked
+	for(i in bookings){
+		if (bookings[i].booked){
+			bookings[i].marker.styleIcon.set("color","#0000ff");
+			google.maps.event.addListener(bookings[i].marker, 'click', function() {
+				infowindow.setContent('<div id="information">'+bookings[i].venue+'</div>');
+			    infowindow.open(map, marker);
+			});
+		}
+	}	
+		
+}
+
 function divideVenues(numberOfDays){
 	for(var i =0; i<numberOfDays; i++){
 		var dayArray = perDay();
@@ -414,6 +437,7 @@ function divideVenues(numberOfDays){
 		venuesPerDay.push(dayArray);
 	}
 }
+
 function perDay(){
 	var arrayish = [];
 	var len = namesList.length;
@@ -456,6 +480,7 @@ var styleIconClass2 = new StyledIcon(StyledIconTypes.CLASS,{color:"#0000ff"});
 var bufferMarker;
 var markersArray = []; 
 var venuesPerDay = []; // an array of arrays, each array being the day 
+var bookingsPerDay = [];
 var namesTaken = [];
 function createAMarker(latlng) {
 	var name;
@@ -492,13 +517,51 @@ function showVenuMap(marker, name){
 	infowindow.setContent('<div id="information">'+name+'</div>');
     infowindow.open(map, marker);
 	marker.styleIcon.set("color","#00ff00");
+	//showBookings();
 }
+
+function showVenuMapPermanent(marker, name){
+	if(bufferMarker){
+		bufferMarker.styleIcon.set("color","#20b2aa");
+		bufferMarker = marker;
+	}else{
+		bufferMarker = marker; //is this right. marker is type, no?
+	}
+//	infowindow.setContent('<div id="information">'+name+'</div>');
+ //   infowindow.open(map, marker);
+	//marker.styleIcon.set("color","#00ff00");
+}
+
 function permanentMarkers(latlng, name){
 	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{},styleIconClass2),position:latlng,map:map});
 	google.maps.event.addListener(marker, 'click', function() {
 		infowindow.setContent('<div id="information">'+name+'</div>');
 	    infowindow.open(map, marker);
-  });
+	    var row = document.getElementById(daycount+","+name+"0");
+	    if (row){
+	    	var icon = document.getElementById(daycount+ "," + name + "icon");
+				if(tempRow){
+					if(tempRow!= row){
+						tempRow.style.display = "none";
+					tempIcon.setAttribute("class" ,"icon-chevron-right");				
+					}
+				}
+
+		tempRow = row;
+		tempIcon = icon;	
+	      if (row.style.display == "block"){
+	    	  row.style.display = "none";
+	    	  icon.setAttribute("class" ,"icon-chevron-right");
+	    	  google.maps.event.trigger(map, 'click');
+
+	     }
+	      else {
+	    	  row.style.display = "block";
+	    	  icon.setAttribute("class" ,"icon-chevron-down");
+	    	  showVenuMap(object, name);
+	      }
+	    }
+	});
 	google.maps.event.addListener(infowindow, 'closeclick', closeMarker);
 	markersArray.push([marker, name]);
 }
@@ -526,6 +589,8 @@ function closeMarker(){
 		tempIcon = null;
 		
 	}
+	
+	showBookings();
 }
 
 function deleteOverlays() {
@@ -536,6 +601,7 @@ function deleteOverlays() {
     markersArray.length = 0;
 	namesList.length = 0; //check if this was removed
 	venuesPerDay.length = 0;
+	
 	bookings.length= 0;
 	daycount = 0;
 	permanantOnes.length = 0;
@@ -600,6 +666,41 @@ function move_up(latlng) {
 	document.getElementById('booking').scrollTop = topPos;
   }
 
+var bookingsPerDay = []
+
+function createBookingPerDay(day){
+	bookingPerday = []
+	 for (j=0; j<venuesPerDay[day].length; j++){
+		 	bookingPerVenu = []
+		 	openings = [];
+		 	var latlong = venuesPerDay[day][j][0];
+		    var name =  venuesPerDay[day][j][1];
+		    ///var marker = venuesPerDay[day][i][2];
+		 	numOpenings = Math.floor(Math.random() * 4);
+			for (k=0; k<=numOpenings; k++){
+				startTime = Math.floor(Math.random() * 14) + 10;
+				duration = Math.floor(Math.random() * 4);
+				var gig = new Booking(name, day, startTime, duration, latlong);
+				openings.push(gig);
+			}
+			bookingPerVenu.push(name);
+			bookingPerVenu.push(openings);
+			bookingPerday.push(bookingPerVenu);
+	 }
+	return bookingPerday; 
+}
+
+function createBookingsForTrip(numberOfDays){
+	bookingsPerDay = [];
+	for(i=0; i< numberOfDays; i++){
+		var dayArray = createBookingPerDay(i);
+		bookingsPerDay.push(dayArray);
+		
+	}
+}
+
+	
+
 
 function drawList(day){
 	var container = document.getElementById("booking");	
@@ -630,7 +731,7 @@ function drawList(day){
 	    var latlong = venuesPerDay[day][i][0];
 	    var name =  venuesPerDay[day][i][1];
 	    var marker = venuesPerDay[day][i][2];
-
+	    listOfbookings = bookingsPerDay[day][i][1];
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);    
 
@@ -655,45 +756,81 @@ function drawList(day){
 	    row.setAttribute("id",day+ "," +name +"0");
 		row.setAttribute("class", "openings");
 		row.style.display = "none";
-
+		
 		cell.onclick = generateTriggerCallback(marker,name); 
 
 
 	    cell = document.createElement("TD");
 	    row.appendChild(cell);  
-
-
-	    booking = createOpenings(day, name, latlong);
-	    for (j=0;j<booking.length;j++){
-	    	cell.appendChild(booking[j]);
+	   
+	    divs = createOpenings(listOfbookings);
+	    for (j=0;j<divs.length;j++){
+	    	cell.appendChild(divs[j]);
 	    }
-
+	    
+	    
 	    }
 }
 /// End of listings code
 
 //// Begin of bookings create code
 
-function createOpenings(day, venueName, latlng){
+function createOpenings(listOfbookings){
 	listOfDivs = [];
-	numOpenings = Math.floor(Math.random() * 4);
-	div = document.createElement("DIV");
-	div.setAttribute("class", "booking");
-	div.innerHTML = "availableItems"
-	for (k=0; k<=numOpenings; k++){
-		startTime = Math.floor(Math.random() * 14) + 10;
-		duration = Math.floor(Math.random() * 4);
-		gigDiv = createGig(venueName, day, startTime, duration, latlng)
+	for (k=0; k<listOfbookings.length; k++){
+		gigDiv = createGig(listOfbookings[k]);
 		listOfDivs.push(gigDiv);
 	}
 	return listOfDivs;
 
 }
+var selectedMarker; 
+showUnBook = function(unbookLink, gig){
+	return function (){
+		
+		bookings.push(gig);
+		gig.book();
+		if (!bufferMarker){
+			bufferMarker = selectedMarker;
+		}
+		gig.marker = bufferMarker;
+		//bufferMarker.styleIcon.set("color","#0000ff");
+		//showBookings();
+		showDayMarkers(daycount);
+		permanantOnes.push(bufferMarker); //maybe later something else. up to you
+		selectedMarker = bufferMarker;
+		bufferMarker = null;
+		if(bookings.length>0){
+			document.getElementById("finishSched").disabled = false;
+		}
+		this.style.display = "none";
+		unbookLink.style.display = 'block';
+	};
+}
 
+showBook = function (toBookLink, gig){
+	return function (){
+		gig.unbook();
+		
+		//permanantOnes.push(bufferMarker); //maybe later something else. up to you
+		//bufferMarker = null;
+		//selectedMarker.styleIcon.set("color","#20b2aa");
+		//showDayMarkers(daycount);
+		//showBookings();
+		showDayMarkers(daycount);
+		if(bookings.length == 0){
+			document.getElementById("finishSched").disabled = false;
+		}
+		this.style.display = 'none';
+		toBookLink.style.display = 'block';
+		
+	};
+	
+}
 permanantOnes =[]; //maybe later [marker, count#bookings]
-function createGig(venueName, date, startTime, duration, latlng){
-	var gig = new Booking(venueName, date, startTime,  duration, latlng);
-
+function createGig(opening){
+	
+	gig = opening;
 	div = document.createElement("DIV");
 	div.setAttribute("class", "gig");
 	div.setAttribute("id", gig);
@@ -703,16 +840,22 @@ function createGig(venueName, date, startTime, duration, latlng){
 	div.appendChild(toBookLink);
 	toBookLink.innerHTML = "Book this time";
 	toBookLink.href = 'javascript:void(0);';
-	toBookLink.onclick =  function (){
-		bookings.push(gig);
-		gig.book();
-		bufferMarker.styleIcon.set("color","#0000ff");
-		permanantOnes.push(bufferMarker); //maybe later something else. up to you
-		bufferMarker = null;
-		if(bookings.length>0){
-			document.getElementById("finishSched").disabled = false;
-		}
+	 
+	
+	unbookLink = document.createElement("A");
+	div.appendChild(unbookLink);
+	unbookLink.innerHTML = "Unbook";
+	unbookLink.href = 'javascript:void(0);';
+	
+	if (gig.booked){
+		toBookLink.style.display = "none";
 	}
+	else{ 
+		unbookLink.style.display = "none";
+	}
+	
+	toBookLink.onclick = showUnBook(unbookLink, gig);
+	unbookLink.onclick = showBook(toBookLink, gig);
 	return div;
 
 }
