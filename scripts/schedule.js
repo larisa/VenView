@@ -428,9 +428,10 @@ function showDayMarkers(day){
 		letThereBeLight(venuesPerDay[day][i][0], venuesPerDay[day][i][1], venuesPerDay[day][i]);
 	}
 	for(i in bookings){
-		if (bookings[i].booked){
-		permanentMarkers(bookings[i].latlng,bookings[i].venue);
-		}
+
+		if(bookings[i].booked){
+			permanentMarkers(bookings[i].latlng,bookings[i].venue);}
+
 	}
 	document.getElementById("dateToDay").innerHTML = dates[day].toDateString();
 
@@ -549,18 +550,21 @@ function showVenuMap(marker, name){
 	marker.styleIcon.set("color","#00ff00");
 	//showBookings();
 }
-
-function showVenuMapPermanent(marker, name){
+function showVenuMapPerm(marker, name){
 	if(bufferMarker){
 		bufferMarker.styleIcon.set("color","#20b2aa");
-		bufferMarker = marker;
+		bufferMarker = null;
 	}else{
-		bufferMarker = marker; //is this right. marker is type, no?
+		bufferMarker = null; //is this right. marker is type, no?
 	}
-//	infowindow.setContent('<div id="information">'+name+'</div>');
- //   infowindow.open(map, marker);
+	infowindow.setContent('<div id="information">'+name+'</div>');
+    infowindow.open(map, marker);
 	//marker.styleIcon.set("color","#00ff00");
+	//showBookings();
 }
+
+
+
 
 function permanentMarkers(latlng, name){
 	var marker = new StyledMarker({styleIcon:new StyledIcon(StyledIconTypes.MARKER,{},styleIconClass2),position:latlng,map:map});
@@ -586,9 +590,13 @@ function permanentMarkers(latlng, name){
 
 	     }
 	      else {
-	    	  row.style.display = "block";
+			showVenuMapPerm(marker, name); //
+		//	bufferMarker = null;
+	    	row.style.display = "block";
+			move_up(marker.position, name);
 	    	  icon.setAttribute("class" ,"icon-chevron-down");
-	    	  showVenuMap(object, name);
+	    	   ///is this being called?
+			
 	      }
 	    }
 	});
@@ -713,9 +721,14 @@ function createBookingPerDay(day){
 		    var name =  venuesPerDay[day][j][1];
 		    ///var marker = venuesPerDay[day][i][2];
 		 	numOpenings = Math.floor(Math.random() * 4);
+		 	endTime = 11;
 			for (k=0; k<=numOpenings; k++){
-				startTime = Math.floor(Math.random() * 14) + 10;
-				duration = Math.floor(Math.random() * 4);
+				startTime = endTime + Math.floor(Math.random() * 5);
+				duration = Math.floor(Math.random() * 3 + 1);
+				endTime = startTime + duration;
+				if (endTime>24){
+					endTime = 24;
+				}
 				var gig = new Booking(name, day, startTime, duration, latlong);
 				openings.push(gig);
 			}
@@ -813,7 +826,8 @@ function drawList(day){
 
 function createOpenings(listOfbookings){
 	listOfDivs = [];
-	for (k=0; k<listOfbookings.length; k++){
+	size = listOfbookings.length;
+	for (k=0; k<size; k++){
 		gigDiv = createGig(listOfbookings[k]);
 		listOfDivs.push(gigDiv);
 	}
@@ -847,8 +861,17 @@ showUnBook = function(unbookLink, gig){
 
 showBook = function (toBookLink, gig){
 	return function (){
+		index = null;
+		size = bookings.legnth;
+		for (s = 0; s<size; s++){
+			if (bookings[s] == gig);
+			index = s;
+			
+		}
+		if (index){
+		bookings.splice(index, index);
+		}
 		gig.unbook();
-		
 		//permanantOnes.push(bufferMarker); //maybe later something else. up to you
 		//bufferMarker = null;
 		//selectedMarker.styleIcon.set("color","#20b2aa");
@@ -871,8 +894,8 @@ function createGig(opening){
 	div = document.createElement("DIV");
 	div.setAttribute("class", "gig");
 	div.setAttribute("id", gig);
-	endTime = startTime + duration;
-	div.innerHTML ="Available from " + startTime + ": " +  endTime;
+	endTime = gig.startTime + gig.duration;
+	div.innerHTML ="Available from " + gig.startTime + ": " +  endTime;
 	toBookLink = document.createElement("A");
 	div.appendChild(toBookLink);
 	toBookLink.innerHTML = "Book this time";
@@ -902,7 +925,11 @@ function createGig(opening){
 
 ////popUpSchedule stuff START
 //specify start and end day indexes into Bookings. 5 day range, no matter what.
-function drawCal(startDayI, endDayI){
+function drawCalTemplate(startDayI, endDayI){
+		if (document.getElementById("popUpSchedDayHeadings")!=null){
+				document.getElementById("finalViewHeading").removeChild(
+						document.getElementById("popUpSchedDayHeadings"));
+		}
 		var dayHeadings = document.createElement("TABLE");
 		dayHeadings.setAttribute("id", "popUpSchedDayHeadings");
 		var schedTable = document.createElement("TABLE");
@@ -916,9 +943,7 @@ function drawCal(startDayI, endDayI){
 				for (j=0; j<6; j++){ //cols
 						var blankCell = document.createElement("TD");
 						blankCell.setAttribute("id", "schedCell" + i+ "," + j);
-						console.log(i, j, blankCell);
 						row.appendChild(blankCell);
-
 				}
 		}
 
@@ -955,10 +980,20 @@ function drawCal(startDayI, endDayI){
 				else if ((i-2)/4==23){ cell.innerHTML = "11 pm";}
 		}
 
-		//create headings
+		//create headings (includes buttons)
 		headingsRow = document.createElement("TR");
 		dayHeadings.appendChild(headingsRow);
-		headingsRow.appendChild(document.createElement("TD"));
+
+		//make PrevDay Button
+		var firstCell = document.createElement("TD");
+		var prevButton = document.createElement('input');
+		prevButton.type = "button";
+		prevButton.name = "Previous";
+		//disable if necessary
+		if (startDayI==0){ prevButton.disabled = true;}
+		firstCell.appendChild(prevButton);
+		headingsRow.appendChild(firstCell);
+
 		for (j=1; j<6; j++){ 
 				headingsCell = document.createElement("TD");
 				headingsRow.appendChild(headingsCell);
@@ -966,13 +1001,37 @@ function drawCal(startDayI, endDayI){
 				dateString = dates[startDayI + j -1].toDateString();
 				headingsCell.innerHTML = dateString.slice(0, dateString.length-4);
 		}
+
+		//make NextDay Button
+		var lastCell = document.createElement("TD");
+		var nextButton = document.createElement('input');
+		nextButton.type = "button";
+		nextButton.name = "Next";
+		//disable if necessary
+		if (endDayI==dates.length-1){ nextButton.disabled = true;}
+		lastCell.appendChild(nextButton);
+		headingsRow.appendChild(lastCell);
 		
 
 }
 
+function drawCalBookings(numFifteenMinIntervals){
+		var cell = document.getElementById("schedCell" + "3" + "," + "1");
+		var rect = document.createElement("div");
+		console.log(cell.style);
+		var height = 20*numFifteenMinIntervals;
+		rect.style.position = "absolute";
+		rect.style.top = "44px";
+		rect.style.left = "100px";
+		rect.style.width = "75px";
+		rect.style.height = height.toString() + "px";
+		rect.style.borderColor = "#0000ff";
+		rect.style.backgroundColor = "#F00";
+		console.log(cell);
+		console.log(rect);
+		cell.appendChild(rect);
+}
 ///popUpSchedule stuff END
-
-
 
 // Docuemnt Ready Function
 $(document).ready(function() {
@@ -1000,7 +1059,8 @@ $(document).ready(function() {
 
 	$("#finishSched").click(function(evt) {
 			popup('popUpDiv');
-			drawCal(0, 4);
+			drawCalTemplate(0, 4);
+			drawCalBookings(3);
 	});
 
 	$("#ArrowForward").click(function(evt) {
