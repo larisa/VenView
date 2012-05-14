@@ -535,7 +535,7 @@ function letThereBeLight(latlng, name, venue){
 	bufferMarker = marker;
 	google.maps.event.addListener(marker, 'click', function() {
 		showListing(marker, name);
-		move_up(marker.position);
+		move_up(marker.position, name);
   });
 	google.maps.event.addListener(infowindow, 'closeclick', closeMarker);
 	venue.push(marker);
@@ -606,12 +606,14 @@ function showListing(object, name){
 	tempIcon = icon;	
       if (row.style.display == "block"){
     	  row.style.display = "none";
+			
     	  icon.setAttribute("class" ,"icon-chevron-right");
     	  google.maps.event.trigger(map, 'click');
 
       }
       else {
     	  row.style.display = "block";
+		row.style.backgroundColor = "#FEF1B5";
     	  icon.setAttribute("class" ,"icon-chevron-down");
     	  showVenuMap(object, name);
       }
@@ -623,10 +625,12 @@ function showListing(object, name){
 //constructed id: currentday,latlng
 //finds the offset of the element in its parent element + offset of parent to know
 //where to scroll to. 
-function move_up(latlng) {
+function move_up(latlng, name) {
 	var sTr = daycount+"," +latlng;
+	var sTr2 = daycount+","+name+"0";
 	var topPos = document.getElementById(sTr).offsetTop;
 	document.getElementById('booking').scrollTop = topPos;
+	document.getElementById(sTr2).style.backgroundColor = "#FEF1B5";
   }
 
 
