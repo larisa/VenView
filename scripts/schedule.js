@@ -851,6 +851,8 @@ function drawList(day){
 /// End of listings code
 
 //// Begin of bookings create code
+var updatedBookingI;
+
 
 function createOpenings(listOfbookings){
 	listOfDivs = [];
@@ -865,6 +867,9 @@ function createOpenings(listOfbookings){
 
 var selectedMarker;
 var madeBookingsPerDay = [];
+
+
+
 showUnBook = function(unbookLink, gig){
 	return function (){
 		bookings.push(gig);
@@ -888,12 +893,14 @@ showUnBook = function(unbookLink, gig){
 		this.style.display = "none";
 		unbookLink.style.display = 'block';
 		popup('popUpDiv');
-		index = daycount%4
-		drawCalTemplate(daycount, daycount+4);
+			updatedBookingI = daycount;
+			startI = pickSchedDayStartI(daycount);
+			drawCal(startI, startI+4);
 		move_up_sched(gig);
 	//	}
 	};
 }
+
 
 showBook = function (toBookLink, gig){
 	return function (){
@@ -916,12 +923,20 @@ showBook = function (toBookLink, gig){
 		this.style.display = 'none';
 		toBookLink.style.display = 'block';
 		popup('popUpDiv');
-		drawCalTemplate(daycount, daycount+4);
+			updatedBookingI = daycount;
+			startI = pickSchedDayStartI(daycount);
+			drawCal(startI, startI+4);
 		move_up_sched(gig);
 		
 	};
-	
 }
+
+function pickSchedDayStartI(currBookDateI){
+		return (Math.floor(currBookDateI/4))*4;
+}
+	
+
+
 permanantOnes =[]; //maybe later [marker, count#bookings]
 function createGig(opening){
 	
@@ -997,10 +1012,31 @@ function checkConflict(gig){
  
 //// End of bookings create code
 
+function goToNextFiveDays(){
+		drawCal(currEndDayI + 1, currEndDayI + 5);
+}
+
+function goToPrevFiveDays(){
+		if ((currStartDayI - 5) < 0){
+				drawCal(0, 4);
+		}
+		else{
+				drawCal(currStartDayI-5, currStartDayI-1);
+		}
+}
+
+
+
+var currStartDayI;
+var currEndDayI;
 
 ////popUpSchedule stuff START
 //specify start and end day indexes into Bookings. 5 day range, no matter what.
-function drawCalTemplate(startDayI, endDayI){
+//ONLY drawCal can update global currStartDayI and currEndDayI
+function drawCal(startDayI, endDayI){
+		currStartDayI = startDayI;
+		currEndDayI = endDayI;
+
 		var dateSize = dates.length;
 		if (endDayI > dateSize){
 			
@@ -1102,14 +1138,18 @@ function drawCalTemplate(startDayI, endDayI){
 				for (p=0;p<numOfCells;p++){
 					rowIndex  = startRow + p;
 					cell = document.getElementById("schedCell"+rowIndex + "," + startCol);
+					cell.style.borderBottom = "none";
+					cell.style.borderTop = "none";
 					cell.style.backgroundColor = booking.color;
-					cell.innerHTML = booking.venue;
-					
+					if (p==0){
+						cell.innerHTML = booking.venue;
+						}
+					}
 				}
 				
 			}
 		}
-		}
+		
 
 		for (j=1; j<6; j++){ 
 			headingsCell = document.createElement("TD");
@@ -1168,7 +1208,7 @@ $(document).ready(function() {
 
 	$("#finishSched").click(function(evt) {
 			popup('popUpDiv');
-			drawCalTemplate(0, 4);
+			drawCal(0, 4); //ASSUMES NO BOOKING
 		//	drawCalBookings(3);
 	});
 
