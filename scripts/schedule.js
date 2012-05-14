@@ -714,6 +714,13 @@ function move_up(latlng, name) {
 
 var bookingsPerDay = []
 
+function get_color() {
+	colorArray = ["#68003B", "#E0465F", "#739420","#F9FD30", "#B183BF"];
+    index = Math.floor(Math.random() * 5);
+    
+    return colorArray[index];
+}
+
 function createBookingPerDay(day){
 	bookingPerday = []
 	 for (j=0; j<venuesPerDay[day].length; j++){
@@ -721,6 +728,7 @@ function createBookingPerDay(day){
 		 	openings = [];
 		 	var latlong = venuesPerDay[day][j][0];
 		    var name =  venuesPerDay[day][j][1];
+		    var color = get_color();
 		    ///var marker = venuesPerDay[day][i][2];
 		 	numOpenings = Math.floor(Math.random() * 4);
 		 	endTime = 11;
@@ -731,7 +739,7 @@ function createBookingPerDay(day){
 				if (endTime>24){
 					endTime = 24;
 				}
-				var gig = new Booking(name, day, startTime, duration, latlong);
+				var gig = new Booking(name, day, startTime, duration, latlong, color);
 				openings.push(gig);
 			}
 			bookingPerVenu.push(name);
@@ -743,9 +751,12 @@ function createBookingPerDay(day){
 
 function createBookingsForTrip(numberOfDays){
 	bookingsPerDay = [];
+	madeBookingsPerDay = [];
 	for(i=0; i< numberOfDays; i++){
 		var dayArray = createBookingPerDay(i);
+		empty = [];
 		bookingsPerDay.push(dayArray);
+		madeBookingsPerDay.push(empty);
 		
 	}
 }
@@ -836,11 +847,13 @@ function createOpenings(listOfbookings){
 	return listOfDivs;
 
 }
-var selectedMarker; 
+var selectedMarker;
+var madeBookingsPerDay = [];
 showUnBook = function(unbookLink, gig){
 	return function (){
 		
 		bookings.push(gig);
+		madeBookingsPerDay[daycount].push(gig);
 		gig.book();
 		if (!bufferMarker){
 			bufferMarker = selectedMarker;
@@ -935,6 +948,10 @@ function drawCalTemplate(startDayI, endDayI){
 		var dayHeadings = document.createElement("TABLE");
 		dayHeadings.setAttribute("id", "popUpSchedDayHeadings");
 		dayHeadings.setAttribute("border", "1");
+		var oldTable = document.getElementById("popUpSchedule");
+		if (oldTable){
+			document.getElementById("finalViewBody").removeChild(oldTable);
+		}
 		var schedTable = document.createElement("TABLE");
 		schedTable.setAttribute("id", "popUpSchedule");
 		schedTable.setAttribute("border", "1");
@@ -993,15 +1010,37 @@ function drawCalTemplate(startDayI, endDayI){
 		firstCell.style.width = "35px";
 		headingsRow.appendChild(firstCell);
 
-		for (j=1; j<6; j++){ 
-				headingsCell = document.createElement("TD");
-				headingsRow.appendChild(headingsCell);
-				//set date text
-				dateString = dates[startDayI + j -1].toDateString();
-				headingsCell.innerHTML = dateString.slice(0, dateString.length-4);
+		
+		for (dayIndex = startDayI; dayIndex< endDayI;dayIndex++){
+			for (b=0; b<madeBookingsPerDay[dayIndex].length; b++){	  
+				booking = madeBookingsPerDay[dayIndex][b];
+				if (booking.booked){
+				startTime = booking.startTime;
+				duration = booking.duration;
+				numOfCells = duration *4;
+				minRow = 2;
+				minCol = 1;
+				startRow = minRow + startTime*4;
+				startCol = minCol + dayIndex;
+				for (p=0;p<numOfCells;p++){
+					rowIndex  = startRow + p;
+					cell = document.getElementById("schedCell"+rowIndex + "," + startCol);
+					cell.style.backgroundColor = booking.color;
+					cell.innerHTML = booking.venue;
+					
+				}
+				
+			}
+		}
 		}
 
-		
+		for (j=1; j<6; j++){ 
+			headingsCell = document.createElement("TD");
+			headingsRow.appendChild(headingsCell);
+			//set date text
+			dateString = dates[startDayI + j -1].toDateString();
+			headingsCell.innerHTML = dateString.slice(0, dateString.length-4);
+	}
 
 }
 
