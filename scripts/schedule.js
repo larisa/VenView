@@ -1015,7 +1015,7 @@ function goToPrevFiveDays(){
 				drawCal(0, 4);
 		}
 		else{
-				drawCal(currStartDay-5, currStartDayI-1);
+				drawCal(currStartDayI-5, currStartDayI-1);
 		}
 }
 
