@@ -91,12 +91,28 @@ overflow: scroll;
 padding: 0 20px 0 0; */
 
 } 
-#finalView{
+#finalViewBody{
 overflow-y: scroll;
 height: 380px;
-width:400px;
+width: 400px;
 
 }
+
+.times{
+width: 50px;
+height: 30px;
+}
+
+#popUpSchedule.td{
+height: 100px;
+width: 100px;
+}
+
+.popUpSchedDayHeadings.td{
+height: 100px;
+width: 100px;
+}
+
 #dayAndTime{
 	border: 1;
 	width: 100%;

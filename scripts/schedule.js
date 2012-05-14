@@ -29,8 +29,11 @@ function loadCalendars() {
 		onSelect : function(dateText, inst) {
 		endDate = parseDate(dateText);
 		dates = getDates(startDate, endDate);
+		
 		}
 	});
+
+
 
 	//remove the div causing bug
 	document.getElementById("ui-datepicker-div").style.display="none";
@@ -66,11 +69,6 @@ function timeMsg()
 {
 var t=setTimeout("display()",500);
 }
-function venMsg()
-{
-var t=setTimeout("divideVenues(5)",500);
-}
-
 
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
@@ -168,6 +166,7 @@ function addCities(){
 		}
 	citycount++;
 	cityNum++;
+
 	}
 	if(citycount == 4){
 		document.getElementById("citLink").style.display="none";
@@ -231,16 +230,21 @@ function initialize() {
 	service = new google.maps.places.PlacesService(map);
 	geocoder = new google.maps.Geocoder();
 	directionsDisplay.setMap(map);
+	var options = {
+	  types: ['(cities)'],
+	  componentRestrictions: {country: 'usa'}
+	};
 	var origin = document.getElementById('originInput');
-	var autocomplete = new google.maps.places.Autocomplete(origin);
+	var autocompleteOr = new google.maps.places.Autocomplete(origin, options);
+	
 	var dest = document.getElementById('destInput');
-	var autocomplete = new google.maps.places.Autocomplete(dest);
+	var autocomplete = new google.maps.places.Autocomplete(dest, options);
 	var city1 = document.getElementById('city1');
-	var autocomplete = new google.maps.places.Autocomplete(city1);
+	var autocomplete = new google.maps.places.Autocomplete(city1, options);
 	var city2 = document.getElementById('city2');
-	var autocomplete = new google.maps.places.Autocomplete(city2);
+	var autocomplete = new google.maps.places.Autocomplete(city2, options);
 	var city3 = document.getElementById('city3');
-	var autocomplete = new google.maps.places.Autocomplete(city3);
+	var autocomplete = new google.maps.places.Autocomplete(city3, options);
 	setRemoveCommentHandlers();
 	google.maps.event.addListener(map, 'click', function() {
       infowindow.close();
@@ -267,6 +271,28 @@ function findVenues(location){
 	        service.search(request, callback);
 		}
 	});
+}
+function findVenuesOr(location){
+	geocoder.geocode({"address": location}, function(results, status){
+		if (status == google.maps.GeocoderStatus.OK){
+			var c = results[0].geometry.location;
+			var request = {
+	          location: c,
+	          radius: 500, //change radius later
+	          types: ['food']
+	        };
+	        var service = new google.maps.places.PlacesService(map);
+	        service.search(request, callbackOr);
+		}
+	});
+}
+function callbackOr(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      createMarkerOr(results[i]);
+
+    }
+  }
 }
 function callback(results, status) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -441,6 +467,13 @@ function divideVenues(numberOfDays){
 function perDay(){
 	var arrayish = [];
 	var len = namesList.length;
+	var len2 = namesListOr.length;
+	for(var i =0; i<len2; i++){
+		var num = Math.random();
+		if(num < 0.3){
+			arrayish.push(namesListOr[i]);
+		}
+	}
 	for(var i =0; i<len; i++){
 		var num = Math.random();
 		if(num < 0.3){
@@ -463,20 +496,12 @@ var a = "";
 var myBookings = [];
 var displayedGig = null;
 
-function breakMsg()
-{
-var t=setTimeout("calcroute()",500);
-}
-function breakMsg2(dest)
-{
-var t=setTimeout("findVenues(dest)",500);
-}
 
 //// End of data distribution code
 
 ///Begin of markers code
 var styleIconClass = new StyledIcon(StyledIconTypes.CLASS,{color:"#20b2aa"});
-var styleIconClass2 = new StyledIcon(StyledIconTypes.CLASS,{color:"#0000ff"});
+var styleIconClass2 = new StyledIcon(StyledIconTypes.CLASS,{color:"#0000ff"}); //double check fallbacks
 var bufferMarker;
 var markersArray = []; 
 var venuesPerDay = []; // an array of arrays, each array being the day 
@@ -502,8 +527,12 @@ function createMarker(place) {
 	namesList.push([placeLoc,place.name]);
 
 }
+var namesListOr = [];
+function createMarkerOr(place) {
+  var placeLoc = place.geometry.location;
+	namesListOr.push([placeLoc,place.name]);
 
-
+}
 
 
 ///Similar marker and link behavior
@@ -570,7 +599,7 @@ function letThereBeLight(latlng, name, venue){
 	bufferMarker = marker;
 	google.maps.event.addListener(marker, 'click', function() {
 		showListing(marker, name);
-		move_up(marker.position);
+		move_up(marker.position, name);
   });
 	google.maps.event.addListener(infowindow, 'closeclick', closeMarker);
 	venue.push(marker);
@@ -601,7 +630,9 @@ function deleteOverlays() {
     markersArray.length = 0;
 	namesList.length = 0; //check if this was removed
 	venuesPerDay.length = 0;
-	
+
+	namesListOr.length = 0;
+
 	bookings.length= 0;
 	daycount = 0;
 	permanantOnes.length = 0;
@@ -643,12 +674,14 @@ function showListing(object, name){
 	tempIcon = icon;	
       if (row.style.display == "block"){
     	  row.style.display = "none";
+			
     	  icon.setAttribute("class" ,"icon-chevron-right");
     	  google.maps.event.trigger(map, 'click');
 
       }
       else {
     	  row.style.display = "block";
+		row.style.backgroundColor = "#FEF1B5";
     	  icon.setAttribute("class" ,"icon-chevron-down");
     	  showVenuMap(object, name);
       }
@@ -660,10 +693,12 @@ function showListing(object, name){
 //constructed id: currentday,latlng
 //finds the offset of the element in its parent element + offset of parent to know
 //where to scroll to. 
-function move_up(latlng) {
+function move_up(latlng, name) {
 	var sTr = daycount+"," +latlng;
+	var sTr2 = daycount+","+name+"0";
 	var topPos = document.getElementById(sTr).offsetTop;
 	document.getElementById('booking').scrollTop = topPos;
+	document.getElementById(sTr2).style.backgroundColor = "#FEF1B5";
   }
 
 var bookingsPerDay = []
@@ -863,6 +898,79 @@ function createGig(opening){
 //// End of bookings create code
 
 
+////popUpSchedule stuff START
+//specify start and end day indexes into Bookings. 5 day range, no matter what.
+function drawCal(startDayI, endDayI){
+		var dayHeadings = document.createElement("TABLE");
+		dayHeadings.setAttribute("id", "popUpSchedDayHeadings");
+		var schedTable = document.createElement("TABLE");
+		schedTable.setAttribute("id", "popUpSchedule");
+
+		document.getElementById("finalViewHeading").appendChild(dayHeadings);
+		document.getElementById("finalViewBody").appendChild(schedTable);
+		for (i=0; i<96; i++){ //rows
+				row = document.createElement("TR");
+				schedTable.appendChild(row);
+				for (j=0; j<6; j++){ //cols
+						var blankCell = document.createElement("TD");
+						blankCell.setAttribute("id", "schedCell" + i+ "," + j);
+						console.log(i, j, blankCell);
+						row.appendChild(blankCell);
+
+				}
+		}
+
+		//create times
+		for (i=0; i<96; i++){
+				var cell = document.getElementById("schedCell" + i + "," + "0");
+				cell.setAttribute("class", "times");
+				if (i==0){
+						cell.innerHTML = "all day";
+				}
+				else if ((i-2)/4==0){ cell.innerHTML = "12 am";}
+				else if ((i-2)/4==1){ cell.innerHTML = "1 am";}
+				else if ((i-2)/4==2){ cell.innerHTML = "2 am";}
+				else if ((i-2)/4==3){ cell.innerHTML = "3 am";}
+				else if ((i-2)/4==4){ cell.innerHTML = "4 am";}
+				else if ((i-2)/4==5){ cell.innerHTML = "5 am";}
+				else if ((i-2)/4==6){ cell.innerHTML = "6 am";}
+				else if ((i-2)/4==7){ cell.innerHTML = "7 am";}
+				else if ((i-2)/4==8){ cell.innerHTML = "8 am";}
+				else if ((i-2)/4==9){ cell.innerHTML = "9 am";}
+				else if ((i-2)/4==10){ cell.innerHTML = "10 am";}
+				else if ((i-2)/4==11){ cell.innerHTML = "11 am";}
+				else if ((i-2)/4==12){ cell.innerHTML = "12 pm";}
+				else if ((i-2)/4==13){ cell.innerHTML = "1 pm";}
+				else if ((i-2)/4==14){ cell.innerHTML = "2 pm";}
+				else if ((i-2)/4==15){ cell.innerHTML = "3 pm";}
+				else if ((i-2)/4==16){ cell.innerHTML = "4 pm";}
+				else if ((i-2)/4==17){ cell.innerHTML = "5 pm";}
+				else if ((i-2)/4==18){ cell.innerHTML = "6 pm";}
+				else if ((i-2)/4==19){ cell.innerHTML = "7 pm";}
+				else if ((i-2)/4==20){ cell.innerHTML = "8 pm";}
+				else if ((i-2)/4==21){ cell.innerHTML = "9 pm";}
+				else if ((i-2)/4==22){ cell.innerHTML = "10 pm";}
+				else if ((i-2)/4==23){ cell.innerHTML = "11 pm";}
+		}
+
+		//create headings
+		headingsRow = document.createElement("TR");
+		dayHeadings.appendChild(headingsRow);
+		headingsRow.appendChild(document.createElement("TD"));
+		for (j=1; j<6; j++){ 
+				headingsCell = document.createElement("TD");
+				headingsRow.appendChild(headingsCell);
+				//set date text
+				dateString = dates[startDayI + j -1].toDateString();
+				headingsCell.innerHTML = dateString.slice(0, dateString.length-4);
+		}
+		
+
+}
+
+///popUpSchedule stuff END
+
+
 
 // Docuemnt Ready Function
 $(document).ready(function() {
@@ -887,6 +995,12 @@ $(document).ready(function() {
 			}
 
 	});
+
+	$("#finishSched").click(function(evt) {
+			popup('popUpDiv');
+			drawCal(0, 4);
+	});
+
 	$("#ArrowForward").click(function(evt) {
 		daycount++;
 		document.getElementById("ArrowBackward").disabled = false;
@@ -897,6 +1011,7 @@ $(document).ready(function() {
 			this.disabled=true;
 		}
 		infowindow.close();
+		//closeMarker();
 			if(bufferMarker){
 				bufferMarker.styleIcon.set("color","#20b2aa");}
 	});
@@ -910,10 +1025,13 @@ $(document).ready(function() {
 			//disable button
 		}
 		infowindow.close();
+		//closeMarker();
 			if(bufferMarker){
 				bufferMarker.styleIcon.set("color","#20b2aa");}
 
 	});
+
+	
 	$("#Enter").click(function(evt) {
 		document.getElementById("debug").innerHTML = "";
 		var bDate = document.getElementById('start_cal').value;
@@ -923,50 +1041,35 @@ $(document).ready(function() {
 		var style = document.getElementById('style').value;
 		var origin = document.getElementById('originInput').value;
 		var dest = document.getElementById('destInput').value;
-
-		//cities shouldn't be ordered, one can hav cities 1 through 5, then delete 3, this should not affect behavior
-		//also I can try to call initiate at every Enter. That would be better in terms of the autocompelte elements. 
 		var cit1 = document.getElementById('city1').value;
 		var cit2 = document.getElementById('city2').value;
 		var cit3 = document.getElementById('city3').value;
 
 		deleteOverlays();
-
-	//	if(cit1!=""){
-	//		findVenues(cit1);
-	//	}
-	//	if(cit2!=""){
-	//		findVenues(cit2);
-	//	}
-	//	if(cit3!=""){
-	//		findVenues(cit3);
-	//	}
-		//findVenuesAlongPath();
-
-		//findVenues("Hartford, CT");
+		
 		if(bDate != "" && eDate!= "" && genre != null && cap != null && style!= null && origin!="" && dest!=""){
 			if(citycount == 1){
 					//origin, Calcroute, then dest ensure that markers are put in array in the right order
-				findVenues(origin);
+				findVenuesOr(origin);	
 				calcRoute();
 				findVenues(dest);
-
+				//document.getElementById("debug").innerHTML = dest;
 				timeMsg();
 				}
 			else if(citycount == 2 && (cit1!="" || cit2 !="" || cit3 != "")){
-				findVenues(origin);	
+				findVenuesOr(origin);	
 				calcRoute();
 				findVenues(dest);
 				timeMsg();
 				}
 			else if(citycount == 3 && (cit1!="" && cit2!="") || (cit2!="" && cit3!="") || (cit1!="" && cit3!="")){
-				findVenues(origin);	
+				findVenuesOr(origin);	
 				calcRoute();
 				findVenues(dest);
 				timeMsg();
 				}
 			else if(citycount == 4 && cit1!="" && cit2!="" && cit3!=""){
-				findVenues(origin);	
+				findVenuesOr(origin);	
 				calcRoute();
 				findVenues(dest);
 				timeMsg();
@@ -974,11 +1077,15 @@ $(document).ready(function() {
 			else{
 			/// send warning, this should be in red
 				document.getElementById("debug").innerHTML = "Please enter all fields";
+				document.getElementById("Column2").style.visibility="hidden";
+				document.getElementById("Column3").style.visibility="hidden";
 			}
 		}
 		else{
 		/// send warning, this should be in red
 			document.getElementById("debug").innerHTML = "Please enter all fields";
+			document.getElementById("Column2").style.visibility="hidden";
+			document.getElementById("Column3").style.visibility="hidden";
 		}
 
 

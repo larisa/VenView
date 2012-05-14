@@ -20,7 +20,8 @@
 <link href='http://fonts.googleapis.com/css?family=Happy+Monkey' rel='stylesheet' type='text/css'>
 
 <!-- Load any supplemental Javascript libraries here -->
-
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://jzaefferer.github.com/jquery-validation/jquery.validate.js"></script>
 
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBtJA2DVT63Bh-JQDh28XNVFNAOaLSMimg&sensor=false&libraries=places"></script>
 <script type="text/javascript" src="scripts/styledMarker.js"></script>
@@ -48,7 +49,9 @@
 		</td>
 	</tr>
 	<tr><td>
-		<div id = "finalView" >
+		<div id = "finalViewHeading" >
+			</div>
+		<div id = "finalViewBody" >				
 		</div>
 		</td></td>
 </table>
@@ -173,7 +176,8 @@
 						<table width = "650px">
 						<tr width="650px"><td><input id="ArrowBackward" type="button"
 					width="100px" value="Previous Day" class = "btn btn-primary" disabled = "true"></input></td>
-					<td align = "center"><div id ="dateToDay"></div></td>
+					<td align = "center"><div id ="dateToDay"></div>
+						</td>
 					<td align = "right"><input width="100px" id="ArrowForward" type="button"
 				 		value="Next Day" class = "btn btn-primary" ></input></td></tr>
 				</table>
@@ -194,7 +198,7 @@
 			<table id = "sched"></table>
 			</div></td></tr>
 			<tr><td align= "center"><input id="finishSched" type="button" 
-			 value="View Schedule" disabled = "true" class = "btn btn-danger" onclick="popup('popUpDiv')" ></input>
+			 value="View Schedule" disabled = "true" class = "btn btn-danger"  ></input>
 			</td></tr></table>
 			</td>
 		</tr>
