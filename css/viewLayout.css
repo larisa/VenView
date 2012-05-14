@@ -155,6 +155,19 @@ height: 20px;
 #information{
 }
 
+#schedArrowPrev{
+	float:left;
+}
+
+#schedArrowNext{
+	position:absolute;
+	top: 15px;
+	right: 25px;
+}
+
+curseMeSched{
+	float:right;
+}
 .venue{
 cursor:pointer;
 padding: 6px 10px;

@@ -947,13 +947,15 @@ function drawCalTemplate(startDayI, endDayI){
 		}
 		var dayHeadings = document.createElement("TABLE");
 		dayHeadings.setAttribute("id", "popUpSchedDayHeadings");
-		dayHeadings.setAttribute("border", "1");
+		dayHeadings.setAttribute("class", "table");
+		//dayHeadings.setAttribute("border", "1");
 		var oldTable = document.getElementById("popUpSchedule");
 		if (oldTable){
 			document.getElementById("finalViewBody").removeChild(oldTable);
 		}
 		var schedTable = document.createElement("TABLE");
 		schedTable.setAttribute("id", "popUpSchedule");
+		schedTable.setAttribute("class", "table");
 		schedTable.setAttribute("border", "1");
 
 		document.getElementById("finalViewHeading").appendChild(dayHeadings);
