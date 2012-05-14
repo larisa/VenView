@@ -1105,14 +1105,18 @@ function drawCalTemplate(startDayI, endDayI){
 				for (p=0;p<numOfCells;p++){
 					rowIndex  = startRow + p;
 					cell = document.getElementById("schedCell"+rowIndex + "," + startCol);
+					cell.style.borderBottom = "none";
+					cell.style.borderTop = "none";
 					cell.style.backgroundColor = booking.color;
-					cell.innerHTML = booking.venue;
-					
+					if (p==0){
+						cell.innerHTML = booking.venue;
+						}
+					}
 				}
 				
 			}
 		}
-		}
+		
 
 		for (j=1; j<6; j++){ 
 			headingsCell = document.createElement("TD");
