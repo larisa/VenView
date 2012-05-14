@@ -915,8 +915,10 @@ function drawCalTemplate(startDayI, endDayI){
 		}
 		var dayHeadings = document.createElement("TABLE");
 		dayHeadings.setAttribute("id", "popUpSchedDayHeadings");
+		dayHeadings.setAttribute("border", "1");
 		var schedTable = document.createElement("TABLE");
 		schedTable.setAttribute("id", "popUpSchedule");
+		schedTable.setAttribute("border", "1");
 
 		document.getElementById("finalViewHeading").appendChild(dayHeadings);
 		document.getElementById("finalViewBody").appendChild(schedTable);
