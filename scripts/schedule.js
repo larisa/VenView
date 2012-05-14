@@ -29,8 +29,11 @@ function loadCalendars() {
 		onSelect : function(dateText, inst) {
 		endDate = parseDate(dateText);
 		dates = getDates(startDate, endDate);
+		
 		}
 	});
+
+
 
 	//remove the div causing bug
 	document.getElementById("ui-datepicker-div").style.display="none";
@@ -66,11 +69,6 @@ function timeMsg()
 {
 var t=setTimeout("display()",500);
 }
-function venMsg()
-{
-var t=setTimeout("divideVenues(5)",500);
-}
-
 
 var display = function(){
 	document.getElementById("Column2").style.visibility="visible";
@@ -167,6 +165,7 @@ function addCities(){
 		}
 	citycount++;
 	cityNum++;
+
 	}
 	if(citycount == 4){
 		document.getElementById("citLink").style.display="none";
@@ -230,24 +229,25 @@ function initialize() {
 	service = new google.maps.places.PlacesService(map);
 	geocoder = new google.maps.Geocoder();
 	directionsDisplay.setMap(map);
+	var options = {
+	  types: ['(cities)'],
+	  componentRestrictions: {country: 'usa'}
+	};
 	var origin = document.getElementById('originInput');
-	var autocompleteOr = new google.maps.places.Autocomplete(origin);
+	var autocompleteOr = new google.maps.places.Autocomplete(origin, options);
+	
 	var dest = document.getElementById('destInput');
-	var autocomplete = new google.maps.places.Autocomplete(dest);
+	var autocomplete = new google.maps.places.Autocomplete(dest, options);
 	var city1 = document.getElementById('city1');
-	var autocomplete = new google.maps.places.Autocomplete(city1);
+	var autocomplete = new google.maps.places.Autocomplete(city1, options);
 	var city2 = document.getElementById('city2');
-	var autocomplete = new google.maps.places.Autocomplete(city2);
+	var autocomplete = new google.maps.places.Autocomplete(city2, options);
 	var city3 = document.getElementById('city3');
-	var autocomplete = new google.maps.places.Autocomplete(city3);
+	var autocomplete = new google.maps.places.Autocomplete(city3, options);
 	setRemoveCommentHandlers();
 	google.maps.event.addListener(map, 'click', function() {
       infowindow.close();
 		closeMarker();
-	//	if(bufferMarker){
-	//		bufferMarker.styleIcon.set("color","#20b2aa");}
-			
-			//findme
     });
 
 }
@@ -932,11 +932,15 @@ $(document).ready(function() {
 			else{
 			/// send warning, this should be in red
 				document.getElementById("debug").innerHTML = "Please enter all fields";
+				document.getElementById("Column2").style.visibility="hidden";
+				document.getElementById("Column3").style.visibility="hidden";
 			}
 		}
 		else{
 		/// send warning, this should be in red
 			document.getElementById("debug").innerHTML = "Please enter all fields";
+			document.getElementById("Column2").style.visibility="hidden";
+			document.getElementById("Column3").style.visibility="hidden";
 		}
 
 
