@@ -441,6 +441,7 @@ function showBookings(){
 	for(i in bookings){
 		if (!bookings[i].booked){
 			bookings[i].marker.styleIcon.set("color","#20b2aa");
+			//never remove from bookings
 		}
 	}
 	//then book items that were booked
@@ -914,8 +915,10 @@ function drawCalTemplate(startDayI, endDayI){
 		}
 		var dayHeadings = document.createElement("TABLE");
 		dayHeadings.setAttribute("id", "popUpSchedDayHeadings");
+		dayHeadings.setAttribute("border", "1");
 		var schedTable = document.createElement("TABLE");
 		schedTable.setAttribute("id", "popUpSchedule");
+		schedTable.setAttribute("border", "1");
 
 		document.getElementById("finalViewHeading").appendChild(dayHeadings);
 		document.getElementById("finalViewBody").appendChild(schedTable);
