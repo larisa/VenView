@@ -248,16 +248,11 @@ function initialize() {
     });
 	
 }
-
-
 /// End of Google Maps code
 
 /// Begin of Data accumelation code
 
 function findVenues(location){
-	var kan = new google.maps.LatLng(38.891033, -94.526367);
-	//document.getElementById("change").innerHTML="hi";
-	//return kan;
 	geocoder.geocode({"address": location}, function(results, status){
 		if (status == google.maps.GeocoderStatus.OK){
 			//map.setCenter(results[0].geometry.location);
@@ -269,16 +264,19 @@ function findVenues(location){
 	        };
 	        var service = new google.maps.places.PlacesService(map);
 	        service.search(request, callback);
-
-				
-		}
-		else{
-
+	
 		}
 	});
 
 }
+function callback(results, status) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    for (var i = 0; i < results.length; i++) {
+      createMarker(results[i]);
 
+    }
+  }
+}
 function calcRoute() {
 	
   var ori = $("#originInput").val();
@@ -442,15 +440,6 @@ var a = "";
 var myBookings = [];
 var displayedGig = null;
 
-function breakMsg()
-{
-var t=setTimeout("calcroute()",500);
-}
-function breakMsg2(dest)
-{
-var t=setTimeout("findVenues(dest)",500);
-}
-
 //// End of data distribution code
 
 ///Begin of markers code
@@ -459,7 +448,7 @@ var styleIconClass2 = new StyledIcon(StyledIconTypes.CLASS,{color:"#0000ff"});
 var bufferMarker;
 var markersArray = []; 
 var venuesPerDay = []; // an array of arrays, each array being the day 
-var namesTaken = [];
+var namesTaken = []; // arrray to keep track of taken names
 function createAMarker(latlng) {
 	var name;
 	var boo = true;
@@ -480,16 +469,6 @@ function createMarker(place) {
 	namesList.push([placeLoc,place.name]);
 
 }
-
-function callback(results, status) {
-  if (status == google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
-
-    }
-  }
-}
-
 
 ///Similar marker and link behavior
 function showVenuMap(marker, name){
@@ -726,8 +705,6 @@ function createGig(venueName, date, startTime, duration, latlng){
  
 //// End of bookings create code
 
-
-
 // Docuemnt Ready Function
 $(document).ready(function() {
 	
@@ -779,7 +756,6 @@ $(document).ready(function() {
 		
 	});
 	$("#Enter").click(function(evt) {
-		document.getElementById("debug").innerHTML = "";
 		var bDate = document.getElementById('start_cal').value;
 		var eDate = document.getElementById('end_cal').value;
 		var genre = document.getElementById('genre').value;
@@ -787,9 +763,6 @@ $(document).ready(function() {
 		var style = document.getElementById('style').value;
 		var origin = document.getElementById('originInput').value;
 		var dest = document.getElementById('destInput').value;
-		
-		//cities shouldn't be ordered, one can hav cities 1 through 5, then delete 3, this should not affect behavior
-		//also I can try to call initiate at every Enter. That would be better in terms of the autocompelte elements. 
 		var cit1 = document.getElementById('city1').value;
 		var cit2 = document.getElementById('city2').value;
 		var cit3 = document.getElementById('city3').value;
@@ -812,8 +785,9 @@ $(document).ready(function() {
 			if(citycount == 1){
 					//origin, Calcroute, then dest ensure that markers are put in array in the right order
 				findVenues(origin);
+				
 				calcRoute();
-				findVenues(dest);
+				indVenues(dest);
 				
 				timeMsg();
 				}
