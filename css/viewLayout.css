@@ -23,8 +23,8 @@
 #popUpDiv {
 position:absolute;
 background-color:#eeeeee;
-width:400px;
-height:400px;
+width:600px;
+height:800px;
 z-index: 9002;}
 #information{
     overflow: hidden;
@@ -91,26 +91,40 @@ overflow: scroll;
 padding: 0 20px 0 0; */
 
 } 
+
+#popUpDiv{
+width: 800px;
+height: 400px;
+border: 1;
+}
+
 #finalViewBody{
 overflow-y: scroll;
-height: 380px;
-width: 400px;
-
 }
 
 .times{
 width: 50px;
-height: 30px;
+height: 20px;
 }
 
-#popUpSchedule.td{
-height: 100px;
-width: 100px;
+#popUpSchedule td{
+		height: 20px;
+		width: 100px;
 }
 
-.popUpSchedDayHeadings.td{
-height: 100px;
-width: 100px;
+#popUpSchedDayHeadings td{
+		height: 0px;
+		width: 100px;
+}
+
+#popUpSchedule{
+		border: 1;
+		z-index: 100;
+}
+
+#popUpSchedDayHeadings{
+		border: 1;
+		z-index: 100;
 }
 
 #dayAndTime{
