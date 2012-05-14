@@ -91,7 +91,7 @@ overflow: scroll;
 padding: 0 20px 0 0; */
 
 } 
-#finalView{
+#finalViewBody{
 overflow-y: scroll;
 height: 380px;
 width: 400px;

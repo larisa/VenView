@@ -752,14 +752,13 @@ function createGig(venueName, date, startTime, duration, latlng){
 ////popUpSchedule stuff START
 //specify start and end day indexes into Bookings. 5 day range, no matter what.
 function drawCal(startDayI, endDayI){
-		var container = document.getElementById("finalView");
 		var dayHeadings = document.createElement("TABLE");
 		dayHeadings.setAttribute("id", "popUpSchedDayHeadings");
 		var schedTable = document.createElement("TABLE");
 		schedTable.setAttribute("id", "popUpSchedule");
 
-		container.appendChild(dayHeadings);
-		container.appendChild(schedTable);
+		document.getElementById("finalViewHeading").appendChild(dayHeadings);
+		document.getElementById("finalViewBody").appendChild(schedTable);
 		for (i=0; i<96; i++){ //rows
 				row = document.createElement("TR");
 				schedTable.appendChild(row);
