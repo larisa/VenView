@@ -908,7 +908,11 @@ function createGig(opening){
 
 ////popUpSchedule stuff START
 //specify start and end day indexes into Bookings. 5 day range, no matter what.
-function drawCal(startDayI, endDayI){
+function drawCalTemplate(startDayI, endDayI){
+		if (document.getElementById("popUpSchedDayHeadings")!=null){
+				document.getElementById("finalViewHeading").removeChild(
+						document.getElementById("popUpSchedDayHeadings"));
+		}
 		var dayHeadings = document.createElement("TABLE");
 		dayHeadings.setAttribute("id", "popUpSchedDayHeadings");
 		var schedTable = document.createElement("TABLE");
@@ -922,9 +926,7 @@ function drawCal(startDayI, endDayI){
 				for (j=0; j<6; j++){ //cols
 						var blankCell = document.createElement("TD");
 						blankCell.setAttribute("id", "schedCell" + i+ "," + j);
-						console.log(i, j, blankCell);
 						row.appendChild(blankCell);
-
 				}
 		}
 
@@ -961,10 +963,20 @@ function drawCal(startDayI, endDayI){
 				else if ((i-2)/4==23){ cell.innerHTML = "11 pm";}
 		}
 
-		//create headings
+		//create headings (includes buttons)
 		headingsRow = document.createElement("TR");
 		dayHeadings.appendChild(headingsRow);
-		headingsRow.appendChild(document.createElement("TD"));
+
+		//make PrevDay Button
+		var firstCell = document.createElement("TD");
+		var prevButton = document.createElement('input');
+		prevButton.type = "button";
+		prevButton.name = "Previous";
+		//disable if necessary
+		if (startDayI==0){ prevButton.disabled = true;}
+		firstCell.appendChild(prevButton);
+		headingsRow.appendChild(firstCell);
+
 		for (j=1; j<6; j++){ 
 				headingsCell = document.createElement("TD");
 				headingsRow.appendChild(headingsCell);
@@ -972,13 +984,37 @@ function drawCal(startDayI, endDayI){
 				dateString = dates[startDayI + j -1].toDateString();
 				headingsCell.innerHTML = dateString.slice(0, dateString.length-4);
 		}
+
+		//make NextDay Button
+		var lastCell = document.createElement("TD");
+		var nextButton = document.createElement('input');
+		nextButton.type = "button";
+		nextButton.name = "Next";
+		//disable if necessary
+		if (endDayI==dates.length-1){ nextButton.disabled = true;}
+		lastCell.appendChild(nextButton);
+		headingsRow.appendChild(lastCell);
 		
 
 }
 
+function drawCalBookings(numFifteenMinIntervals){
+		var cell = document.getElementById("schedCell" + "3" + "," + "1");
+		var rect = document.createElement("div");
+		console.log(cell.style);
+		var height = 20*numFifteenMinIntervals;
+		rect.style.position = "absolute";
+		rect.style.top = "44px";
+		rect.style.left = "100px";
+		rect.style.width = "75px";
+		rect.style.height = height.toString() + "px";
+		rect.style.borderColor = "#0000ff";
+		rect.style.backgroundColor = "#F00";
+		console.log(cell);
+		console.log(rect);
+		cell.appendChild(rect);
+}
 ///popUpSchedule stuff END
-
-
 
 // Docuemnt Ready Function
 $(document).ready(function() {
@@ -1006,7 +1042,8 @@ $(document).ready(function() {
 
 	$("#finishSched").click(function(evt) {
 			popup('popUpDiv');
-			drawCal(0, 4);
+			drawCalTemplate(0, 4);
+			drawCalBookings(3);
 	});
 
 	$("#ArrowForward").click(function(evt) {
