@@ -92,6 +92,10 @@ padding: 0 20px 0 0; */
 
 } 
 
+#WholeFuckingPopupTable{
+border:1;
+}
+
 #popUpDiv{
 width: 800px;
 height: 400px;
